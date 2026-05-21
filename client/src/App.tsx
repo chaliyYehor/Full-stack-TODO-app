@@ -1,7 +1,5 @@
 function App() {
-  return <>
-    <h1>Coderabbit test</h1>
-  </>
+	return <></>
 }
 
 export default App
