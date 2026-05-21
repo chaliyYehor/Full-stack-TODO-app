@@ -6,4 +6,9 @@ export const reqBodySchema = z.object({
 	password: z.string().min(6),
 })
 
+export const loginReqBodySchema = z.object({
+	email: z.email(),
+	password: z.string().min(6)
+})
+
 export type RegisterReqBody = z.infer<typeof reqBodySchema>
