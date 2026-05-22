@@ -6,3 +6,21 @@ body {
 
 	background-color: gray;
 }
+.err-content {
+	background-image: url('../public/notFoundBackground.png');
+}
+
+.err-text {
+	font-family: 'Rubik', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
+	color: #565872;
+	font-size: 2.5rem;
+}
+
+.backHome {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
