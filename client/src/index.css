@@ -7,7 +7,7 @@ body {
 	background-color: gray;
 }
 .err-content {
-	background-image: url('../public/notFoundBackground.png');
+	background-image: url('/notFoundBackground.png');
 }
 
 .err-text {
