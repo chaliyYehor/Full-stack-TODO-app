@@ -19,7 +19,7 @@ export default function Authentication({ authType }: Props) {
 					{authType === 'SignIn'
 						? "Don't have an account? "
 						: 'Already have an account? '}
-					<a className='text-blue-500 cursor-pointer font-bold'>
+					<a className='text-blue-500 cursor-pointer font-bold hover:border-b-2 border-blue-500'>
 						{authType === 'SignIn' ? 'Create One' : 'Sign In'}
 					</a>
 				</p>
