@@ -17,7 +17,7 @@ interface UserMethods {
 type UserModel = Model<User, {}, UserMethods>
 
 export type UserDoc = HydratedDocument<User, UserMethods>
-
+// change name to be unique !!!
 const UserSchema = new mongoose.Schema<User, UserModel, UserMethods>({
 	name: {
 		type: String,

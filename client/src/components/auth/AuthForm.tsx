@@ -1,14 +1,17 @@
+import { signInFormInputs, signUpFormInputs } from '../../constants/formType'
 import Input from './Input'
+interface Props {
+	authType: 'SignUp' | 'SignIn'
+}
 
-export default function AuthForm() {
+export default function AuthForm({ authType }: Props) {
+	const formInputs = authType === 'SignUp' ? signUpFormInputs : signInFormInputs
+
 	return (
 		<form className='w-full'>
-			<Input inpPlaceholder='First Name' />
-			<Input inpPlaceholder='Last Name' />
-			<Input inpPlaceholder='Username' />
-			<Input inpPlaceholder='Email' />
-			<Input inpPlaceholder='Password' />
-			<Input inpPlaceholder='Confirm Password' />
+			{formInputs.map((inp, i) => (
+				<Input key={i} inpPlaceholder={inp} />
+			))}
 		</form>
 	)
 }

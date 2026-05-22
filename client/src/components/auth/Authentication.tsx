@@ -14,7 +14,7 @@ export default function Authentication({ authType }: Props) {
 				<h3 className='authHeading'>
 					{authType === 'SignUp' ? 'Sign Up' : 'Sign In'}
 				</h3>
-				<AuthForm />
+				<AuthForm authType={authType}/>
 				<p className='authPar'>
 					{authType === 'SignIn'
 						? "Don't have an account? "
