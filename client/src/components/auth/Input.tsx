@@ -25,9 +25,31 @@ export default function Input({ inpPlaceholder }: Props) {
 	const isPasswordInput = inpType === 'password'
 	const inputType = isPasswordInput && showPassword ? 'text' : inpType
 
+	let imgUrl = null
+	switch (inpPlaceholder) {
+		case 'Username':
+			imgUrl = '/auth/formIcons/Username.png'
+			break
+		case 'Email':
+			imgUrl = '/auth/formIcons/Email.png'
+			break
+		case 'Password':
+			imgUrl = '/auth/formIcons/Password.png'
+			break
+		case 'Confirm Password':
+			imgUrl = '/auth/formIcons/confirm.png'
+			break
+		case 'First Name':
+			imgUrl = '/auth/formIcons/firstName.png'
+			break
+		case 'Last Name':
+			imgUrl = '/auth/formIcons/lastName.png'
+			break
+	}
+
 	return (
 		<div className='inputWrapper select-none relative flex justify-center items-center gap-2 border-2 border-[#565454] rounded-lg py-2 px-1 mb-5.5 mt-5'>
-			<img className='w-15%' src='/auth/formIcons/username.png' alt='icon' />
+			<img className='w-15%' src={imgUrl} alt='icon' />
 			<input
 				className=' w-full outline-none'
 				type={inputType}
@@ -41,7 +63,9 @@ export default function Input({ inpPlaceholder }: Props) {
 						: `Enter ${inpPlaceholder}`
 				}
 			/>
-			{input.length > 0 && <X onClick={() => setInput('')} className='cursor-pointer' />}
+			{input.length > 0 && (
+				<X onClick={() => setInput('')} className='cursor-pointer' />
+			)}
 			{isPasswordInput && !showPassword && input.length > 0 && (
 				<Eye
 					onClick={() => setShowPassword(true)}
