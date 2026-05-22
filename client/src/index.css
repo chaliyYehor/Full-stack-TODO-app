@@ -1,0 +1,47 @@
+@import 'tailwindcss';
+
+body {
+	margin: 0;
+	box-sizing: border-box;
+
+	background-color: gray;
+}
+.err-content {
+	background-image: url('/notFoundBackground.png');
+}
+
+.err-text {
+	font-family: 'Rubik', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
+	color: #565872;
+	font-size: 2.5rem;
+}
+
+.backHome {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 500;
+	font-style: normal;
+}
+
+.signUpWrapper {
+	background-image: url('/auth/authenticationBg.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.authHeading {
+	font-family: 'Montserrat', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 800;
+	font-style: normal;
+	font-size: 3rem;
+}
+
+.authPar {
+	font-family: 'Montserrat', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
