@@ -5,6 +5,6 @@ export const signUpFormInputs = [
 	'Email',
 	'Password',
 	'Confirm Password',
-]
+] as const
 
-export const signInFormInputs = ['Username', 'Password']
+export const signInFormInputs = ['Username', 'Password'] as const
