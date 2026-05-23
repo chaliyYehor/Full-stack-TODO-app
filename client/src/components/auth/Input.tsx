@@ -48,7 +48,7 @@ export default function Input({ inpPlaceholder }: Props) {
 	}
 
 	return (
-		<div className='inputWrapper focus-within:ring-2 focus-within:ring-[#ff6767] select-none relative flex justify-center items-center gap-2 border-2 border-[#565454] rounded-lg py-2 px-1 mb-5.5 mt-5'>
+		<div className='inputWrapper focus-within:ring-2 focus-within:ring-[#6776ff] select-none relative flex justify-center items-center gap-2 border-2 border-[#565454] rounded-lg py-2 px-1 mb-5.5 mt-5'>
 			<img className='w-15%' src={imgUrl} alt='icon' />
 			<input
 				className=' w-full outline-none'
