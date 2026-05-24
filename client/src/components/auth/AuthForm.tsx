@@ -1,3 +1,4 @@
+import { useForm } from 'react-hook-form'
 import { signInFormInputs, signUpFormInputs } from '../../constants/formType'
 import Input from './Input'
 interface Props {
@@ -7,6 +8,8 @@ interface Props {
 export default function AuthForm({ authType }: Props) {
 	const formInputs = authType === 'SignUp' ? signUpFormInputs : signInFormInputs
 
+	const {} = useForm()
+
 	return (
 		<form className='w-full'>
 			{formInputs.map((inp, i) => (
@@ -15,7 +18,7 @@ export default function AuthForm({ authType }: Props) {
 			{authType === 'SignUp' && (
 				<>
 					<label className='cursor-pointer select-none'>
-						<input type='checkbox' /> I agree to all terms
+						<input className='cursor-pointer' type='checkbox' /> I agree to all terms
 					</label>
 					<br />
 				</>
