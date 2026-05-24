@@ -25,7 +25,7 @@ export default function Authentication({ authType }: Props) {
 			password: '',
 			confirmPassword: '',
 		},
-		mode: 'all'
+		mode: 'onSubmit'
 	})
 
 	return (
