@@ -1,5 +1,8 @@
 import { Eye, EyeOff, X } from 'lucide-react'
 import { useState } from 'react'
+import { useFormContext } from 'react-hook-form'
+import { defineFormInputType } from '../../constants/formType'
+import type { AuthFormType } from '../../types/types'
 
 interface Props {
 	inpPlaceholder:
@@ -10,9 +13,21 @@ interface Props {
 		| 'First Name'
 		| 'Last Name'
 }
+
 export default function Input({ inpPlaceholder }: Props) {
 	const [input, setInput] = useState('')
 	const [showPassword, setShowPassword] = useState(false)
+
+	const {
+		register,
+		resetField,
+		formState: { errors },
+	} = useFormContext<AuthFormType>()
+
+	const fieldName = defineFormInputType[inpPlaceholder]
+	const errorMessage = errors[fieldName]?.message
+
+	console.log(errors)
 
 	let inpType = null
 	if (inpPlaceholder.startsWith('Confirm') || inpPlaceholder === 'Password') {
@@ -48,36 +63,45 @@ export default function Input({ inpPlaceholder }: Props) {
 	}
 
 	return (
-		<div className='inputWrapper focus-within:ring-2 focus-within:ring-[#6776ff] select-none relative flex justify-center items-center gap-2 border-2 border-[#565454] rounded-lg py-2 px-1 mb-5.5 mt-5'>
-			<img className='w-15%' src={imgUrl} alt='icon' />
-			<input
-				className=' w-full outline-none'
-				type={inputType}
-				value={input}
-				onChange={e => {
-					setInput(e.target.value)
-				}}
-				placeholder={
-					inpPlaceholder.startsWith('Confirm')
-						? inpPlaceholder
-						: `Enter ${inpPlaceholder}`
-				}
-			/>
-			{input.length > 0 && (
-				<X onClick={() => setInput('')} className='cursor-pointer' />
-			)}
-			{isPasswordInput && !showPassword && input.length > 0 && (
-				<Eye
-					onClick={() => setShowPassword(true)}
-					className='absolute -right-8'
+		<>
+			<div className='inputWrapper focus-within:ring-2 focus-within:ring-[#6776ff] select-none relative flex justify-center items-center gap-2 border-2 border-[#565454] rounded-lg py-2 px-1 mb-5.5 mt-5'>
+				<img className='w-15%' src={imgUrl} alt='icon' />
+				<input
+					className=' w-full outline-none'
+					{...register(defineFormInputType[inpPlaceholder])}
+					type={inputType}
+					placeholder={
+						inpPlaceholder.startsWith('Confirm')
+							? inpPlaceholder
+							: `Enter ${inpPlaceholder}`
+					}
 				/>
+				{input.length > 0 && (
+					<X
+						onClick={() => {
+							resetField(defineFormInputType[inpPlaceholder])
+							setInput('')
+						}}
+						className='cursor-pointer'
+					/>
+				)}
+				{isPasswordInput && !showPassword && input.length > 0 && (
+					<Eye
+						onClick={() => setShowPassword(true)}
+						className='absolute -right-8'
+					/>
+				)}
+				{isPasswordInput && showPassword && input.length > 0 && (
+					<EyeOff
+						onClick={() => setShowPassword(false)}
+						className='absolute -right-8'
+					/>
+				)}
+			</div>
+
+			{errorMessage && (
+				<p className='text-red-500 text-sm'>{errorMessage}</p>
 			)}
-			{isPasswordInput && showPassword && input.length > 0 && (
-				<EyeOff
-					onClick={() => setShowPassword(false)}
-					className='absolute -right-8'
-				/>
-			)}
-		</div>
+		</>
 	)
 }

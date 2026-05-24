@@ -5,15 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	loginSchema,
 	registerSchema,
-	type LoginType,
-	type RegisterType,
 } from '../../schemas/authFormSchema'
+import type { AuthFormType } from '../../types/types'
 
 interface Props {
 	authType: 'SignUp' | 'SignIn'
 }
-
-type AuthFormType = RegisterType | LoginType
 
 export default function Authentication({ authType }: Props) {
 	const schema = authType === 'SignUp' ? registerSchema : loginSchema
@@ -28,6 +25,7 @@ export default function Authentication({ authType }: Props) {
 			password: '',
 			confirmPassword: '',
 		},
+		mode: 'all'
 	})
 
 	return (

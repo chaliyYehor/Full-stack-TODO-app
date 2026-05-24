@@ -1,31 +1,34 @@
-import { useForm, useFormContext } from 'react-hook-form'
+import {
+	useFormContext,
+	type FieldErrors,
+	type SubmitHandler,
+} from 'react-hook-form'
 import { signInFormInputs, signUpFormInputs } from '../../constants/formType'
 import Input from './Input'
-import {
-	loginSchema,
-	registerSchema,
-	type LoginType,
-	type RegisterType,
-} from '../../schemas/authFormSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
+import type { AuthFormType } from '../../types/types'
 interface Props {
 	authType: 'SignUp' | 'SignIn'
 }
-
-type AuthFormType = RegisterType | LoginType
 
 export default function AuthForm({ authType }: Props) {
 	const formInputs = authType === 'SignUp' ? signUpFormInputs : signInFormInputs
 
 	const {
-		register,
 		handleSubmit,
-		resetField,
 		formState: { isSubmitting },
 	} = useFormContext<AuthFormType>()
 
+	const onSubmit: SubmitHandler<AuthFormType> = async data => {
+		console.log(data)
+	}
+
 	return (
-		<form className='w-full'>
+		<form
+			className='w-full'
+			onSubmit={handleSubmit(onSubmit, (errors: FieldErrors<AuthFormType>) => {
+				console.log(errors)
+			})}
+		>
 			{formInputs.map((inp, i) => (
 				<Input key={i} inpPlaceholder={inp} />
 			))}
@@ -38,7 +41,11 @@ export default function AuthForm({ authType }: Props) {
 					<br />
 				</>
 			)}
-			<button className='regBtn bg-[#FF9090] text-2xl px-10 py-4 my-2 text-white rounded-xl hover:bg-[#f35b5b] active:bg-[#FF9090] transition shadow-xl cursor-pointer'>
+			<button
+				type='submit'
+				disabled={isSubmitting}
+				className='regBtn bg-[#FF9090] text-2xl px-10 py-4 my-2 text-white rounded-xl hover:bg-[#f35b5b] active:bg-[#FF9090] transition shadow-xl cursor-pointer'
+			>
 				{authType === 'SignUp' ? 'Register' : 'Login'}
 			</button>
 		</form>
