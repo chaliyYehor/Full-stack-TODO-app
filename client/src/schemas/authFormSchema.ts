@@ -17,5 +17,11 @@ export const registerSchema = z
 		path: ['confirmPassword'],
 	})
 
-export type RegisterSchema = z.infer<typeof registerSchema>
+export type RegisterType = z.infer<typeof registerSchema>
 
+export const loginSchema = z.object({
+	username: z.string().min(4, 'Username is too short'),
+	password: z.string().min(5, 'Password is too short'),
+})
+
+export type LoginType = z.infer<typeof loginSchema>
