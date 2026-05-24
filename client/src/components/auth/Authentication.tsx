@@ -1,11 +1,35 @@
 import { Link } from 'react-router-dom'
 import AuthForm from './AuthForm'
+import { FormProvider, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+	loginSchema,
+	registerSchema,
+	type LoginType,
+	type RegisterType,
+} from '../../schemas/authFormSchema'
 
 interface Props {
 	authType: 'SignUp' | 'SignIn'
 }
 
+type AuthFormType = RegisterType | LoginType
+
 export default function Authentication({ authType }: Props) {
+	const schema = authType === 'SignUp' ? registerSchema : loginSchema
+
+	const methods = useForm<AuthFormType>({
+		resolver: zodResolver(schema),
+		defaultValues: {
+			firstName: '',
+			lastName: '',
+			username: '',
+			email: '',
+			password: '',
+			confirmPassword: '',
+		},
+	})
+
 	return (
 		<div className='authWrapper rounded-xl w-full min-h-[calc(100dvh-17rem)] bg-white grid grid-cols-2 px-30 py-5'>
 			<div
@@ -30,19 +54,24 @@ export default function Authentication({ authType }: Props) {
 					gridColumn: authType === 'SignIn' ? 1 : 2,
 					gridRow: 1,
 					alignSelf: authType === 'SignIn' ? 'center' : 'start',
-					gap: authType === 'SignIn' ? '50px' : '0px'
+					gap: authType === 'SignIn' ? '50px' : '0px',
 				}}
 				className='auth flex flex-col'
 			>
 				<h3 className='authHeading'>
 					{authType === 'SignUp' ? 'Sign Up' : 'Sign In'}
 				</h3>
-				<AuthForm authType={authType} />
+				<FormProvider {...methods}>
+					<AuthForm authType={authType} />
+				</FormProvider>
 				<p className='authPar'>
 					{authType === 'SignIn'
 						? "Don't have an account? "
 						: 'Already have an account? '}
-					<Link to={authType === 'SignUp' ? '/signIn' : '/signUp'} className='text-blue-500 cursor-pointer font-bold hover:border-b-2 border-blue-500'>
+					<Link
+						to={authType === 'SignUp' ? '/signIn' : '/signUp'}
+						className='text-blue-500 cursor-pointer font-bold hover:border-b-2 border-blue-500'
+					>
 						{authType === 'SignIn' ? 'Create One' : 'Sign In'}
 					</Link>
 				</p>
