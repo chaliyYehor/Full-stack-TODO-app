@@ -5,7 +5,6 @@ import type { AuthFormType } from '../../types/types'
 import { useRegister } from '../../hooks/useRegister'
 import axios from 'axios'
 import { useState } from 'react'
-import { useLocalStorage } from '@uidotdev/usehooks'
 import { useLogin } from '../../hooks/useLogin'
 interface Props {
 	authType: 'SignUp' | 'SignIn'
@@ -13,8 +12,6 @@ interface Props {
 
 export default function AuthForm({ authType }: Props) {
 	const [authError, setAuthError] = useState()
-
-	const [_, saveToken] = useLocalStorage('token', '')
 
 	const {
 		handleSubmit,
@@ -32,7 +29,6 @@ export default function AuthForm({ authType }: Props) {
 
 		try {
 			const response = await authFunc(rest)
-			saveToken(response.token)
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setAuthError(error.response?.data?.msg)
