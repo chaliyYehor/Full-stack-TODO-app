@@ -4,6 +4,8 @@ import mongoose, { HydratedDocument, Model } from 'mongoose'
 import jwt from 'jsonwebtoken'
 
 interface User {
+	firstName: string
+	lastName: string
 	username: string
 	email: string
 	password: string
@@ -17,8 +19,20 @@ interface UserMethods {
 type UserModel = Model<User, {}, UserMethods>
 
 export type UserDoc = HydratedDocument<User, UserMethods>
-// change name to be unique !!!
+
 const UserSchema = new mongoose.Schema<User, UserModel, UserMethods>({
+	firstName: {
+		type: String,
+		required: [true, 'Please provide First Name'],
+		minLength: 2,
+		maxLength: 50,
+	},
+	lastName: {
+		type: String,
+		required: [true, 'Please provide First Name'],
+		minLength: 2,
+		maxLength: 50,
+	},
 	username: {
 		type: String,
 		required: [true, 'Please provide a username'],

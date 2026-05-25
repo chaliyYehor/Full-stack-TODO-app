@@ -26,8 +26,9 @@ export default function AuthForm({ authType }: Props) {
 	const { mutateAsync: registerUser } = useRegister()
 
 	const onSubmit: SubmitHandler<AuthFormType> = async data => {
+		const {confirmPassword, ...rest} = data
 		try {
-			const response = await registerUser(data)
+			const response = await registerUser(rest)
 			console.log(response)
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -40,9 +41,7 @@ export default function AuthForm({ authType }: Props) {
 	return (
 		<form
 			className='w-full relative'
-			onSubmit={handleSubmit(onSubmit, (errors: FieldErrors<AuthFormType>) => {
-				console.log(errors)
-			})}
+			onSubmit={handleSubmit(onSubmit)}
 		>
 			{formInputs.map((inp, i) => (
 				<Input key={i} inpPlaceholder={inp} />
