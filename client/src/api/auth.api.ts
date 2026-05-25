@@ -6,3 +6,9 @@ export const registerUser = async (data: AuthFormType) => {
 
 	return response.data
 }
+
+export const loginUser = async (data: AuthFormType) => {
+	const response = await api.post('/api/v1/auth/login', data)
+
+	return response.data
+}
