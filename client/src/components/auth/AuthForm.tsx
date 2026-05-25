@@ -6,6 +6,8 @@ import {
 import { signInFormInputs, signUpFormInputs } from '../../constants/formType'
 import Input from './Input'
 import type { AuthFormType } from '../../types/types'
+import { useRegister } from '../../hooks/useRegister'
+import axios from 'axios'
 interface Props {
 	authType: 'SignUp' | 'SignIn'
 }
@@ -18,8 +20,18 @@ export default function AuthForm({ authType }: Props) {
 		formState: { isSubmitting },
 	} = useFormContext<AuthFormType>()
 
+	const { mutateAsync: registerUser } = useRegister()
+
 	const onSubmit: SubmitHandler<AuthFormType> = async data => {
-		console.log(data)
+		try {
+			const response = await registerUser(data)
+			console.log(response)
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				console.log(error.response?.data?.msg)
+				return
+			}
+		}
 	}
 
 	return (
