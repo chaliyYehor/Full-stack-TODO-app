@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import {
+	LoginReqBody,
 	loginReqBodySchema,
 	RegisterReqBody,
 	reqBodySchema,
@@ -24,11 +25,11 @@ export const register = async (
 	const token = user.createJWT()
 	return res
 		.status(StatusCodes.CREATED)
-		.json({ user: { name: user.name }, token })
+		.json({ user: { username: user.username }, token })
 }
 
 export const login = async (
-	req: Request<{}, {}, Omit<RegisterReqBody, 'name'>>,
+	req: Request<{}, {}, LoginReqBody>,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -36,9 +37,9 @@ export const login = async (
 	if (!result.success) {
 		return next(new BadRequestError('Please provide valid credentials'))
 	}
-	const { password, email } = req.body
+	const { password, username } = req.body
 
-	const user = await User.findOne({ email })
+	const user = await User.findOne({ username })
 	if (!user) {
 		return next(new NotFoundError('No such user was found'))
 	}
@@ -49,5 +50,5 @@ export const login = async (
 	}
 
 	const token = user.createJWT()
-	res.status(StatusCodes.OK).json({ user: { name: user.name }, token })
+	res.status(StatusCodes.OK).json({ user: { username: user.username }, token })
 }

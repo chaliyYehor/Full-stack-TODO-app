@@ -2,6 +2,7 @@
 
 body {
 	margin: 0;
+	padding: 0;
 	box-sizing: border-box;
 
 	background-color: gray;
@@ -25,7 +26,7 @@ body {
 	font-style: normal;
 }
 
-.signUpWrapper {
+.signInUpWrapper {
 	background-image: url('/auth/authenticationBg.png');
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -43,5 +44,12 @@ body {
 	font-family: 'Montserrat', sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 400;
+	font-style: normal;
+}
+
+.regBtn {
+	font-family: 'Montserrat', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
 	font-style: normal;
 }

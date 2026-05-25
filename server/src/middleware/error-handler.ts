@@ -21,7 +21,7 @@ export const errorHandlerMiddleware = (
 	if (err instanceof MongoServerError && err.code === 11000) {
 		console.log(err)
 		return res.status(StatusCodes.BAD_REQUEST).json({
-			msg: `A user with ${err.keyValue.emal} email already exists`,
+			msg: `A user with this email already exists`,
 		})
 	}
 

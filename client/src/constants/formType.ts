@@ -8,3 +8,12 @@ export const signUpFormInputs = [
 ] as const
 
 export const signInFormInputs = ['Username', 'Password'] as const
+
+export const defineFormInputType = {
+	'First Name': 'firstName',
+	'Last Name': 'lastName',
+	Username: 'username',
+	Email: 'email',
+	Password: 'password',
+	'Confirm Password': 'confirmPassword',
+} as const
