@@ -28,7 +28,7 @@ export default function AuthForm({ authType }: Props) {
 		const authFunc = authType === 'SignUp' ? registerUser : loginUser
 
 		try {
-			const response = await authFunc(rest)
+			await authFunc(rest)
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setAuthError(error.response?.data?.msg)
