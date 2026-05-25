@@ -4,7 +4,9 @@ import { notFoundMiddleware } from './middleware/not-found.js'
 import { errorHandlerMiddleware } from './middleware/error-handler.js'
 import connectDB from './db/connect.js'
 import authRouter from './routes/auth.js'
+import todosRouter from './routes/todo.js'
 import cors from 'cors'
+import { authMiddleware } from './middleware/authorization.js'
 const app = express()
 
 const port = process.env.PORT || 5000
@@ -24,10 +26,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 app.use('/api/v1/auth', authRouter)
-
-app.get('/', (req, res) => {
-	res.send('pinged')
-})
+app.use('/api/v1/todos', authMiddleware, todosRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
