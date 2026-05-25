@@ -14,7 +14,7 @@ interface Props {
 export default function AuthForm({ authType }: Props) {
 	const [authError, setAuthError] = useState()
 
-	const [_, saveToken] = useLocalStorage('token', null)
+	const [_, saveToken] = useLocalStorage('token', '')
 
 	const {
 		handleSubmit,
