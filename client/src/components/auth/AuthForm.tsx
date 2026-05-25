@@ -33,7 +33,6 @@ export default function AuthForm({ authType }: Props) {
 		try {
 			const response = await authFunc(rest)
 			saveToken(response.token)
-			console.log(response)
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setAuthError(error.response?.data?.msg)
