@@ -6,6 +6,7 @@ import { useRegister } from '../../hooks/useRegister'
 import axios from 'axios'
 import { useState } from 'react'
 import { useLocalStorage } from '@uidotdev/usehooks'
+import { useLogin } from '../../hooks/useLogin'
 interface Props {
 	authType: 'SignUp' | 'SignIn'
 }
@@ -21,13 +22,16 @@ export default function AuthForm({ authType }: Props) {
 	} = useFormContext<AuthFormType>()
 
 	const { mutateAsync: registerUser } = useRegister()
+	const { mutateAsync: loginUser } = useLogin()
 
 	const formInputs = authType === 'SignUp' ? signUpFormInputs : signInFormInputs
 
 	const onSubmit: SubmitHandler<AuthFormType> = async data => {
 		const { confirmPassword, ...rest } = data
+		const authFunc = authType === 'SignUp' ? registerUser : loginUser
+
 		try {
-			const response = await registerUser(rest)
+			const response = await authFunc(rest)
 			saveToken(response.token)
 			console.log(response)
 		} catch (error) {
