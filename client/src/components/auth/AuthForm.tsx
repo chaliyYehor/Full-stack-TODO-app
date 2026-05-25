@@ -1,21 +1,19 @@
-import {
-	useFormContext,
-	type SubmitHandler,
-} from 'react-hook-form'
+import { useFormContext, type SubmitHandler } from 'react-hook-form'
 import { signInFormInputs, signUpFormInputs } from '../../constants/formType'
 import Input from './Input'
 import type { AuthFormType } from '../../types/types'
 import { useRegister } from '../../hooks/useRegister'
 import axios from 'axios'
 import { useState } from 'react'
+import { useLocalStorage } from '@uidotdev/usehooks'
 interface Props {
 	authType: 'SignUp' | 'SignIn'
 }
 
 export default function AuthForm({ authType }: Props) {
-	const formInputs = authType === 'SignUp' ? signUpFormInputs : signInFormInputs
-
 	const [authError, setAuthError] = useState()
+
+	const [_, saveToken] = useLocalStorage('token', null)
 
 	const {
 		handleSubmit,
@@ -24,10 +22,13 @@ export default function AuthForm({ authType }: Props) {
 
 	const { mutateAsync: registerUser } = useRegister()
 
+	const formInputs = authType === 'SignUp' ? signUpFormInputs : signInFormInputs
+
 	const onSubmit: SubmitHandler<AuthFormType> = async data => {
-		const {confirmPassword, ...rest} = data
+		const { confirmPassword, ...rest } = data
 		try {
 			const response = await registerUser(rest)
+			saveToken(response.token)
 			console.log(response)
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -38,10 +39,7 @@ export default function AuthForm({ authType }: Props) {
 	}
 
 	return (
-		<form
-			className='w-full relative'
-			onSubmit={handleSubmit(onSubmit)}
-		>
+		<form className='w-full relative' onSubmit={handleSubmit(onSubmit)}>
 			{formInputs.map((inp, i) => (
 				<Input key={i} inpPlaceholder={inp} />
 			))}
