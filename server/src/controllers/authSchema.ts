@@ -5,12 +5,13 @@ export const reqBodySchema = z.object({
 	lastName: z.string().min(3, 'Please provide a valid Last Name'),
 	username: z.string().min(3).max(50),
 	email: z.email(),
-	password: z.string().min(6)
+	password: z.string().min(6),
 })
 
 export const loginReqBodySchema = z.object({
-	email: z.email(),
+	username: z.string().min(4, 'Username is too short'),
 	password: z.string().min(6),
 })
 
 export type RegisterReqBody = z.infer<typeof reqBodySchema>
+export type LoginReqBody = z.infer<typeof loginReqBodySchema>
