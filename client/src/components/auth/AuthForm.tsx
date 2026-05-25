@@ -1,6 +1,5 @@
 import {
 	useFormContext,
-	type FieldErrors,
 	type SubmitHandler,
 } from 'react-hook-form'
 import { signInFormInputs, signUpFormInputs } from '../../constants/formType'
