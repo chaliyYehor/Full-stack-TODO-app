@@ -4,7 +4,7 @@ import mongoose, { HydratedDocument, Model } from 'mongoose'
 import jwt from 'jsonwebtoken'
 
 interface User {
-	name: string
+	username: string
 	email: string
 	password: string
 }
@@ -19,11 +19,12 @@ type UserModel = Model<User, {}, UserMethods>
 export type UserDoc = HydratedDocument<User, UserMethods>
 // change name to be unique !!!
 const UserSchema = new mongoose.Schema<User, UserModel, UserMethods>({
-	name: {
+	username: {
 		type: String,
-		required: [true, 'Please provide a name'],
+		required: [true, 'Please provide a username'],
 		minLength: 3,
 		maxlength: 50,
+		unique: true,
 	},
 	email: {
 		type: String,
@@ -63,7 +64,7 @@ UserSchema.methods.createJWT = function (this: UserDoc) {
 		| SignOptions['expiresIn']
 		| undefined
 
-	return jwt.sign({ userID: this._id, name: this.name }, jwtSecret, {
+	return jwt.sign({ userID: this._id, username: this.username }, jwtSecret, {
 		expiresIn: jwtLifetime,
 	})
 }

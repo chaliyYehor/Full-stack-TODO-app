@@ -24,11 +24,11 @@ export const register = async (
 	const token = user.createJWT()
 	return res
 		.status(StatusCodes.CREATED)
-		.json({ user: { name: user.name }, token })
+		.json({ user: { username: user.username }, token })
 }
 
 export const login = async (
-	req: Request<{}, {}, Omit<RegisterReqBody, 'name'>>,
+	req: Request<{}, {}, Omit<RegisterReqBody, 'username'>>,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -49,5 +49,5 @@ export const login = async (
 	}
 
 	const token = user.createJWT()
-	res.status(StatusCodes.OK).json({ user: { name: user.name }, token })
+	res.status(StatusCodes.OK).json({ user: { username: user.username }, token })
 }

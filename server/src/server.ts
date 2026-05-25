@@ -4,6 +4,7 @@ import { notFoundMiddleware } from './middleware/not-found.js'
 import { errorHandlerMiddleware } from './middleware/error-handler.js'
 import connectDB from './db/connect.js'
 import authRouter from './routes/auth.js'
+import cors from 'cors'
 const app = express()
 
 const port = process.env.PORT || 5000
@@ -13,6 +14,14 @@ if (!uri) {
 }
 
 app.use(express.json())
+
+const corsOptions = {
+	origin: 'http://localhost:5173', // Replace with your allowed domain
+	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+	credentials: true, // Allow cookies if needed
+}
+
+app.use(cors(corsOptions))
 
 app.use('/api/v1/auth', authRouter)
 

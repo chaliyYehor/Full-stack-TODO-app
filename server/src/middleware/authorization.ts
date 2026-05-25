@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 
 interface AuthPayload extends JwtPayload {
 	userID: string
-	name: string
+	username: string
 }
 
 export const authMiddleware = (
@@ -24,7 +24,7 @@ export const authMiddleware = (
 	}
 	try {
 		const payload = jwt.verify(token, jwtSecret) as AuthPayload
-		req.user = { userID: payload.userID, name: payload.name }
+		req.user = { userID: payload.userID, username: payload.username }
 		next()
 	} catch (error) {
 		return next(new UnauthenticatedError('Unauthorized'))

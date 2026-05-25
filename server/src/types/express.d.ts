@@ -3,7 +3,7 @@ declare global {
 		interface Request {
 			user?: {
 				userID: string,
-				name: string
+				username: string
 			}
 		}
 	}
