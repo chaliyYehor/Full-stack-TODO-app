@@ -1,7 +1,8 @@
 import { useLocalStorage } from '@uidotdev/usehooks'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetAllTodos } from '../hooks/useGetAllTodos'
+import clsx from 'clsx'
 
 export default function Main() {
 	const navigate = useNavigate()
@@ -29,10 +30,69 @@ export default function Main() {
 		navigate('/signUp')
 	}
 
+	const radius = 40
+	const circumference = 2 * Math.PI * radius
+	const percent = 75
+	const offset = circumference - (percent / 100) * circumference
+
+	const [isLonding, setIsPending] = useState(true)
+
+	useEffect(() => {
+		async function sleep() {
+			return await new Promise((res, rej) => {
+				setTimeout(() => {
+					setIsPending(false)
+					res('ok')
+				}, 5000)
+			})
+		}
+		sleep()
+	}, [])
+
 	return (
 		<>
 			<p>{isPending ? 'pending' : data.message}</p>
-			<button className='cursor-pointer' onClick={logOut}>LogOut</button>
+			<button className='cursor-pointer' onClick={logOut}>
+				LogOut
+			</button>
+
+			<svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'>
+				<circle
+					strokeWidth='5'
+					stroke='lightgray'
+					cx='50'
+					cy='50'
+					r={radius}
+					fill='none'
+				/>
+
+				<circle
+					strokeWidth='5'
+					stroke='black'
+					cx='50'
+					cy='50'
+					r={radius}
+					fill='none'
+					strokeDasharray={circumference}
+					strokeDashoffset={offset}
+					strokeLinecap='round'
+				/>
+			</svg>
+
+			{/* <h1
+				className={clsx(
+					isLonding && 'loadingComp',
+					'relative min-w-[70px] min-h-[25px] overflow-hidden inline-block',
+				)}
+				style={
+					{
+						'--left-border': '-250%',
+						'--right-border': '200%',
+					} as React.CSSProperties
+				}
+			>
+				{isLonding ? '' : 'no lodaing'}
+			</h1> */}
 		</>
 	)
 }
