@@ -5,7 +5,7 @@ body {
 	padding: 0;
 	box-sizing: border-box;
 
-	background-color: gray;
+	background-color: #f5f8ff;
 }
 .err-content {
 	background-image: url('/notFoundBackground.png');
@@ -101,4 +101,11 @@ body {
 		top: var(--right-border);
 		opacity: 0;
 	}
+}
+
+header {
+	font-family: 'Inter', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 900;
+	font-style: normal;
 }
