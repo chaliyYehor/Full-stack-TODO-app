@@ -109,3 +109,44 @@ header {
 	font-weight: 900;
 	font-style: normal;
 }
+
+.menu-wrapper {
+	font-family: 'Inter', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.pfp-image {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid white;
+}
+
+.menu a {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	font-size: 1.2rem;
+}
+
+.menu li {
+	width: 85%;
+	height: 60px;	
+	/* border: 2px solid black; 	*/
+	display: flex;
+	align-items: center;
+	padding: 17px;
+	cursor: pointer;
+	border-radius: 15px;
+	transition: 0.2s;
+	user-select: none;
+}
+
+.menu li:hover {
+	color: #ff6767;
+	background-color: white;
+	filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.485));
+}
