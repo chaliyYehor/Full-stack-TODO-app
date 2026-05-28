@@ -1,8 +1,7 @@
 import { useLocalStorage } from '@uidotdev/usehooks'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetAllTodos } from '../hooks/useGetAllTodos'
-import clsx from 'clsx'
 
 export default function Main() {
 	const navigate = useNavigate()
@@ -34,20 +33,6 @@ export default function Main() {
 	const circumference = 2 * Math.PI * radius
 	const percent = 75
 	const offset = circumference - (percent / 100) * circumference
-
-	const [isLonding, setIsPending] = useState(true)
-
-	useEffect(() => {
-		async function sleep() {
-			return await new Promise((res, rej) => {
-				setTimeout(() => {
-					setIsPending(false)
-					res('ok')
-				}, 5000)
-			})
-		}
-		sleep()
-	}, [])
 
 	return (
 		<>
