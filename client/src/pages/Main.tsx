@@ -2,6 +2,7 @@ import { useLocalStorage } from '@uidotdev/usehooks'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetAllTodos } from '../hooks/useGetAllTodos'
+import Header from '../components/main/Header'
 
 export default function Main() {
 	const navigate = useNavigate()
@@ -24,24 +25,16 @@ export default function Main() {
 		}
 	})
 
-	function logOut() {
-		saveToken('')
-		navigate('/signUp')
-	}
-
-	const radius = 40
-	const circumference = 2 * Math.PI * radius
-	const percent = 75
-	const offset = circumference - (percent / 100) * circumference
+	// const radius = 40
+	// const circumference = 2 * Math.PI * radius
+	// const percent = 75
+	// const offset = circumference - (percent / 100) * circumference
 
 	return (
 		<>
-			<p>{isPending ? 'pending' : data.message}</p>
-			<button className='cursor-pointer' onClick={logOut}>
-				LogOut
-			</button>
+			<Header />
 
-			<svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'>
+			{/* <svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'>
 				<circle
 					strokeWidth='5'
 					stroke='lightgray'
@@ -62,7 +55,7 @@ export default function Main() {
 					strokeDashoffset={offset}
 					strokeLinecap='round'
 				/>
-			</svg>
+			</svg> */}
 
 			{/* <h1
 				className={clsx(
