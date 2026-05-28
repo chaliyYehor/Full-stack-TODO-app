@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetAllTodos } from '../hooks/useGetAllTodos'
 import Header from '../components/main/Header'
+import Menu from '../components/main/Menu'
 
 export default function Main() {
 	const navigate = useNavigate()
@@ -33,6 +34,7 @@ export default function Main() {
 	return (
 		<>
 			<Header />
+			<Menu />
 
 			{/* <svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'>
 				<circle
