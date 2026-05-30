@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import { Plus } from 'lucide-react'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import Todo from './Todo'
 
 dayjs.extend(customParseFormat)
 
@@ -38,7 +39,9 @@ export default function ToDoSection() {
 						{isToday('30/05/2026') && 'Today'}
 					</span>
 				</div>
-				<div className="todo-section"></div>
+				<div className='todo-section'>
+					<Todo />
+				</div>
 			</div>
 		</>
 	)
