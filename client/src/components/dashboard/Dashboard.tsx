@@ -8,7 +8,7 @@ export default function Dashboard() {
 		>
 			<h1 className='inline-block text-4xl'>Welcome back, Sundar 👋</h1>
 
-			<div className='dashboard-info-wrapper p-4 border-[#A1A3AB] border-2'>
+			<div className='dashboard-info-wrapper p-4 border-[#A1A3AB] border-2 grid grid-cols-2'>
 				<ToDoSection />
 			</div>
 		</div>

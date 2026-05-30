@@ -157,3 +157,9 @@ header {
 	font-weight: 400;
 	font-style: normal;
 }
+
+
+.todoWrapper {
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.559);
+	border-radius: 15px;
+}
