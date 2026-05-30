@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useGetAllTodos } from '../hooks/useGetAllTodos'
 import Header from '../components/main/Header'
 import Menu from '../components/main/Menu'
+import Dashboard from '../components/dashboard/Dashboard'
 
 export default function Main() {
 	const navigate = useNavigate()
@@ -34,7 +35,10 @@ export default function Main() {
 	return (
 		<>
 			<Header />
-			<Menu />
+			<div className='container flex w-full'>
+				<Menu />
+				<Dashboard />
+			</div>
 
 			{/* <svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'>
 				<circle
