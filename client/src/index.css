@@ -5,7 +5,7 @@ body {
 	padding: 0;
 	box-sizing: border-box;
 
-	background-color: gray;
+	background-color: #f5f8ff;
 }
 .err-content {
 	background-image: url('/notFoundBackground.png');
@@ -52,4 +52,114 @@ body {
 	font-optical-sizing: auto;
 	font-weight: 500;
 	font-style: normal;
+}
+
+.loadingComp {
+	--left-border: -100%;
+	--right-border: 190%;
+	background-color: rgba(255, 255, 255, 0.312);
+	backdrop-filter: blur(5);
+}
+
+.loadingComp::after {
+	content: '';
+	width: 150%;
+	height: 5px;
+	z-index: 100;
+	background-color: white;
+	position: absolute;
+	top: 60%;
+	left: -20%;
+	rotate: -45deg;
+	box-shadow: 0px 0px 5px 5px white;
+	animation: loadingMove 5s infinite linear;
+}
+
+@keyframes loadingMove {
+	0% {
+		top: var(--left-border);
+		opacity: 1;
+	}
+	20% {
+		top: var(--right-border);
+		opacity: 0;
+	}
+	30% {
+		top: var(--left-border);
+		opacity: 1;
+	}
+	50% {
+		top: var(--right-border);
+		opacity: 0;
+	}
+
+	60% {
+		top: var(--left-border);
+		opacity: 1;
+	}
+	100% {
+		top: var(--right-border);
+		opacity: 0;
+	}
+}
+
+header {
+	font-family: 'Inter', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 900;
+	font-style: normal;
+}
+
+.menu-wrapper {
+	font-family: 'Inter', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.pfp-image {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid white;
+}
+
+.menu a {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	font-size: 1.2rem;
+}
+
+.menu li {
+	width: 85%;
+	height: 60px;
+	/* border: 2px solid black; 	*/
+	display: flex;
+	align-items: center;
+	padding: 17px;
+	cursor: pointer;
+	border-radius: 15px;
+	transition: 0.2s;
+	user-select: none;
+}
+
+.menu li:hover {
+	color: #ff6767;
+	background-color: white;
+	filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.485));
+}
+
+.dashboard-wrapper {
+	font-family: 'Inter', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+
+.todoWrapper {
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.559);
+	border-radius: 15px;
 }

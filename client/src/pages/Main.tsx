@@ -2,6 +2,9 @@ import { useLocalStorage } from '@uidotdev/usehooks'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetAllTodos } from '../hooks/useGetAllTodos'
+import Header from '../components/main/Header'
+import Menu from '../components/main/Menu'
+import Dashboard from '../components/dashboard/Dashboard'
 
 export default function Main() {
 	const navigate = useNavigate()
@@ -16,7 +19,7 @@ export default function Main() {
 		}
 	})
 	// Check if the user is authorized 1.2
-	const { data, isPending, isError } = useGetAllTodos()
+	const { isError } = useGetAllTodos()
 	useEffect(() => {
 		if (isError) {
 			saveToken('')
@@ -24,15 +27,56 @@ export default function Main() {
 		}
 	})
 
-	function logOut() {
-		saveToken('')
-		navigate('/signUp')
-	}
+	// const radius = 40
+	// const circumference = 2 * Math.PI * radius
+	// const percent = 75
+	// const offset = circumference - (percent / 100) * circumference
 
 	return (
 		<>
-			<p>{isPending ? 'pending' : data.message}</p>
-			<button className='cursor-pointer' onClick={logOut}>LogOut</button>
+			<Header />
+			<div className='container flex w-full'>
+				<Menu />
+				<Dashboard />
+			</div>
+
+			{/* <svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'>
+				<circle
+					strokeWidth='5'
+					stroke='lightgray'
+					cx='50'
+					cy='50'
+					r={radius}
+					fill='none'
+				/>
+
+				<circle
+					strokeWidth='5'
+					stroke='black'
+					cx='50'
+					cy='50'
+					r={radius}
+					fill='none'
+					strokeDasharray={circumference}
+					strokeDashoffset={offset}
+					strokeLinecap='round'
+				/>
+			</svg> */}
+
+			{/* <h1
+				className={clsx(
+					isLonding && 'loadingComp',
+					'relative min-w-[70px] min-h-[25px] overflow-hidden inline-block',
+				)}
+				style={
+					{
+						'--left-border': '-250%',
+						'--right-border': '200%',
+					} as React.CSSProperties
+				}
+			>
+				{isLonding ? '' : 'no lodaing'}
+			</h1> */}
 		</>
 	)
 }
