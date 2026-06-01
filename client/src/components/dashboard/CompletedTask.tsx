@@ -1,5 +1,5 @@
 export default function CompletedTask() {
 	return (
-		<div>CompletedTask</div>
+		<div className='completedTaskWrapper w-full h-[60%]'>completed task</div>
 	)
 }
