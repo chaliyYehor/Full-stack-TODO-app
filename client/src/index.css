@@ -164,12 +164,14 @@ header {
 	border-radius: 15px;
 }
 
-.todo-section {
+.todo-section,
+.completedSection {
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 }
 
-.todo-section::-webkit-scrollbar {
+.todo-section::-webkit-scrollbar,
+.completedSection::-webkit-scrollbar {
 	display: none;
 }
 

@@ -2,7 +2,7 @@ import CircledPercentage from './CircledPercentage'
 
 export default function TaskStatus() {
 	return (
-		<div className='taskStatusWrapper p-6.25 h-[40%] w-full flex flex-col'>
+		<div className='taskStatusWrapper p-6.25 h-full min-h-0 w-full flex flex-col overflow-hidden'>
 			<div className='heading flex'>
 				<img src='/dashboard/taskStatusIcon.png' alt='status icon' />
 				<span className='text-[#FF6767] inline-block ml-2 font-semibold text-xl'>
