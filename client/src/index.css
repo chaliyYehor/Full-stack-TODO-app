@@ -6,6 +6,7 @@ body {
 	box-sizing: border-box;
 
 	background-color: #f5f8ff;
+	overflow: hidden;
 }
 .err-content {
 	background-image: url('/notFoundBackground.png');
@@ -158,8 +159,52 @@ header {
 	font-style: normal;
 }
 
-
 .todoWrapper {
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.559);
+	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.354);
 	border-radius: 15px;
+}
+
+.todo-section {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.todo-section::-webkit-scrollbar {
+	display: none;
+}
+
+.todo-text {
+	max-height: 80px;
+	word-break: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.taskStatusWrapper {
+	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.354);
+	border-radius: 15px;
+}
+
+.completedTaskWrapper {
+	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.354);
+	border-radius: 15px;
+}
+
+.progressBar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+}
+
+.progressBar .statusIcon {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	left: -15px;
+	bottom: 6px;
+	border-radius: 50%;
 }

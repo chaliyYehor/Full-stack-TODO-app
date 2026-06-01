@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import { Plus } from 'lucide-react'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import Todo from './Todo'
 
 dayjs.extend(customParseFormat)
 
@@ -15,8 +16,8 @@ export default function ToDoSection() {
 
 	return (
 		<>
-			<div className='todoWrapper p-5'>
-				<div className='upperSection flex items-center justify-between'>
+			<div className='todoWrapper p-5 h-full min-h-0 overflow-hidden flex flex-col'>
+				<div className='upperSection flex items-center justify-between shrink-0'>
 					<div className='flex'>
 						<img src='/dashboard/todoIcon.png' alt='todo-icon' />
 						<span className='text-[#FF6767] inline-block ml-2 font-semibold text-xl'>
@@ -28,17 +29,27 @@ export default function ToDoSection() {
 						<span className='inline-block text-[#A1A3AB]'>Add Task</span>
 					</div>
 				</div>
-				<div className='dateSection w-full'>
+				<div className='dateSection w-full shrink-0'>
 					20{' '}
 					{dayjs()
 						.month(5 - 1)
 						.format('MMM')}
 					<span className='text-[#A1A3AB] ml-2'>
-						<span className='font-bold text-xl'>&#183;</span>
-						{isToday('30/05/2026') && 'Today'}
+						{isToday('01/06/2026') && (
+							<>
+								<span className='font-bold text-xl'>&#183;</span>
+								Today
+							</>
+						)}
 					</span>
 				</div>
-				<div className="todo-section"></div>
+				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
+					<Todo />
+					<Todo />
+					<Todo />
+					<Todo />
+					<Todo />
+				</div>
 			</div>
 		</>
 	)
