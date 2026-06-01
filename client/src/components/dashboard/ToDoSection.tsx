@@ -44,11 +44,11 @@ export default function ToDoSection() {
 					</span>
 				</div>
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
-					<Todo />
-					<Todo />
-					<Todo />
-					<Todo />
-					<Todo />
+					<Todo completed={false}/>
+					<Todo completed={false}/>
+					<Todo completed={false}/>
+					<Todo completed={false}/>
+					<Todo completed={false}/>
 				</div>
 			</div>
 		</>
