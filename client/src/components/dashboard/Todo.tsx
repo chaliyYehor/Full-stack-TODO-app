@@ -3,7 +3,7 @@ import { Circle } from 'lucide-react'
 export default function Todo() {
 	return (
 		<>
-			<div className='todo-wrapper grid grid-rows-3 relative mt-4 gap-3 rounded-lg border border-[#A1A3AB] py-4 px-10 h-60'>
+			<div className='todo-wrapper grid grid-rows-3 cursor-pointer relative mt-4 gap-3 rounded-lg border border-[#A1A3AB] py-4 px-10 h-60'>
 				<div className='todo-status absolute left-2 top-2 text-[#FF6767]'>
 					<Circle strokeWidth={3} />
 				</div>
