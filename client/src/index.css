@@ -160,7 +160,7 @@ header {
 }
 
 .todoWrapper {
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.559);
+	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.354);
 	border-radius: 15px;
 }
 
@@ -181,4 +181,30 @@ header {
 	line-clamp: 3;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
+}
+
+.taskStatusWrapper {
+	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.354);
+	border-radius: 15px;
+}
+
+.completedTaskWrapper {
+	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.354);
+	border-radius: 15px;
+}
+
+.progressBar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+}
+
+.progressBar .statusIcon {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	left: -15px;
+	bottom: 6px;
+	border-radius: 50%;
 }
