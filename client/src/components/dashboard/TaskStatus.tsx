@@ -10,9 +10,9 @@ export default function TaskStatus() {
 				</span>
 			</div>
 			<div className='info flex items-center justify-between mt-5'>
-				<CircledPercentage state='Completed' percent={84} />
-				<CircledPercentage state='In Progress' percent={46} />
-				<CircledPercentage state='Not Started' percent={13} />
+				<CircledPercentage state='Completed' percent={0} />
+				<CircledPercentage state='In Progress' percent={0} />
+				<CircledPercentage state='Not Started' percent={0} />
 			</div>
 		</div>
 	)

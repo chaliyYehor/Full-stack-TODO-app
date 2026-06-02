@@ -1,5 +1,3 @@
-import Todo from './Todo'
-
 export default function CompletedTask() {
 	return (
 		<div className='completedTaskWrapper w-full h-full min-h-0 overflow-hidden p-6.25 flex flex-col'>
@@ -15,11 +13,7 @@ export default function CompletedTask() {
 			</div>
 
 			<div className='completedSection flex-1 min-h-0 overflow-y-auto pr-2'>
-				<Todo completed />
-				<Todo completed />
-				<Todo completed />
-				<Todo completed />
-				<Todo completed />
+				{/* render completed tasks here */}
 			</div>
 		</div>
 	)
