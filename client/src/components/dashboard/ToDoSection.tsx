@@ -59,7 +59,15 @@ export default function ToDoSection() {
 				</button>
 			</div>
 
-			{isAddTaskOpen && <CreateTask closeTask={setIsAddTaskOpen} />}
+			{isAddTaskOpen && (
+				<>
+					<CreateTask closeTask={setIsAddTaskOpen} />
+					<div
+						onClick={() => setIsAddTaskOpen(false)}
+						className='brightnessDown top-0 left-0 z-10 absolute w-screen h-screen bg-black/70'
+					></div>
+				</>
+			)}
 		</>
 	)
 }
