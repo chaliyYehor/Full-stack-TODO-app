@@ -1,10 +1,10 @@
 import { useLocalStorage } from '@uidotdev/usehooks'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useGetAllTodos } from '../hooks/useGetAllTodos'
+import Dashboard from '../components/main/Dashboard'
 import Header from '../components/main/Header'
 import Menu from '../components/main/Menu'
-import Dashboard from '../components/dashboard/Dashboard'
+import { useGetAllTodos } from '../hooks/useGetAllTodos'
 
 export default function Main() {
 	const navigate = useNavigate()

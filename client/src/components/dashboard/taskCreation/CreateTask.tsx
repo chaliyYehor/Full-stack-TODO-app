@@ -3,6 +3,8 @@ type Props = {
 }
 
 export default function CreateTask({ closeTask }: Props) {
+	
+
 	return (
 		<>
 			<div className='absolute left-[50%] translate-x-[-50%] z-20 top-39.5 w-255 h-180 bg-[#F9F9F9] p-12.5'>
@@ -19,6 +21,8 @@ export default function CreateTask({ closeTask }: Props) {
 						Go Back
 					</button>
 				</div>
+
+				
 			</div>
 		</>
 	)
