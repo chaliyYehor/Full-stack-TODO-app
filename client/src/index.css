@@ -210,3 +210,15 @@ header {
 	bottom: 6px;
 	border-radius: 50%;
 }
+
+
+.addNewTaskHeading::after {
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	left: 0;
+	width: 80%;
+	border-radius: 15px;
+	height: 3px;
+	background-color: #F24E1E;
+}
