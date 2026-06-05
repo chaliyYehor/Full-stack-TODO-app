@@ -1,9 +1,25 @@
+import { FormProvider, useForm } from 'react-hook-form'
+import {
+	createTaskFormSchema,
+	type CreateTaskFormType,
+} from '../../../schemas/createTaskFormSchema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import TaskCreationForm from './TaskCreationForm'
+
 type Props = {
 	closeTask: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function CreateTask({ closeTask }: Props) {
-	
+	const methods = useForm<CreateTaskFormType>({
+		resolver: zodResolver(createTaskFormSchema),
+		defaultValues: {
+			title: '',
+			priority: 'Low',
+			taskDescription: '',
+			image: undefined,
+		},
+	})
 
 	return (
 		<>
@@ -22,7 +38,9 @@ export default function CreateTask({ closeTask }: Props) {
 					</button>
 				</div>
 
-				
+				<FormProvider {...methods}>
+					<TaskCreationForm />
+				</FormProvider>
 			</div>
 		</>
 	)
