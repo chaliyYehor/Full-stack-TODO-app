@@ -2,10 +2,14 @@ import dayjs from 'dayjs'
 import { Plus } from 'lucide-react'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import Todo from './Todo'
+import { useState } from 'react'
+import CreateTask from './taskCreation/CreateTask'
 
 dayjs.extend(customParseFormat)
 
 export default function ToDoSection() {
+	const [isAddTaskOpen, setIsAddTaskOpen] = useState(false)
+
 	function isToday(date: string) {
 		const parsedDate = dayjs(date, 'DD/MM/YYYY', true)
 
@@ -24,10 +28,10 @@ export default function ToDoSection() {
 							To-Do
 						</span>
 					</div>
-					{/* <div className='flex cursor-pointer'>
+					{/* <button className='flex cursor-pointer'>
 						<Plus color='#FF6767' />
 						<span className='inline-block text-[#A1A3AB]'>Add Task</span>
-					</div> */}
+					</button> */}
 				</div>
 				{/* <div className='dateSection w-full shrink-0'>
 					20{' '}
@@ -46,11 +50,16 @@ export default function ToDoSection() {
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
 					{/* render todos here */}
 				</div>
-				<button className='FirstTask absolute flex cursor-pointer top-[50%] left-[50%] -translate-x-1/2 text-2xl items-center justify-center'>
+				<button
+					className='FirstTask absolute flex cursor-pointer top-[50%] left-[50%] -translate-x-1/2 text-2xl items-center justify-center'
+					onClick={() => setIsAddTaskOpen(true)}
+				>
 					<Plus color='#FF6767' />
 					<span className='inline-block text-[#A1A3AB]'>Add Task</span>
 				</button>
 			</div>
+
+			{isAddTaskOpen && <CreateTask closeTask={setIsAddTaskOpen} />}
 		</>
 	)
 }
