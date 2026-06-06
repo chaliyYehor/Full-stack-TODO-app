@@ -1,20 +1,19 @@
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import DatePickerInput from './DatePickerInput'
-import { Controller, useFormContext } from 'react-hook-form'
-import TextareaAutosize from '@mui/material/TextareaAutosize'
+import { useFormContext } from 'react-hook-form'
 import type { CreateTaskFormType } from '../../../schemas/createTaskFormSchema'
 import { priorityInputs } from '../../../constants/constants'
 import FileUpload from './FileUpload'
 import { useState } from 'react'
 import TitleInput from './TitleInput'
+import DescriptionTA from './DescriptionTA'
 
 export default function TaskCreationForm() {
 	const [image, setImage] = useState<File | null>(null)
 
 	const {
 		register,
-		control,
 		setValue,
 		formState: { errors },
 	} = useFormContext<CreateTaskFormType>()
@@ -69,29 +68,7 @@ export default function TaskCreationForm() {
 				<div className='description flex flex-col gap-2'>
 					<h3 className='font-semibold text-xl'>Description</h3>
 
-					<Controller
-						control={control}
-						name='taskDescription'
-						render={({ field, fieldState }) => (
-							<>
-								<TextareaAutosize
-									placeholder='Start writing here...'
-									{...field}
-									value={field.value ?? ''}
-									minRows={5}
-									maxRows={5}
-									className={`w-full resize-none overflow-y-auto rounded border bg-transparent px-3.5 py-4 text-base leading-6 outline-0 outline-offset-0 transition-colors placeholder:text-[#757575] hover:border-black focus:outline-1 ${
-										fieldState.error
-											? 'border-red-500 focus:border-red-500 focus:outline-red-500'
-											: 'border-[#c4c4c4] focus:border-[#1976d2] focus:outline-[#1976d2]'
-									}`}
-								/>
-								{fieldState.error && (
-									<p className='text-red-500'>{fieldState.error.message}</p>
-								)}
-							</>
-						)}
-					/>
+					<DescriptionTA />
 				</div>
 			</div>
 			<div className='secondColumn self-end'>
