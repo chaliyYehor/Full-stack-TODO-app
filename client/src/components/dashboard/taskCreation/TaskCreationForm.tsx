@@ -6,6 +6,7 @@ import { useFormContext } from 'react-hook-form'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import type { CreateTaskFormType } from '../../../schemas/createTaskFormSchema'
 import { priorityInputs } from '../../../constants/constants'
+import FileUpload from '../FileUpload'
 
 export default function TaskCreationForm() {
 	const {
@@ -14,7 +15,7 @@ export default function TaskCreationForm() {
 	} = useFormContext<CreateTaskFormType>()
 
 	return (
-		<div className='formWrapper grid grid-cols-[65%_1fr] p-3.75 border-2 border-[#A1A3AB] mt-10'>
+		<div className='formWrapper grid grid-cols-[65%_1fr] gap-5 p-3.75 border-2 border-[#A1A3AB] mt-10'>
 			<div className='firstColumn flex flex-col gap-5'>
 				<div className='title flex flex-col gap-2'>
 					<h3 className='font-semibold text-xl'>Title</h3>
@@ -69,8 +70,8 @@ export default function TaskCreationForm() {
 					/>
 				</div>
 			</div>
-			<div className='secondColumn'>
-
+			<div className='secondColumn self-end'>
+				<FileUpload />
 			</div>
 		</div>
 	)
