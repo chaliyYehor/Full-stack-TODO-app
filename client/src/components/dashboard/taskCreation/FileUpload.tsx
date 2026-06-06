@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone'
 
 type Props = {
 	image: File | null
-	setImage: React.Dispatch<React.SetStateAction<File | null>>
+	setImage: (image: File | null) => void
 }
 
 export default function FileUpload({ setImage, image }: Props) {
@@ -42,6 +42,7 @@ export default function FileUpload({ setImage, image }: Props) {
 							{image.name}
 						</p>
 						<button
+							type='button'
 							className='cursor-pointer underline'
 							onClick={handleRemoveFile}
 						>
@@ -62,7 +63,10 @@ export default function FileUpload({ setImage, image }: Props) {
 						<span className='text-center'>
 							Drag&Drop files here <br /> or
 						</span>
-						<button className='rounded-2xl border-2 cursor-pointer border-[#A1A3AB] px-5 py-3 text-xl'>
+						<button
+							type='button'
+							className='rounded-2xl border-2 cursor-pointer border-[#A1A3AB] px-5 py-3 text-xl'
+						>
 							Browse
 						</button>
 					</div>
