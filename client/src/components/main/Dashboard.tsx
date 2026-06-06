@@ -1,6 +1,6 @@
-import CompletedTask from './CompletedTask'
-import TaskStatus from './TaskStatus'
-import ToDoSection from './ToDoSection'
+import CompletedTask from '../dashboard/CompletedTask'
+import TaskStatus from '../dashboard/TaskStatus'
+import ToDoSection from '../dashboard/ToDoSection'
 
 export default function Dashboard() {
 	return (
@@ -12,7 +12,7 @@ export default function Dashboard() {
 
 			<div className='dashboard-info-wrapper p-4 border-[#A1A3AB] border-2 gap-6 grid grid-cols-2 h-full min-h-0 overflow-hidden'>
 				<ToDoSection />
-				<div className='w-full flex flex-col gap-5 justify-center items-center'>
+				<div className='w-full h-full min-h-0 grid grid-rows-[2fr_3fr] gap-5'>
 					<TaskStatus />
 					<CompletedTask />
 				</div>

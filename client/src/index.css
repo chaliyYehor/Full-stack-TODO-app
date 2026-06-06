@@ -164,12 +164,14 @@ header {
 	border-radius: 15px;
 }
 
-.todo-section {
+.todo-section,
+.completedSection {
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 }
 
-.todo-section::-webkit-scrollbar {
+.todo-section::-webkit-scrollbar,
+.completedSection::-webkit-scrollbar {
 	display: none;
 }
 
@@ -200,11 +202,28 @@ header {
 	position: relative;
 }
 
-.progressBar .statusIcon {
+.statusIcon {
 	position: absolute;
 	width: 10px;
 	height: 10px;
 	left: -15px;
 	bottom: 6px;
 	border-radius: 50%;
+}
+
+.addNewTaskHeading::after {
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	left: 0;
+	width: 80%;
+	border-radius: 15px;
+	height: 3px;
+	background-color: #f24e1e;
+}
+
+.createTaskForm {
+	font-family: 'Montserrat', sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
 }

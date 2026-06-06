@@ -18,7 +18,7 @@ const router = createBrowserRouter([
 	{
 		path: '/signIn',
 		element: <SignIn />,
-	},
+	}
 ])
 
 const client = new QueryClient()

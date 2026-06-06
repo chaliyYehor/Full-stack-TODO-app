@@ -1,3 +1,5 @@
+import type { CreateTaskFormType } from '../schemas/createTaskFormSchema'
+
 export const days = [
 	'Sunday',
 	'Monday',
@@ -6,4 +8,10 @@ export const days = [
 	'Thursday',
 	'Friday',
 	'Saturday',
+]
+
+export const priorityInputs: CreateTaskFormType['priority'][] = [
+	'Extreme',
+	'Moderate',
+	'Low',
 ]
