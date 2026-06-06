@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField'
 import { useFormContext } from 'react-hook-form'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import type { CreateTaskFormType } from '../../../schemas/createTaskFormSchema'
+import { priorityInputs } from '../../../constants/constants'
 
 export default function TaskCreationForm() {
 	const {
@@ -18,7 +19,6 @@ export default function TaskCreationForm() {
 				<div className='title flex flex-col gap-2'>
 					<h3 className='font-semibold text-xl'>Title</h3>
 					<TextField
-						label='Title'
 						{...register('title')}
 						error={!!errors.title}
 						helperText={errors.title?.message}
@@ -29,6 +29,33 @@ export default function TaskCreationForm() {
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
 						<DatePickerInput />
 					</LocalizationProvider>
+				</div>
+
+				<div className='priority flex flex-col gap-2'>
+					<h3 className='font-semibold text-xl'>Priority</h3>
+					<div className='inputs flex justify-around items-center'>
+						{priorityInputs.map((inp, i) => (
+							<label
+								key={inp}
+								className='w-fit relative cursor-pointer flex gap-2 select-none'
+							>
+								<div
+									style={{
+										backgroundColor:
+											i === 0 ? '#F21E1E' : i === 1 ? '#3ABEFF' : '#05A301',
+									}}
+									className='statusIcon'
+								/>
+								{inp}
+								<input
+									className='w-5'
+									type='radio'
+									{...register('priority')}
+									value={inp}
+								/>
+							</label>
+						))}
+					</div>
 				</div>
 
 				<div className='description flex flex-col gap-2'>

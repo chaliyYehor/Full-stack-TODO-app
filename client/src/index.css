@@ -202,7 +202,7 @@ header {
 	position: relative;
 }
 
-.progressBar .statusIcon {
+.statusIcon {
 	position: absolute;
 	width: 10px;
 	height: 10px;
