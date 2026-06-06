@@ -14,8 +14,8 @@ export default function TaskCreationForm() {
 	} = useFormContext<CreateTaskFormType>()
 
 	return (
-		<div className='formWrapper grid grid-cols-[65%_1fr] p-3.75 border-2 border-[#A1A3AB]'>
-			<div className='firstColumn'>
+		<div className='formWrapper grid grid-cols-[65%_1fr] p-3.75 border-2 border-[#A1A3AB] mt-10'>
+			<div className='firstColumn flex flex-col gap-5'>
 				<div className='title flex flex-col gap-2'>
 					<h3 className='font-semibold text-xl'>Title</h3>
 					<TextField
@@ -48,7 +48,7 @@ export default function TaskCreationForm() {
 								/>
 								{inp}
 								<input
-									className='w-5'
+									className='w-5 cursor-pointer'
 									type='radio'
 									{...register('priority')}
 									value={inp}
