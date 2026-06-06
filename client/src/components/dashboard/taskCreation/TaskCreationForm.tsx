@@ -69,7 +69,9 @@ export default function TaskCreationForm() {
 					/>
 				</div>
 			</div>
-			<div className='secondColumn'></div>
+			<div className='secondColumn'>
+				
+			</div>
 		</div>
 	)
 }
