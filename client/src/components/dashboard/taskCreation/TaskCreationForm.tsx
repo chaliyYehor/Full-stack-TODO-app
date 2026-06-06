@@ -7,8 +7,11 @@ import TextareaAutosize from '@mui/material/TextareaAutosize'
 import type { CreateTaskFormType } from '../../../schemas/createTaskFormSchema'
 import { priorityInputs } from '../../../constants/constants'
 import FileUpload from '../FileUpload'
+import { useState } from 'react'
 
 export default function TaskCreationForm() {
+	const [image, setImage] = useState<File | null>(null)
+	console.log(image)
 	const {
 		register,
 		formState: { errors },
@@ -71,7 +74,7 @@ export default function TaskCreationForm() {
 				</div>
 			</div>
 			<div className='secondColumn self-end'>
-				<FileUpload />
+				<FileUpload image={image} setImage={setImage} />
 			</div>
 		</div>
 	)

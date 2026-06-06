@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import { Plus } from 'lucide-react'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import Todo from './Todo'
 import { useState } from 'react'
 import CreateTask from './taskCreation/CreateTask'
 
@@ -15,8 +14,6 @@ export default function ToDoSection() {
 
 		return parsedDate.isValid() && parsedDate.isSame(dayjs(), 'day')
 	}
-
-	console.log(isToday('30/05/2026'))
 
 	return (
 		<>
