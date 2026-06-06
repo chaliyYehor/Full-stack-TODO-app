@@ -6,7 +6,7 @@ import { useFormContext } from 'react-hook-form'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import type { CreateTaskFormType } from '../../../schemas/createTaskFormSchema'
 import { priorityInputs } from '../../../constants/constants'
-import FileUpload from '../FileUpload'
+import FileUpload from './FileUpload'
 import { useState } from 'react'
 
 export default function TaskCreationForm() {
