@@ -18,8 +18,6 @@ export default function TaskCreationForm() {
 		formState: { errors },
 	} = useFormContext<CreateTaskFormType>()
 
-	console.log(errors)
-
 	return (
 		<div className='formWrapper grid grid-cols-[65%_1fr] gap-5 p-3.75 border-2 border-[#A1A3AB] mt-10'>
 			<div className='firstColumn flex flex-col gap-5'>

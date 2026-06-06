@@ -26,7 +26,26 @@ export default function CreateTask({ closeTask }: Props) {
 	const { handleSubmit } = methods
 
 	const onSubmit: SubmitHandler<CreateTaskFormType> = data => {
-		console.log(data)
+		const payload = {
+			...data,
+			date: data.date ? data.date.toISOString() : '',
+			taskDescription: data.taskDescription ?? '',
+		}
+
+		const formData = new FormData()
+
+		Object.entries(payload).forEach(([key, value]) => {
+			if (value instanceof File) {
+				formData.append(key, value)
+				return
+			}
+
+			if (value !== undefined && value !== null) {
+				formData.append(key, String(value))
+			}
+		})
+
+		console.log(formData)
 	}
 
 	return (
