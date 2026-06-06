@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, useForm, type SubmitHandler } from 'react-hook-form'
 import {
 	createTaskFormSchema,
 	type CreateTaskFormType,
@@ -18,13 +18,19 @@ export default function CreateTask({ closeTask }: Props) {
 			priority: 'Low',
 			taskDescription: '',
 			image: undefined,
-			date: null
+			date: null,
 		},
 	})
 
+	const { handleSubmit } = methods
+
+	const onSubmit: SubmitHandler<CreateTaskFormType> = data => {
+		console.log(data)
+	}
+
 	return (
 		<>
-			<div className='absolute left-[50%] top-[50%] translate-[-50%] z-20 w-255 h-180 bg-[#F9F9F9] p-12.5'>
+			<div className='absolute left-[50%] top-[50%] translate-[-50%] z-20 w-255 h-190 bg-[#F9F9F9] p-12.5'>
 				<div className='upperPart flex w-full justify-between'>
 					<div className='relative'>
 						<h3 className='addNewTaskHeading text-xl font-bold inline-block'>
@@ -39,9 +45,18 @@ export default function CreateTask({ closeTask }: Props) {
 					</button>
 				</div>
 
-				<FormProvider {...methods}>
-					<TaskCreationForm />
-				</FormProvider>
+				<form className='createTaskForm' onSubmit={handleSubmit(onSubmit)}>
+					<FormProvider {...methods}>
+						<TaskCreationForm />
+					</FormProvider>
+
+					<button
+						type='submit'
+						className='bg-[#F24E1E] hover:bg-[#df3400] active:bg-[#f68663] transition text-[#FFFFFF] py-3 px-5 rounded-md cursor-pointer mt-8 font-semibold text-xl'
+					>
+						Done
+					</button>
+				</form>
 			</div>
 		</>
 	)
