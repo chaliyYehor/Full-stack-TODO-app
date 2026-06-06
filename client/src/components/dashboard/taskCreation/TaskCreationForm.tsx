@@ -65,12 +65,12 @@ export default function TaskCreationForm() {
 						minRows={5}
 						maxRows={5}
 						{...register('taskDescription')}
-						className='w-full resize-none overflow-y-auto rounded border border-[#c4c4c4] bg-transparent px-3.5 py-4 text-base leading-6 outline outline-0 outline-offset-0 transition-colors placeholder:text-[#757575] hover:border-black focus:border-[#1976d2] focus:outline-1 focus:outline-[#1976d2]'
+						className='w-full resize-none overflow-y-auto rounded border border-[#c4c4c4] bg-transparent px-3.5 py-4 text-base leading-6 outline-0 outline-offset-0 transition-colors placeholder:text-[#757575] hover:border-black focus:border-[#1976d2] focus:outline-1 focus:outline-[#1976d2]'
 					/>
 				</div>
 			</div>
 			<div className='secondColumn'>
-				
+
 			</div>
 		</div>
 	)
