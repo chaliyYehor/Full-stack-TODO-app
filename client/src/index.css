@@ -211,7 +211,6 @@ header {
 	border-radius: 50%;
 }
 
-
 .addNewTaskHeading::after {
 	content: '';
 	position: absolute;
@@ -220,5 +219,11 @@ header {
 	width: 80%;
 	border-radius: 15px;
 	height: 3px;
-	background-color: #F24E1E;
+	background-color: #f24e1e;
+}
+
+.formWrapper {
+	font-family: 'Montserrat', sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
 }

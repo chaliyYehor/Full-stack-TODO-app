@@ -16,6 +16,14 @@ export default function DatePickerInput() {
 					onChange={date => field.onChange(date)}
 					slotProps={{
 						textField: {
+							sx: {
+								'& .MuiInputBase-input': {
+									fontSize: '1.1rem',
+								},
+								'& .MuiInputLabel-root': {
+									fontSize: '1.1rem',
+								},
+							},
 							error: !!fieldState.error,
 							helperText: fieldState.error?.message,
 						},
