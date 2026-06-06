@@ -8,6 +8,7 @@ import type { CreateTaskFormType } from '../../../schemas/createTaskFormSchema'
 import { priorityInputs } from '../../../constants/constants'
 import FileUpload from './FileUpload'
 import { useState } from 'react'
+import TitleInput from './TitleInput'
 
 export default function TaskCreationForm() {
 	const [image, setImage] = useState<File | null>(null)
@@ -26,17 +27,7 @@ export default function TaskCreationForm() {
 			<div className='firstColumn flex flex-col gap-5'>
 				<div className='title flex flex-col gap-2'>
 					<h3 className='font-semibold text-xl'>Title</h3>
-					<Controller
-						name='title'
-						control={control}
-						render={({ field, fieldState }) => (
-							<TextField
-								{...field}
-								error={!!fieldState.error}
-								helperText={fieldState.error?.message}
-							/>
-						)}
-					/>
+					<TitleInput />
 				</div>
 				<div className='date flex flex-col gap-2'>
 					<h3 className='font-semibold text-xl'>Date</h3>
