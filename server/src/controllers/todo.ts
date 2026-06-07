@@ -55,6 +55,7 @@ export const createTodo = async (
 			taskDescription,
 			imageUrl,
 			imagePublicId,
+			creatorID: req.user?.userID,
 		}
 
 		const createTask = await Task.create(task)
