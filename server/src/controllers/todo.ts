@@ -62,7 +62,7 @@ export const createTodo = async (
 			return next(new BadRequestError('Could not create a task'))
 		}
 
-		res.status(StatusCodes.CREATED).json(task)
+		res.status(StatusCodes.CREATED).json({ msg: 'success', imageUrl })
 	} catch (error) {
 		return next(new BadRequestError('Image Upload failed'))
 	}
