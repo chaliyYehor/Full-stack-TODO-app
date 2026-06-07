@@ -4,7 +4,7 @@ import {
 	loginReqBodySchema,
 	RegisterReqBody,
 	reqBodySchema,
-} from './authSchema.js'
+} from '../schemas/authSchema.js'
 import { BadRequestError } from '../errors/bad-request.js'
 import { StatusCodes } from 'http-status-codes'
 import User from '../models/user.js'
