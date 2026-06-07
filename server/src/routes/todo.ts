@@ -1,8 +1,8 @@
 import express from 'express'
-import { getTodos } from '../controllers/todo.js'
+import { createTodo, upload } from '../controllers/todo.js'
 
 const router = express.Router()
 
-router.get('/', getTodos)
+router.post('/create', upload.single('image'), createTodo)
 
 export default router
