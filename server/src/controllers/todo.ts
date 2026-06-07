@@ -33,7 +33,7 @@ export const createTodo = async (
 		let imagePublicId = ''
 
 		if (req.file) {
-			if (req.file.size > 5 * 1024 * 1024) {
+			if (req.file.size > MAX_FILE_SIZE) {
 				return next(new BadRequestError('Max image size is 5MB'))
 			}
 
