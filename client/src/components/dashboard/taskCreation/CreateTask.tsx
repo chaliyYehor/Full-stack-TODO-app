@@ -84,9 +84,9 @@ export default function CreateTask({ closeTask }: Props) {
 
 					<button
 						type='submit'
-						className='bg-[#F24E1E] hover:bg-[#df3400] active:bg-[#f68663] transition text-[#FFFFFF] py-3 px-5 rounded-md cursor-pointer mt-8 font-semibold text-xl'
+						className='bg-[#F24E1E] hover:bg-[#df3400] active:bg-[#f68663] transition text-[#FFFFFF] w-25 h-13 py-3 px-5 rounded-md flex justify-center items-center cursor-pointer mt-8 font-semibold text-xl'
 					>
-						{isPending ? 'Loading' : 'Done'}
+						{isPending ? <div className='loader ' /> : 'Done'}
 					</button>
 				</form>
 				{authError && (
