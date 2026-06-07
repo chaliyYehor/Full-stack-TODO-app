@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary'
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import multer from 'multer'
 
 cloudinary.config({
@@ -12,4 +13,6 @@ export const upload = multer({ dest: 'uploads/' })
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024
 
-export const createTodo = async (req: Request, res: Response) => {}
+export const createTodo = async (req: Request, res: Response) => {
+	res.status(StatusCodes.OK)
+}
