@@ -4,6 +4,7 @@ interface Task {
 	title: string
 	priority: string
 	date: string
+	creatorID: mongoose.Types.ObjectId
 	taskDescription: string
 	imageUrl: string
 	imagePublicId: string
@@ -40,6 +41,9 @@ const TaskSchema = new mongoose.Schema<Task, TaskModel, TaskMethods>({
 	imagePublicId: {
 		type: String,
 	},
+	creatorID: {
+		type: mongoose.Types.ObjectId
+	}
 })
 
 export default mongoose.model<Task, TaskModel>('Task', TaskSchema)
