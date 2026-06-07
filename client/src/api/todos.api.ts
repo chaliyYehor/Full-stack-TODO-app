@@ -7,9 +7,7 @@ export const getAllTodos = async () => {
 }
 
 export const createTodo = async (data: FormData) => {
-	const response = await api.post('/api/v1/todos/create', {
-		data,
-	})
+	const response = await api.post('/api/v1/todos/create', data)
 
 	return response.data
 }

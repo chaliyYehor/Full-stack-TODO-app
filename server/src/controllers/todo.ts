@@ -23,7 +23,7 @@ export const createTodo = async (
 ) => {
 	const parsed = createTaskSchema.safeParse(req.body)
 	if (!parsed.success) {
-		return next(new BadRequestError('Please provide proper credentials'))
+		return next(new BadRequestError(parsed.error.message))
 	}
 
 	const { date, priority, title, taskDescription } = parsed.data

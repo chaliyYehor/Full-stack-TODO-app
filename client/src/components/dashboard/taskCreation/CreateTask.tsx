@@ -5,12 +5,17 @@ import {
 } from '../../../schemas/createTaskFormSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import TaskCreationForm from './TaskCreationForm'
+import { useCreateTodo } from '../../../hooks/useCreateTodo'
+import axios from 'axios'
+import { useState } from 'react'
 
 type Props = {
 	closeTask: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function CreateTask({ closeTask }: Props) {
+	const [authError, setAuthError] = useState()
+
 	const methods = useForm<CreateTaskFormType>({
 		resolver: zodResolver(createTaskFormSchema),
 		defaultValues: {
@@ -25,7 +30,9 @@ export default function CreateTask({ closeTask }: Props) {
 
 	const { handleSubmit } = methods
 
-	const onSubmit: SubmitHandler<CreateTaskFormType> = data => {
+	const { mutateAsync: createTask, isPending } = useCreateTodo()
+
+	const onSubmit: SubmitHandler<CreateTaskFormType> = async data => {
 		const payload = {
 			...data,
 			date: data.date ? data.date.toISOString() : '',
@@ -34,18 +41,22 @@ export default function CreateTask({ closeTask }: Props) {
 
 		const formData = new FormData()
 
-		Object.entries(payload).forEach(([key, value]) => {
-			if (value instanceof File) {
-				formData.append(key, value)
+		formData.append('title', payload.title)
+		formData.append('priority', payload.priority)
+		formData.append('date', payload.date)
+		formData.append('taskDescription', payload.taskDescription)
+		if (payload.image) {
+			formData.append('image', payload.image)
+		}
+
+		try {
+			await createTask(formData)
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				setAuthError(error.response?.data?.msg)
 				return
 			}
-
-			if (value !== undefined && value !== null) {
-				formData.append(key, String(value))
-			}
-		})
-
-		console.log(formData)
+		}
 	}
 
 	return (
@@ -75,9 +86,14 @@ export default function CreateTask({ closeTask }: Props) {
 						type='submit'
 						className='bg-[#F24E1E] hover:bg-[#df3400] active:bg-[#f68663] transition text-[#FFFFFF] py-3 px-5 rounded-md cursor-pointer mt-8 font-semibold text-xl'
 					>
-						Done
+						{isPending ? 'Loading' : 'Done'}
 					</button>
 				</form>
+				{authError && (
+					<p className='text-red-500 text-sm m-0 p-0 absolute bottom-0'>
+						{authError}
+					</p>
+				)}
 			</div>
 		</>
 	)
