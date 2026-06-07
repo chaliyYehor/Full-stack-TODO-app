@@ -19,13 +19,13 @@ export default function Main() {
 		}
 	})
 	// Check if the user is authorized 1.2
-	const { isError } = useGetAllTodos()
-	useEffect(() => {
-		if (isError) {
-			saveToken('')
-			navigate('/signUp')
-		}
-	})
+	// const { isError } = useGetAllTodos()
+	// useEffect(() => {
+	// 	if (isError) {
+	// 		saveToken('')
+	// 		navigate('/signUp')
+	// 	}
+	// })
 
 	// const radius = 40
 	// const circumference = 2 * Math.PI * radius
