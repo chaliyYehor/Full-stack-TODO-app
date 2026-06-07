@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb'
 import mongoose, { HydratedDocument, Model } from 'mongoose'
 
 interface Task {
@@ -42,8 +43,10 @@ const TaskSchema = new mongoose.Schema<Task, TaskModel, TaskMethods>({
 		type: String,
 	},
 	creatorID: {
-		type: mongoose.Types.ObjectId
-	}
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true,
+	},
 })
 
 export default mongoose.model<Task, TaskModel>('Task', TaskSchema)
