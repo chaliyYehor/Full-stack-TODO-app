@@ -33,11 +33,7 @@ export default function FileUpload({ setImage, image }: Props) {
 
 				{image ? (
 					<div className='drag-and-drop-wrapper w-72.5 h-74 rounded-xl border-2 border-[#A1A3AB] flex flex-col justify-center items-center gap-5 text-[#A1A3AB] cursor-pointer'>
-						<img
-							className='w-25'
-							src='/dashboard/imgUploadIcon.png'
-							alt='dragAndDrop'
-						/>
+						<Upload size={120} />
 						<p className='w-full wrap-break-word p-5 text-center'>
 							{image.name}
 						</p>

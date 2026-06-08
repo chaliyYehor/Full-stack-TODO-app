@@ -5,6 +5,7 @@ import { errorHandlerMiddleware } from './middleware/error-handler.js'
 import connectDB from './db/connect.js'
 import authRouter from './routes/auth.js'
 import todosRouter from './routes/todo.js'
+import userRouter from './routes/user.js'
 import cors from 'cors'
 import { authMiddleware } from './middleware/authorization.js'
 const app = express()
@@ -28,6 +29,7 @@ app.use(cors(corsOptions))
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/todos', authMiddleware, todosRouter)
+app.use('/api/v1/user', authMiddleware, userRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)

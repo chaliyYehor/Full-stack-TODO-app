@@ -5,6 +5,12 @@ import Dashboard from '../components/main/Dashboard'
 import Header from '../components/main/Header'
 import Menu from '../components/main/Menu'
 import { useGetAllTodos } from '../hooks/useGetAllTodos'
+import { FormProvider, useForm } from 'react-hook-form'
+import {
+	createTaskFormSchema,
+	type CreateTaskFormType,
+} from '../schemas/createTaskFormSchema'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 export default function Main() {
 	const navigate = useNavigate()
@@ -19,50 +25,38 @@ export default function Main() {
 		}
 	})
 	// Check if the user is authorized 1.2
-	// const { isError } = useGetAllTodos()
-	// useEffect(() => {
-	// 	if (isError) {
-	// 		saveToken('')
-	// 		navigate('/signUp')
-	// 	}
-	// })
+	const { data, isError } = useGetAllTodos()
+	useEffect(() => {
+		if (isError) {
+			saveToken('')
+			navigate('/signUp')
+		}
+	})
 
-	// const radius = 40
-	// const circumference = 2 * Math.PI * radius
-	// const percent = 75
-	// const offset = circumference - (percent / 100) * circumference
+	const methods = useForm<CreateTaskFormType>({
+		resolver: zodResolver(createTaskFormSchema),
+		defaultValues: {
+			title: '',
+			priority: 'Low',
+			taskDescription: '',
+			image: undefined,
+			date: null,
+			status: 'Not Started',
+		},
+		mode: 'onSubmit',
+	})
+
+	console.log(data)
 
 	return (
 		<>
 			<Header />
 			<div className='container flex w-full'>
 				<Menu />
-				<Dashboard />
+				<FormProvider {...methods}>
+					<Dashboard />
+				</FormProvider>
 			</div>
-
-			{/* <svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'>
-				<circle
-					strokeWidth='5'
-					stroke='lightgray'
-					cx='50'
-					cy='50'
-					r={radius}
-					fill='none'
-				/>
-
-				<circle
-					strokeWidth='5'
-					stroke='black'
-					cx='50'
-					cy='50'
-					r={radius}
-					fill='none'
-					strokeDasharray={circumference}
-					strokeDashoffset={offset}
-					strokeLinecap='round'
-				/>
-			</svg> */}
-
 			{/* <h1
 				className={clsx(
 					isLonding && 'loadingComp',

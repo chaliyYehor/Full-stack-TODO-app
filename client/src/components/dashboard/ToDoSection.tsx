@@ -3,6 +3,8 @@ import { Plus } from 'lucide-react'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { useState } from 'react'
 import CreateTask from './taskCreation/CreateTask'
+import { useGetAllTodos } from '../../hooks/useGetAllTodos'
+import Todo from './Todo'
 
 dayjs.extend(customParseFormat)
 
@@ -15,6 +17,9 @@ export default function ToDoSection() {
 		return parsedDate.isValid() && parsedDate.isSame(dayjs(), 'day')
 	}
 
+	const { data: todos, isPending } = useGetAllTodos()
+	const formattedDate = dayjs(todos?.[0]?.createdAt).format('DD/MM/YYYY')
+
 	return (
 		<>
 			<div className='todoWrapper p-5 h-full min-h-0 relative overflow-hidden flex flex-col'>
@@ -25,35 +30,49 @@ export default function ToDoSection() {
 							To-Do
 						</span>
 					</div>
-					{/* <button className='flex cursor-pointer'>
-						<Plus color='#FF6767' />
-						<span className='inline-block text-[#A1A3AB]'>Add Task</span>
-					</button> */}
+					{todos && todos?.length > 0 && (
+						<button
+							onClick={() => setIsAddTaskOpen(true)}
+							className='flex cursor-pointer'
+						>
+							<Plus color='#FF6767' />
+							<span className='inline-block text-[#A1A3AB]'>Add Task</span>
+						</button>
+					)}
 				</div>
-				{/* <div className='dateSection w-full shrink-0'>
+				<div className='dateSection w-full shrink-0'>
 					20{' '}
 					{dayjs()
 						.month(5 - 1)
 						.format('MMM')}
 					<span className='text-[#A1A3AB] ml-2'>
-						{isToday('01/06/2026') && (
+						{isToday(formattedDate) && (
 							<>
 								<span className='font-bold text-xl'>&#183;</span>
 								Today
 							</>
 						)}
 					</span>
-				</div> */}
-				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
-					{/* render todos here */}
 				</div>
-				<button
-					className='FirstTask absolute flex cursor-pointer top-[50%] left-[50%] -translate-x-1/2 text-2xl items-center justify-center'
-					onClick={() => setIsAddTaskOpen(true)}
-				>
-					<Plus color='#FF6767' />
-					<span className='inline-block text-[#A1A3AB]'>Add Task</span>
-				</button>
+				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
+					{todos &&
+						todos.map(todo => (
+							<Todo
+								todoInfo={todo}
+								completed={todo.status === 'Completed'}
+								key={todo._id}
+							/>
+						))}
+				</div>
+				{todos && todos?.length < 1 && (
+					<button
+						className='FirstTask absolute flex cursor-pointer top-[50%] left-[50%] -translate-x-1/2 text-2xl items-center justify-center'
+						onClick={() => setIsAddTaskOpen(true)}
+					>
+						<Plus color='#FF6767' />
+						<span className='inline-block text-[#A1A3AB]'>Add Task</span>
+					</button>
+				)}
 			</div>
 
 			{isAddTaskOpen && (

@@ -23,10 +23,10 @@ export const createTodo = async (
 ) => {
 	const parsed = createTaskSchema.safeParse(req.body)
 	if (!parsed.success) {
-		return next(new BadRequestError('Please provide proper credentials'))
+		return next(new BadRequestError(parsed.error.message))
 	}
 
-	const { date, priority, title, taskDescription } = parsed.data
+	const { date, priority, title, taskDescription, status } = parsed.data
 
 	try {
 		let imageUrl = ''
@@ -50,11 +50,13 @@ export const createTodo = async (
 
 		const task = {
 			title,
+			status,
 			priority,
 			date,
 			taskDescription,
 			imageUrl,
 			imagePublicId,
+			creatorID: req.user?.userID,
 		}
 
 		const createTask = await Task.create(task)
@@ -65,5 +67,27 @@ export const createTodo = async (
 		res.status(StatusCodes.CREATED).json({ msg: 'success', imageUrl })
 	} catch (error) {
 		return next(new BadRequestError('Image Upload failed'))
+	}
+}
+
+export const getAllTodos = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		if (!req.user?.userID) {
+			return next(new BadRequestError('User id was not provided'))
+		}
+
+		const tasks = await Task.find({ creatorID: req.user.userID })
+			.select(['-__v', '-creatorID', '-imagePublicId'])
+			.sort({
+				createdAt: -1,
+			})
+
+		res.status(StatusCodes.OK).json({ tasks })
+	} catch (error) {
+		next(error)
 	}
 }

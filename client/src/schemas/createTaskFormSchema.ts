@@ -6,6 +6,7 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024
 export const createTaskFormSchema = z.object({
 	title: z.string().min(2, 'Title is too short').max(40, 'Title is too long'),
 	priority: z.enum(['Extreme', 'Moderate', 'Low']),
+	status: z.enum(['Not Started', 'In Progress', 'Completed']),
 	date: z
 		.custom<Dayjs>(value => dayjs.isDayjs(value), {
 			message: 'Invalid date',

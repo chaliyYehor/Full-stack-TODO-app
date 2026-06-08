@@ -9,6 +9,7 @@ export const createTaskSchema = z.object({
 			message: 'Invalid date',
 		}),
 	taskDescription: z.string().min(5, 'Description is too small').optional(),
+	status: z.enum(['Not Started', 'In Progress', 'Completed']),
 })
 
 export type CreateTaskFormType = z.infer<typeof createTaskSchema>
