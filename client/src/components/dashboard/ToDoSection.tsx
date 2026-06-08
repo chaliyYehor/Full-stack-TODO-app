@@ -3,6 +3,8 @@ import { Plus } from 'lucide-react'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { useState } from 'react'
 import CreateTask from './taskCreation/CreateTask'
+import { useGetAllTodos } from '../../hooks/useGetAllTodos'
+import Todo from './Todo'
 
 dayjs.extend(customParseFormat)
 
@@ -14,6 +16,8 @@ export default function ToDoSection() {
 
 		return parsedDate.isValid() && parsedDate.isSame(dayjs(), 'day')
 	}
+
+	const { data: todos, isPending } = useGetAllTodos()
 
 	return (
 		<>
@@ -45,7 +49,9 @@ export default function ToDoSection() {
 					</span>
 				</div> */}
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
-					{/* render todos here */}
+					{/* {todos.map(todo => (
+						<Todo completed={false} />
+					))} */}
 				</div>
 				<button
 					className='FirstTask absolute flex cursor-pointer top-[50%] left-[50%] -translate-x-1/2 text-2xl items-center justify-center'
