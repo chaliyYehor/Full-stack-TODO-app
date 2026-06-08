@@ -5,13 +5,15 @@ import {
 	LogOut,
 	Settings,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { BsExclamationLg } from 'react-icons/bs'
 import { HiQuestionMarkCircle } from 'react-icons/hi'
 import { useGetUserInfo } from '../../hooks/useGetUserInfo'
 
 export default function Menu() {
-	const { data, isPending, error } = useGetUserInfo()
+	const navigate = useNavigate()
+
+	const { data, isPending } = useGetUserInfo()
 
 	console.log(data)
 
