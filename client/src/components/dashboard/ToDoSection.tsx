@@ -49,7 +49,7 @@ export default function ToDoSection() {
 					</span>
 				</div> */}
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
-					{todos.map(todo => (
+					{todos && todos.map(todo => (
 						<Todo completed={false} key={todo._id} />
 					))}
 				</div>

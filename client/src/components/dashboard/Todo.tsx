@@ -2,6 +2,7 @@ import { Circle } from 'lucide-react'
 
 type Props = {
 	completed: boolean
+	
 }
 
 export default function Todo({ completed }: Props) {
