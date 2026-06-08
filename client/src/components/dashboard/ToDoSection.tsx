@@ -49,9 +49,9 @@ export default function ToDoSection() {
 					</span>
 				</div> */}
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
-					{/* {todos.map(todo => (
-						<Todo completed={false} />
-					))} */}
+					{todos.map(todo => (
+						<Todo completed={false} key={todo._id} />
+					))}
 				</div>
 				<button
 					className='FirstTask absolute flex cursor-pointer top-[50%] left-[50%] -translate-x-1/2 text-2xl items-center justify-center'
