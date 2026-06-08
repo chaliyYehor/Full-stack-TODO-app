@@ -1,3 +1,4 @@
+import type { TodoType } from '../schemas/todosSchema'
 import { api } from './axios'
 
 export const getAllTodos = async () => {
@@ -6,7 +7,7 @@ export const getAllTodos = async () => {
 	return response.data
 }
 
-export const createTodo = async (data: FormData) => {
+export const createTodo = async (data: FormData): Promise<TodoType> => {
 	const response = await api.post('/api/v1/todos/create', data)
 
 	return response.data
