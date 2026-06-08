@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import TaskCreationForm from './TaskCreationForm'
 import { useCreateTodo } from '../../../hooks/useCreateTodo'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type Props = {
 	closeTask: React.Dispatch<React.SetStateAction<boolean>>
@@ -24,12 +24,16 @@ export default function CreateTask({ closeTask }: Props) {
 			taskDescription: '',
 			image: undefined,
 			date: null,
-			status: 'Not Started'
+			status: 'Not Started',
 		},
 		mode: 'onSubmit',
 	})
 
-	const { handleSubmit } = methods
+	const {
+		handleSubmit,
+		formState: { isSubmitSuccessful },
+		reset,
+	} = methods
 
 	const { mutateAsync: createTask, isPending } = useCreateTodo()
 
@@ -60,6 +64,12 @@ export default function CreateTask({ closeTask }: Props) {
 			}
 		}
 	}
+
+	useEffect(() => {
+		if (isSubmitSuccessful) {
+			reset()
+		}
+	}, [isSubmitSuccessful])
 
 	return (
 		<>
