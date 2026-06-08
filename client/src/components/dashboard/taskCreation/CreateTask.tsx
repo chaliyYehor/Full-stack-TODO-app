@@ -3,7 +3,7 @@ import { type CreateTaskFormType } from '../../../schemas/createTaskFormSchema'
 import TaskCreationForm from './TaskCreationForm'
 import { useCreateTodo } from '../../../hooks/useCreateTodo'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 type Props = {
 	closeTask: React.Dispatch<React.SetStateAction<boolean>>
@@ -16,7 +16,6 @@ export default function CreateTask({ closeTask }: Props) {
 
 	const {
 		handleSubmit,
-		formState: { isSubmitSuccessful },
 		reset,
 	} = useFormContext<CreateTaskFormType>()
 

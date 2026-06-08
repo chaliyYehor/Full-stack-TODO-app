@@ -1,12 +1,10 @@
 import dayjs from 'dayjs'
 import { Plus } from 'lucide-react'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import CreateTask from './taskCreation/CreateTask'
 import { useGetAllTodos } from '../../hooks/useGetAllTodos'
 import Todo from './Todo'
-import { useFormContext } from 'react-hook-form'
-import type { CreateTaskFormType } from '../../schemas/createTaskFormSchema'
 
 dayjs.extend(customParseFormat)
 
@@ -18,10 +16,6 @@ export default function ToDoSection() {
 
 		return parsedDate.isValid() && parsedDate.isSame(dayjs(), 'day')
 	}
-
-	const {
-		formState: { isSubmitSuccessful },
-	} = useFormContext<CreateTaskFormType>()
 
 	const { data: todos, isPending } = useGetAllTodos()
 	const formattedDate = dayjs(todos?.[0]?.createdAt).format('DD/MM/YYYY')
