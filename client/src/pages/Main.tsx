@@ -27,11 +27,6 @@ export default function Main() {
 	// 	}
 	// })
 
-	// const radius = 40
-	// const circumference = 2 * Math.PI * radius
-	// const percent = 75
-	// const offset = circumference - (percent / 100) * circumference
-
 	return (
 		<>
 			<Header />
@@ -39,30 +34,6 @@ export default function Main() {
 				<Menu />
 				<Dashboard />
 			</div>
-
-			{/* <svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'>
-				<circle
-					strokeWidth='5'
-					stroke='lightgray'
-					cx='50'
-					cy='50'
-					r={radius}
-					fill='none'
-				/>
-
-				<circle
-					strokeWidth='5'
-					stroke='black'
-					cx='50'
-					cy='50'
-					r={radius}
-					fill='none'
-					strokeDasharray={circumference}
-					strokeDashoffset={offset}
-					strokeLinecap='round'
-				/>
-			</svg> */}
-
 			{/* <h1
 				className={clsx(
 					isLonding && 'loadingComp',

@@ -8,8 +8,13 @@ import {
 import { Link } from 'react-router-dom'
 import { BsExclamationLg } from 'react-icons/bs'
 import { HiQuestionMarkCircle } from 'react-icons/hi'
+import { useGetUserInfo } from '../../hooks/useGetUserInfo'
 
 export default function Menu() {
+	const { data, isPending, error } = useGetUserInfo()
+
+	console.log(data)
+
 	return (
 		<div className='menu-wrapper flex flex-col items-center relative bg-[#FF6767] shadow-md rounded-r-xl min-w-100 min-h-[calc(100dvh-11rem)] mt-15 text-white'>
 			<div className='account-info pt-17 flex flex-col items-center'>
@@ -60,7 +65,10 @@ export default function Menu() {
 				</ul>
 			</nav>
 
-			<Link className='absolute text-xl flex justify-center items-center gap-5 bottom-10 left-10' to={'/signUp'}>
+			<Link
+				className='absolute text-xl flex justify-center items-center gap-5 bottom-10 left-10'
+				to={'/signUp'}
+			>
 				<LogOut size={35} /> Logout
 			</Link>
 		</div>
