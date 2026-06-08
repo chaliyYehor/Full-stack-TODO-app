@@ -68,3 +68,23 @@ export const createTodo = async (
 		return next(new BadRequestError('Image Upload failed'))
 	}
 }
+
+export const getAllTodos = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		if (!req.user?.userID) {
+			return next(new BadRequestError('User id was not provided'))
+		}
+
+		const tasks = await Task.find({ creatorID: req.user.userID }).sort({
+			createdAt: -1,
+		})
+
+		res.status(StatusCodes.OK).json({ tasks })
+	} catch (error) {
+		next(error)
+	}
+}
