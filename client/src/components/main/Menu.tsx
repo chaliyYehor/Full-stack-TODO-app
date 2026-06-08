@@ -9,13 +9,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import { BsExclamationLg } from 'react-icons/bs'
 import { HiQuestionMarkCircle } from 'react-icons/hi'
 import { useGetUserInfo } from '../../hooks/useGetUserInfo'
+import { useEffect } from 'react'
 
 export default function Menu() {
 	const navigate = useNavigate()
 
-	const { data, isPending } = useGetUserInfo()
+	const { data, isPending, isError } = useGetUserInfo()
 
-	console.log(data)
+	useEffect(() => {
+		if (isError) {
+			navigate('/signUp')
+		}
+	}, [isError, navigate])
 
 	return (
 		<div className='menu-wrapper flex flex-col items-center relative bg-[#FF6767] shadow-md rounded-r-xl min-w-100 min-h-[calc(100dvh-11rem)] mt-15 text-white'>
@@ -27,8 +32,8 @@ export default function Menu() {
 						alt='profile picture'
 					/>
 				</div>
-				<p className='name font-bold text-xl'>Sundar Gurung</p>
-				<p className='email'>sundargurung360@gmail.com</p>
+				<p className='name font-bold text-xl'>{`${data?.firstName} ${data?.lastName}`}</p>
+				<p className='email'>{data?.email}</p>
 			</div>
 			<nav className='menu w-full flex flex-col items-center mt-10'>
 				<ul className='flex flex-col ml-14 gap-2.5 w-full'>
