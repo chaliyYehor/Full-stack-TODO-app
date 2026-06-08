@@ -79,9 +79,11 @@ export const getAllTodos = async (
 			return next(new BadRequestError('User id was not provided'))
 		}
 
-		const tasks = await Task.find({ creatorID: req.user.userID }).sort({
-			createdAt: -1,
-		})
+		const tasks = await Task.find({ creatorID: req.user.userID })
+			.select(['-__v', '-creatorID', '-imagePublicId'])
+			.sort({
+				createdAt: -1,
+			})
 
 		res.status(StatusCodes.OK).json({ tasks })
 	} catch (error) {

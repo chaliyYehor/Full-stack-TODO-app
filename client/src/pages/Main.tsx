@@ -19,13 +19,15 @@ export default function Main() {
 		}
 	})
 	// Check if the user is authorized 1.2
-	// const { isError } = useGetAllTodos()
-	// useEffect(() => {
-	// 	if (isError) {
-	// 		saveToken('')
-	// 		navigate('/signUp')
-	// 	}
-	// })
+	const { data, isError } = useGetAllTodos()
+	useEffect(() => {
+		if (isError) {
+			saveToken('')
+			navigate('/signUp')
+		}
+	})
+
+	console.log(data)
 
 	return (
 		<>
