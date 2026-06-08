@@ -1,11 +1,12 @@
 import { Circle } from 'lucide-react'
+import type { TodoType } from '../../schemas/todosSchema'
 
 type Props = {
 	completed: boolean
-	
+	todoInfo: TodoType
 }
 
-export default function Todo({ completed }: Props) {
+export default function Todo({ completed, todoInfo }: Props) {
 	return (
 		<>
 			<div className='todo-wrapper grid grid-rows-3 cursor-pointer relative mt-4 gap-3 rounded-lg border border-[#A1A3AB] py-4 px-6 h-60'>

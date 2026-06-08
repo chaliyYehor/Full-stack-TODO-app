@@ -52,7 +52,13 @@ export default function ToDoSection() {
 				</div> */}
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
 					{todos &&
-						todos.map(todo => <Todo completed={false} key={todo._id} />)}
+						todos.map(todo => (
+							<Todo
+								todoInfo={todo}
+								completed={todo.status === 'Completed'}
+								key={todo._id}
+							/>
+						))}
 				</div>
 				{todos && todos?.length < 1 && (
 					<button
