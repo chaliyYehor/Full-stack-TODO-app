@@ -1,9 +1,5 @@
-import { FormProvider, useForm, type SubmitHandler } from 'react-hook-form'
-import {
-	createTaskFormSchema,
-	type CreateTaskFormType,
-} from '../../../schemas/createTaskFormSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useFormContext, type SubmitHandler } from 'react-hook-form'
+import { type CreateTaskFormType } from '../../../schemas/createTaskFormSchema'
 import TaskCreationForm from './TaskCreationForm'
 import { useCreateTodo } from '../../../hooks/useCreateTodo'
 import axios from 'axios'
@@ -16,26 +12,13 @@ type Props = {
 export default function CreateTask({ closeTask }: Props) {
 	const [authError, setAuthError] = useState()
 
-	const methods = useForm<CreateTaskFormType>({
-		resolver: zodResolver(createTaskFormSchema),
-		defaultValues: {
-			title: '',
-			priority: 'Low',
-			taskDescription: '',
-			image: undefined,
-			date: null,
-			status: 'Not Started',
-		},
-		mode: 'onSubmit',
-	})
+	const { mutateAsync: createTask, isPending } = useCreateTodo()
 
 	const {
 		handleSubmit,
 		formState: { isSubmitSuccessful },
 		reset,
-	} = methods
-
-	const { mutateAsync: createTask, isPending } = useCreateTodo()
+	} = useFormContext<CreateTaskFormType>()
 
 	const onSubmit: SubmitHandler<CreateTaskFormType> = async data => {
 		const payload = {
@@ -57,6 +40,8 @@ export default function CreateTask({ closeTask }: Props) {
 
 		try {
 			await createTask(formData)
+			reset()
+			closeTask(false)
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setAuthError(error.response?.data?.msg)
@@ -64,12 +49,6 @@ export default function CreateTask({ closeTask }: Props) {
 			}
 		}
 	}
-
-	useEffect(() => {
-		if (isSubmitSuccessful) {
-			reset()
-		}
-	}, [isSubmitSuccessful])
 
 	return (
 		<>
@@ -90,10 +69,7 @@ export default function CreateTask({ closeTask }: Props) {
 				</div>
 
 				<form className='createTaskForm' onSubmit={handleSubmit(onSubmit)}>
-					<FormProvider {...methods}>
-						<TaskCreationForm />
-					</FormProvider>
-
+					<TaskCreationForm />
 					<button
 						type='submit'
 						className='bg-[#F24E1E] hover:bg-[#df3400] active:bg-[#f68663] transition text-[#FFFFFF] w-25 h-13 py-3 px-5 rounded-md flex justify-center items-center cursor-pointer mt-8 font-semibold text-xl'

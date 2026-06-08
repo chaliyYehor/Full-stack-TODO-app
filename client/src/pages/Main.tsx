@@ -5,6 +5,12 @@ import Dashboard from '../components/main/Dashboard'
 import Header from '../components/main/Header'
 import Menu from '../components/main/Menu'
 import { useGetAllTodos } from '../hooks/useGetAllTodos'
+import { FormProvider, useForm } from 'react-hook-form'
+import {
+	createTaskFormSchema,
+	type CreateTaskFormType,
+} from '../schemas/createTaskFormSchema'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 export default function Main() {
 	const navigate = useNavigate()
@@ -27,6 +33,19 @@ export default function Main() {
 		}
 	})
 
+	const methods = useForm<CreateTaskFormType>({
+		resolver: zodResolver(createTaskFormSchema),
+		defaultValues: {
+			title: '',
+			priority: 'Low',
+			taskDescription: '',
+			image: undefined,
+			date: null,
+			status: 'Not Started',
+		},
+		mode: 'onSubmit',
+	})
+
 	console.log(data)
 
 	return (
@@ -34,7 +53,9 @@ export default function Main() {
 			<Header />
 			<div className='container flex w-full'>
 				<Menu />
-				<Dashboard />
+				<FormProvider {...methods}>
+					<Dashboard />
+				</FormProvider>
 			</div>
 			{/* <h1
 				className={clsx(

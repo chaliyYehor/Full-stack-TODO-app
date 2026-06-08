@@ -1,10 +1,12 @@
 import dayjs from 'dayjs'
 import { Plus } from 'lucide-react'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CreateTask from './taskCreation/CreateTask'
 import { useGetAllTodos } from '../../hooks/useGetAllTodos'
 import Todo from './Todo'
+import { useFormContext } from 'react-hook-form'
+import type { CreateTaskFormType } from '../../schemas/createTaskFormSchema'
 
 dayjs.extend(customParseFormat)
 
@@ -17,8 +19,13 @@ export default function ToDoSection() {
 		return parsedDate.isValid() && parsedDate.isSame(dayjs(), 'day')
 	}
 
+	const {
+		formState: { isSubmitSuccessful },
+	} = useFormContext<CreateTaskFormType>()
+
 	const { data: todos, isPending } = useGetAllTodos()
 	const formattedDate = dayjs(todos?.[0]?.createdAt).format('DD/MM/YYYY')
+
 	return (
 		<>
 			<div className='todoWrapper p-5 h-full min-h-0 relative overflow-hidden flex flex-col'>
@@ -30,7 +37,10 @@ export default function ToDoSection() {
 						</span>
 					</div>
 					{todos && todos?.length > 0 && (
-						<button onClick={() => setIsAddTaskOpen(true)} className='flex cursor-pointer'>
+						<button
+							onClick={() => setIsAddTaskOpen(true)}
+							className='flex cursor-pointer'
+						>
 							<Plus color='#FF6767' />
 							<span className='inline-block text-[#A1A3AB]'>Add Task</span>
 						</button>
