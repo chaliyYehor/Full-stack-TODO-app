@@ -47,7 +47,7 @@ export default function ToDoSection() {
 								<span className='font-bold text-xl'>&#183;</span>
 								Today
 							</>
-						)}
+						)} 
 					</span>
 				</div> */}
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
