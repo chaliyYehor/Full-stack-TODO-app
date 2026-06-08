@@ -5,6 +5,7 @@ export const todoSchema = z.object({
 	date: z.string(),
 	imageUrl: z.string(),
 	priority: z.enum(['Extreme', 'Moderate', 'Low']),
+	status: z.enum(['Not Started', 'In Progress', 'Completed']),
 	taskDescription: z.string(),
 	title: z.string(),
 	updatedAt: z.string(),

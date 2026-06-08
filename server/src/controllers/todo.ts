@@ -26,7 +26,7 @@ export const createTodo = async (
 		return next(new BadRequestError(parsed.error.message))
 	}
 
-	const { date, priority, title, taskDescription } = parsed.data
+	const { date, priority, title, taskDescription, status } = parsed.data
 
 	try {
 		let imageUrl = ''
@@ -50,6 +50,7 @@ export const createTodo = async (
 
 		const task = {
 			title,
+			status,
 			priority,
 			date,
 			taskDescription,

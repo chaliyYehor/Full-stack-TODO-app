@@ -29,10 +29,12 @@ export default function ToDoSection() {
 							To-Do
 						</span>
 					</div>
-					{/* <button className='flex cursor-pointer'>
-						<Plus color='#FF6767' />
-						<span className='inline-block text-[#A1A3AB]'>Add Task</span>
-					</button> */}
+					{todos && todos?.length > 0 && (
+						<button className='flex cursor-pointer'>
+							<Plus color='#FF6767' />
+							<span className='inline-block text-[#A1A3AB]'>Add Task</span>
+						</button>
+					)}
 				</div>
 				{/* <div className='dateSection w-full shrink-0'>
 					20{' '}
@@ -49,17 +51,18 @@ export default function ToDoSection() {
 					</span>
 				</div> */}
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
-					{todos && todos.map(todo => (
-						<Todo completed={false} key={todo._id} />
-					))}
+					{todos &&
+						todos.map(todo => <Todo completed={false} key={todo._id} />)}
 				</div>
-				<button
-					className='FirstTask absolute flex cursor-pointer top-[50%] left-[50%] -translate-x-1/2 text-2xl items-center justify-center'
-					onClick={() => setIsAddTaskOpen(true)}
-				>
-					<Plus color='#FF6767' />
-					<span className='inline-block text-[#A1A3AB]'>Add Task</span>
-				</button>
+				{todos && todos?.length < 1 && (
+					<button
+						className='FirstTask absolute flex cursor-pointer top-[50%] left-[50%] -translate-x-1/2 text-2xl items-center justify-center'
+						onClick={() => setIsAddTaskOpen(true)}
+					>
+						<Plus color='#FF6767' />
+						<span className='inline-block text-[#A1A3AB]'>Add Task</span>
+					</button>
+				)}
 			</div>
 
 			{isAddTaskOpen && (

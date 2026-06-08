@@ -24,6 +24,7 @@ export default function CreateTask({ closeTask }: Props) {
 			taskDescription: '',
 			image: undefined,
 			date: null,
+			status: 'Not Started'
 		},
 		mode: 'onSubmit',
 	})
@@ -45,6 +46,7 @@ export default function CreateTask({ closeTask }: Props) {
 		formData.append('priority', payload.priority)
 		formData.append('date', payload.date)
 		formData.append('taskDescription', payload.taskDescription)
+		formData.append('status', 'Not Started')
 		if (payload.image) {
 			formData.append('image', payload.image)
 		}

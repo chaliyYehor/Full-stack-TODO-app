@@ -9,6 +9,7 @@ interface Task {
 	taskDescription: string
 	imageUrl: string
 	imagePublicId: string
+	status: 'Not Started' | 'In Progress' | 'Completed'
 }
 
 interface TaskMethods {}
@@ -48,6 +49,11 @@ const TaskSchema = new mongoose.Schema<Task, TaskModel, TaskMethods>(
 			ref: 'User',
 			required: true,
 		},
+		status: {
+			type: String,
+			enum: ['Not Started', 'In Progress', 'Completed'],
+			required: true
+		}
 	},
 	{ timestamps: true },
 )
