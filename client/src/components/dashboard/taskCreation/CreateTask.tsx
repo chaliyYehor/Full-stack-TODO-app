@@ -4,6 +4,7 @@ import TaskCreationForm from './TaskCreationForm'
 import { useCreateTodo } from '../../../hooks/useCreateTodo'
 import axios from 'axios'
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 
 type Props = {
 	closeTask: React.Dispatch<React.SetStateAction<boolean>>
@@ -13,6 +14,8 @@ export default function CreateTask({ closeTask }: Props) {
 	const [authError, setAuthError] = useState()
 
 	const { mutateAsync: createTask, isPending } = useCreateTodo()
+
+	const queryClient = useQueryClient()
 
 	const {
 		handleSubmit,
@@ -41,6 +44,7 @@ export default function CreateTask({ closeTask }: Props) {
 			await createTask(formData)
 			reset()
 			closeTask(false)
+			queryClient.invalidateQueries({queryKey: ['todos']})
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setAuthError(error.response?.data?.msg)
