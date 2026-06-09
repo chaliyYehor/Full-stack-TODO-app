@@ -56,14 +56,14 @@ export default function CreateTask({ closeTask, editTask }: Props) {
 		<>
 			<div
 				className={clsx(
-					editTask ? 'absolute left-[50%] top-[50%] translate-[-50%]' : '',
+					!editTask ? 'absolute left-[50%] top-[50%] translate-[-50%]' : '',
 					'z-20 w-255 h-200 bg-[#F9F9F9] p-12.5',
 				)}
 			>
 				<div className='upperPart flex w-full justify-between'>
 					<div className='relative'>
 						<h3 className='addNewTaskHeading text-xl font-bold inline-block'>
-							Add New Task
+							{editTask ? 'Edit Task' : 'Add New Task'}
 						</h3>
 					</div>
 					<button
