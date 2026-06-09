@@ -8,7 +8,7 @@ function NotFound() {
 					<img className='w-full max-w-140' src='/notFound.png' alt='404' />
 					<div className='info flex flex-col justify-end items-center pb-22.5 gap-15'>
 						<div className=' err-text uppercase'>OPPS! Page not found</div>
-						<Link to={'/'} className='px-10.25 py-3 backHome rounded-4xl uppercase transition cursor-pointer bg-[#FB8133] hover:bg-[#f66810] text-white  text-[24px] shadow-2xl'>
+						<Link to={'/dashboard'} className='px-10.25 py-3 backHome rounded-4xl uppercase transition cursor-pointer bg-[#FB8133] hover:bg-[#f66810] text-white  text-[24px] shadow-2xl'>
 							Back to home
 						</Link>
 					</div>

@@ -8,8 +8,14 @@ import FileUpload from './FileUpload'
 import { useState } from 'react'
 import TitleInput from './TitleInput'
 import DescriptionTA from './DescriptionTA'
+import type { TodoType } from '../../../schemas/todosSchema'
 
-export default function TaskCreationForm() {
+type Props = {
+	isFormEdit: boolean
+	prevTodo?: TodoType | null
+}
+
+export default function TaskCreationForm({}: Props) {
 	const [image, setImage] = useState<File | null>(null)
 
 	const {

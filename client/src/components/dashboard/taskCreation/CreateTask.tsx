@@ -1,28 +1,50 @@
-import { useFormContext, type SubmitHandler } from 'react-hook-form'
-import { type CreateTaskFormType } from '../../../schemas/createTaskFormSchema'
+import { FormProvider, useForm, type SubmitHandler } from 'react-hook-form'
+import {
+	createTaskFormSchema,
+	type CreateTaskFormType,
+} from '../../../schemas/createTaskFormSchema'
 import TaskCreationForm from './TaskCreationForm'
 import { useCreateTodo } from '../../../hooks/useCreateTodo'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import clsx from 'clsx'
+import { useNavigate } from 'react-router-dom'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useGetAllTodos } from '../../../hooks/useGetAllTodos'
+import { editTaskFormSchema } from '../../../schemas/editTaskFormSchema'
+import dayjs from 'dayjs'
 
 type Props = {
-	closeTask: React.Dispatch<React.SetStateAction<boolean>>
+	closeTask?: React.Dispatch<React.SetStateAction<boolean>>
+	editTask: boolean
+	editTaskId?: string
 }
 
-export default function CreateTask({ closeTask }: Props) {
+export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 	const [authError, setAuthError] = useState()
 
-	const { mutateAsync: createTask, isPending } = useCreateTodo()
+	const navigate = useNavigate()
 
 	const queryClient = useQueryClient()
+	const { mutateAsync: createTask, isPending } = useCreateTodo()
 
-	const {
-		handleSubmit,
-		reset,
-	} = useFormContext<CreateTaskFormType>()
+	const createFormMethods = useForm<CreateTaskFormType>({
+		resolver: zodResolver(createTaskFormSchema),
+		defaultValues: {
+			title: '',
+			priority: 'Low',
+			taskDescription: '',
+			image: undefined,
+			date: null,
+			status: 'Not Started',
+		},
+		mode: 'onSubmit',
+	})
 
-	const onSubmit: SubmitHandler<CreateTaskFormType> = async data => {
+	const { handleSubmit: handleCreate, reset: resetCreate } = createFormMethods
+
+	const onCreateSubmit: SubmitHandler<CreateTaskFormType> = async data => {
 		const payload = {
 			...data,
 			date: data.date ? data.date.toISOString() : '',
@@ -42,9 +64,10 @@ export default function CreateTask({ closeTask }: Props) {
 
 		try {
 			await createTask(formData)
-			reset()
-			closeTask(false)
-			queryClient.invalidateQueries({queryKey: ['todos']})
+			resetCreate()
+			closeTask && closeTask(false)
+			queryClient.invalidateQueries({ queryKey: ['todos'] })
+			console.log('success')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setAuthError(error.response?.data?.msg)
@@ -53,33 +76,117 @@ export default function CreateTask({ closeTask }: Props) {
 		}
 	}
 
+	const { data: todos } = useGetAllTodos()
+	const oldTodo = todos?.find(todo => todo._id === editTaskId)
+
+	useEffect(() => {
+		if (!editTask || !oldTodo) return
+
+		createFormMethods.reset({
+			title: oldTodo.title,
+			priority: oldTodo.priority,
+			taskDescription: oldTodo.taskDescription,
+			date: oldTodo.date ? dayjs(oldTodo.date) : null,
+			status: oldTodo.status,
+			image: undefined,
+		})
+	}, [editTask, oldTodo, createFormMethods])
+
+	const onEditSubmit: SubmitHandler<CreateTaskFormType> = async data => {
+		const changedFields: Partial<CreateTaskFormType> = {}
+
+		if (data.title !== oldTodo?.title) {
+			changedFields.title = data.title
+		}
+		if (data.priority !== oldTodo?.priority) {
+			changedFields.priority = data.priority
+		}
+
+		if (
+			data.taskDescription &&
+			data.taskDescription !== oldTodo?.taskDescription
+		) {
+			changedFields.taskDescription = data.taskDescription
+		}
+
+		if (data.date !== null && data.date.toISOString() !== oldTodo?.date) {
+			changedFields.date = data.date
+		}
+
+		if (data.image) {
+			changedFields.image = data.image
+		}
+
+		const parsed = editTaskFormSchema.safeParse(changedFields)
+
+		if (!parsed.success) {
+			console.log(parsed.error)
+			return
+		}
+
+		const formData = new FormData()
+		Object.entries(parsed.data).forEach(([key, value]) => {
+			if (value === undefined || value === null) return
+
+			if (value instanceof File) {
+				formData.append(key, value)
+				return
+			}
+
+			if (dayjs.isDayjs(value)) {
+				formData.append(key, value.toISOString())
+				return
+			}
+
+			formData.append(key, String(value))
+		})
+	}
+
 	return (
 		<>
-			<div className='absolute left-[50%] top-[50%] translate-[-50%] z-20 w-255 h-200 bg-[#F9F9F9] p-12.5'>
+			<div
+				className={clsx(
+					!editTask ? 'absolute left-[50%] top-[50%] translate-[-50%]' : '',
+					'z-20 w-255 h-200 bg-[#F9F9F9] p-12.5',
+				)}
+			>
 				<div className='upperPart flex w-full justify-between'>
 					<div className='relative'>
 						<h3 className='addNewTaskHeading text-xl font-bold inline-block'>
-							Add New Task
+							{editTask ? 'Edit Task' : 'Add New Task'}
 						</h3>
 					</div>
 					<button
 						type='button'
 						className='cursor-pointer text-xl font-semibold underline'
-						onClick={() => closeTask(false)}
+						onClick={() => {
+							if (editTask) {
+								navigate(-1)
+							} else {
+								closeTask && closeTask(false)
+							}
+						}}
 					>
 						Go Back
 					</button>
 				</div>
-
-				<form className='createTaskForm' onSubmit={handleSubmit(onSubmit)}>
-					<TaskCreationForm />
-					<button
-						type='submit'
-						className='bg-[#F24E1E] hover:bg-[#df3400] active:bg-[#f68663] transition text-[#FFFFFF] w-25 h-13 py-3 px-5 rounded-md flex justify-center items-center cursor-pointer mt-8 font-semibold text-xl'
+				<FormProvider {...createFormMethods}>
+					<form
+						className='createTaskForm'
+						onSubmit={handleCreate(editTask ? onEditSubmit : onCreateSubmit)}
 					>
-						{isPending ? <div className='loader ' /> : 'Done'}
-					</button>
-				</form>
+						<TaskCreationForm
+							isFormEdit={editTask}
+							prevTodo={editTask ? oldTodo : null}
+						/>
+						<button
+							type='submit'
+							className='bg-[#F24E1E] hover:bg-[#df3400] active:bg-[#f68663] transition text-[#FFFFFF] w-25 h-13 py-3 px-5 rounded-md flex justify-center items-center cursor-pointer mt-8 font-semibold text-xl'
+						>
+							{isPending ? <div className='loader ' /> : 'Done'}
+						</button>
+					</form>
+				</FormProvider>
 				{authError && (
 					<p className='text-red-500 text-sm m-0 p-0 absolute bottom-0'>
 						{authError}

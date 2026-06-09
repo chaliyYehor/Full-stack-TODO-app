@@ -77,7 +77,7 @@ export default function ToDoSection() {
 
 			{isAddTaskOpen && (
 				<>
-					<CreateTask closeTask={setIsAddTaskOpen} />
+					<CreateTask editTask={false} closeTask={setIsAddTaskOpen} />
 					<div
 						onClick={() => setIsAddTaskOpen(false)}
 						className='brightnessDown top-0 left-0 z-10 absolute w-screen h-screen bg-black/70'
