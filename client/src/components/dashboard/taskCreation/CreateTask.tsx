@@ -27,7 +27,7 @@ export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 	const navigate = useNavigate()
 
 	const queryClient = useQueryClient()
-	const { mutateAsync: createTask } = useCreateTodo()
+	const { mutateAsync: createTask, isPending } = useCreateTodo()
 
 	const createFormMethods = useForm<CreateTaskFormType>({
 		resolver: zodResolver(createTaskFormSchema),
@@ -76,7 +76,7 @@ export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 		}
 	}
 
-	const { data: todos, isPending } = useGetAllTodos()
+	const { data: todos } = useGetAllTodos()
 	const oldTodo = todos?.find(todo => todo._id === editTaskId)
 
 	useEffect(() => {
@@ -91,7 +91,7 @@ export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 			image: undefined,
 		})
 	}, [editTask, oldTodo, createFormMethods])
-	
+
 	const onEditSubmit: SubmitHandler<CreateTaskFormType> = async data => {
 		const changedFields: Partial<CreateTaskFormType> = {}
 
