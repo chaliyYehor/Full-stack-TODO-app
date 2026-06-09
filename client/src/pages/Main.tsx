@@ -1,20 +1,9 @@
 import { useLocalStorage } from '@uidotdev/usehooks'
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import Dashboard from '../components/main/Dashboard'
 import Header from '../components/main/Header'
 import Menu from '../components/main/Menu'
 import { useGetAllTodos } from '../hooks/useGetAllTodos'
-import { FormProvider, useForm } from 'react-hook-form'
-import {
-	createTaskFormSchema,
-	type CreateTaskFormType,
-} from '../schemas/createTaskFormSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import {
-	editTaskFormSchema,
-	type EditTaskFormSchema,
-} from '../schemas/editTaskFormSchema'
 
 export default function Main() {
 	const navigate = useNavigate()
@@ -37,41 +26,12 @@ export default function Main() {
 		}
 	})
 
-	const createFormMethods = useForm<CreateTaskFormType>({
-		resolver: zodResolver(createTaskFormSchema),
-		defaultValues: {
-			title: '',
-			priority: 'Low',
-			taskDescription: '',
-			image: undefined,
-			date: null,
-			status: 'Not Started',
-		},
-		mode: 'onSubmit',
-	})
-
-	const editFormMethods = useForm<EditTaskFormSchema>({
-		resolver: zodResolver(editTaskFormSchema),
-		defaultValues: {
-			title: '',
-			priority: 'Low',
-			taskDescription: '',
-			image: undefined,
-			date: null,
-		},
-		mode: 'onSubmit',
-	})
-
 	return (
 		<>
 			<Header />
 			<div className='container flex w-full'>
 				<Menu />
-				<FormProvider {...createFormMethods}>
-					<FormProvider {...editFormMethods}>
-						<Outlet />
-					</FormProvider>
-				</FormProvider>
+				<Outlet />
 			</div>
 			{/* <h1
 				className={clsx(
