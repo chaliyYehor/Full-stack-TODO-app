@@ -38,6 +38,21 @@ export default function Todo({ completed, todoInfo }: Props) {
 					<Circle strokeWidth={3} size={12} color='#A1A3AB' />
 					<Circle strokeWidth={3} size={12} color='#A1A3AB' />
 					<Circle strokeWidth={3} size={12} color='#A1A3AB' />
+					<div className='todoDropdown cursor-default absolute top-8 right-2 w-50 h-fit p-2 text-[16px] bg-white shadow-xl rounded-md'>
+						<ul className='flex flex-col gap-2'>
+							<li>
+								<button>Edit Task</button>
+							</li>
+							<li>
+								<button>Delete Task</button>
+							</li>
+							<li>
+								<button>
+									{completed ? 'Remove from completed' : 'Complete'}
+								</button>
+							</li>
+						</ul>
+					</div>
 				</div>
 
 				<h3 className=' font-bold text-2xl'>{title}</h3>

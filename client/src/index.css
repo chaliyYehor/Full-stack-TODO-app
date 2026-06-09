@@ -246,3 +246,25 @@ header {
 		transform: rotate(1turn);
 	}
 }
+
+
+.todoDropdown li {
+	width: 100%;
+	height: 100%;
+	padding: 8px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: 0.4s;
+}
+
+.todoDropdown li > button {
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	display: flex;
+}
+
+.todoDropdown li:hover {
+	background-color: #565872;
+	color: white;
+}
