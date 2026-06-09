@@ -25,7 +25,7 @@ export default function Main() {
 		}
 	})
 	// Check if the user is authorized 1.2
-	const { data, isError } = useGetAllTodos()
+	const { isError } = useGetAllTodos()
 	useEffect(() => {
 		if (isError) {
 			saveToken('')

@@ -5,6 +5,7 @@ import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Dashboard from './components/main/Dashboard'
+import EditTask from './components/main/EditTask'
 
 const router = createBrowserRouter([
 	{
@@ -14,13 +15,13 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: '/dashboard',
-				element: <Dashboard />
+				element: <Dashboard />,
 			},
-			// {
-			// 	path: '/editTask',
-			// 	element: 
-			// }
-		]
+			{
+				path: '/editTask/:todoId',
+				element: <EditTask />,
+			},
+		],
 	},
 	{
 		path: '/signUp',
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
 	{
 		path: '/signIn',
 		element: <SignIn />,
-	}
+	},
 ])
 
 const client = new QueryClient()

@@ -33,38 +33,39 @@ export default function Menu() {
 			</div>
 			<nav className='menu w-full flex flex-col items-center mt-10'>
 				<ul className='flex flex-col ml-14 gap-2.5 w-full'>
-					<li>
-						<Link to={'#'}>
+					<Link className='w-full h-full' to={'/dashboard'}>
+						<li className='flex gap-5'>
 							<LayoutDashboard size={35} /> Dashboard
-						</Link>
-					</li>
-					<li>
-						<Link to={'#'}>
+						</li>
+					</Link>
+
+					<Link className='w-full h-full' to={'#'}>
+						<li className='flex gap-5'>
 							<BsExclamationLg size={48} className='-ml-1' />{' '}
 							<span className='inline-block -ml-2'>Vital Task</span>
-						</Link>
-					</li>
-					<li>
-						<Link to={'#'}>
+						</li>
+					</Link>
+					<Link className='w-full h-full' to={'#'}>
+						<li className='flex gap-5'>
 							<CalendarCheck size={35} />
 							My Task
-						</Link>
-					</li>
-					<li>
-						<Link to={'#'}>
+						</li>
+					</Link>
+					<Link className='w-full h-full' to={'#'}>
+						<li className='flex gap-5'>
 							<ListChecks size={35} /> Task Categories
-						</Link>
-					</li>
-					<li>
-						<Link to={'#'}>
+						</li>
+					</Link>
+					<Link className='w-full h-full' to={'#'}>
+						<li className='flex gap-5'>
 							<Settings size={35} /> Settings
-						</Link>
-					</li>
-					<li>
-						<Link to={'#'}>
+						</li>
+					</Link>
+					<Link className='w-full h-full' to={'#'}>
+						<li className='flex gap-5'>
 							<HiQuestionMarkCircle size={35} /> Help
-						</Link>
-					</li>
+						</li>
+					</Link>
 				</ul>
 			</nav>
 
