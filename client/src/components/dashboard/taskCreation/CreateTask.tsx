@@ -24,7 +24,7 @@ export default function CreateTask({ closeTask, editTask }: Props) {
 
 	const { handleSubmit, reset } = useFormContext<CreateTaskFormType>()
 
-	const onSubmit: SubmitHandler<CreateTaskFormType> = async data => {
+	const onCreateSubmit: SubmitHandler<CreateTaskFormType> = async data => {
 		const payload = {
 			...data,
 			date: data.date ? data.date.toISOString() : '',
@@ -84,7 +84,7 @@ export default function CreateTask({ closeTask, editTask }: Props) {
 					</button>
 				</div>
 
-				<form className='createTaskForm' onSubmit={handleSubmit(onSubmit)}>
+				<form className='createTaskForm' onSubmit={handleSubmit(onCreateSubmit)}>
 					<TaskCreationForm />
 					<button
 						type='submit'
