@@ -5,22 +5,21 @@ import { useCreateTodo } from '../../../hooks/useCreateTodo'
 import axios from 'axios'
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import clsx from 'clsx'
 
 type Props = {
-	closeTask: React.Dispatch<React.SetStateAction<boolean>>
+	closeTask?: React.Dispatch<React.SetStateAction<boolean>>
+	editTask: boolean
 }
 
-export default function CreateTask({ closeTask }: Props) {
+export default function CreateTask({ closeTask, editTask }: Props) {
 	const [authError, setAuthError] = useState()
 
 	const { mutateAsync: createTask, isPending } = useCreateTodo()
 
 	const queryClient = useQueryClient()
 
-	const {
-		handleSubmit,
-		reset,
-	} = useFormContext<CreateTaskFormType>()
+	const { handleSubmit, reset } = useFormContext<CreateTaskFormType>()
 
 	const onSubmit: SubmitHandler<CreateTaskFormType> = async data => {
 		const payload = {
@@ -43,8 +42,8 @@ export default function CreateTask({ closeTask }: Props) {
 		try {
 			await createTask(formData)
 			reset()
-			closeTask(false)
-			queryClient.invalidateQueries({queryKey: ['todos']})
+			closeTask && closeTask(false)
+			queryClient.invalidateQueries({ queryKey: ['todos'] })
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setAuthError(error.response?.data?.msg)
@@ -55,7 +54,12 @@ export default function CreateTask({ closeTask }: Props) {
 
 	return (
 		<>
-			<div className='absolute left-[50%] top-[50%] translate-[-50%] z-20 w-255 h-200 bg-[#F9F9F9] p-12.5'>
+			<div
+				className={clsx(
+					editTask ? 'absolute left-[50%] top-[50%] translate-[-50%]' : '',
+					'z-20 w-255 h-200 bg-[#F9F9F9] p-12.5',
+				)}
+			>
 				<div className='upperPart flex w-full justify-between'>
 					<div className='relative'>
 						<h3 className='addNewTaskHeading text-xl font-bold inline-block'>
@@ -65,7 +69,7 @@ export default function CreateTask({ closeTask }: Props) {
 					<button
 						type='button'
 						className='cursor-pointer text-xl font-semibold underline'
-						onClick={() => closeTask(false)}
+						onClick={() => closeTask && closeTask(false)}
 					>
 						Go Back
 					</button>
