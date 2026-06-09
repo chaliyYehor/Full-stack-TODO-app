@@ -167,7 +167,7 @@ export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 					>
 						<TaskCreationForm
 							isFormEdit={editTask}
-							taskPriority={editTask ? oldTodo?.priority : null}
+							prevTodo={editTask ? oldTodo : null}
 						/>
 						<button
 							type='submit'

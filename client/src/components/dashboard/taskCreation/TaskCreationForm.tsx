@@ -8,13 +8,14 @@ import FileUpload from './FileUpload'
 import { useState } from 'react'
 import TitleInput from './TitleInput'
 import DescriptionTA from './DescriptionTA'
+import type { TodoType } from '../../../schemas/todosSchema'
 
 type Props = {
 	isFormEdit: boolean
-	taskPriority?: 'Extreme' | 'Moderate' | 'Low' | null
+	prevTodo?: TodoType | null
 }
 
-export default function TaskCreationForm({ isFormEdit, taskPriority }: Props) {
+export default function TaskCreationForm({ prevTodo }: Props) {
 	const [image, setImage] = useState<File | null>(null)
 
 	const {
@@ -56,7 +57,7 @@ export default function TaskCreationForm({ isFormEdit, taskPriority }: Props) {
 								{inp}
 								<input
 									className='w-5 cursor-pointer'
-									defaultChecked={taskPriority && taskPriority === inp ? true : false}
+									defaultChecked={prevTodo && prevTodo.priority === inp ? true : false}
 									type='radio'
 									{...register('priority')}
 									value={inp}
