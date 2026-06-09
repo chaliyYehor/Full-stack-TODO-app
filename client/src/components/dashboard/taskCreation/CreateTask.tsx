@@ -6,6 +6,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {
 	closeTask?: React.Dispatch<React.SetStateAction<boolean>>
@@ -13,6 +14,8 @@ type Props = {
 }
 
 export default function CreateTask({ closeTask, editTask }: Props) {
+	const navigate = useNavigate()
+
 	const [authError, setAuthError] = useState()
 
 	const { mutateAsync: createTask, isPending } = useCreateTodo()
@@ -69,7 +72,13 @@ export default function CreateTask({ closeTask, editTask }: Props) {
 					<button
 						type='button'
 						className='cursor-pointer text-xl font-semibold underline'
-						onClick={() => closeTask && closeTask(false)}
+						onClick={() => {
+							if (editTask) {
+								navigate(-1)
+							} else {
+								closeTask && closeTask(false)
+							}
+						}}
 					>
 						Go Back
 					</button>
