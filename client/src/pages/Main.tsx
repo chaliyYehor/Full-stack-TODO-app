@@ -11,6 +11,10 @@ import {
 	type CreateTaskFormType,
 } from '../schemas/createTaskFormSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
+import {
+	editTaskFormSchema,
+	type EditTaskFormSchema,
+} from '../schemas/editTaskFormSchema'
 
 export default function Main() {
 	const navigate = useNavigate()
@@ -46,13 +50,27 @@ export default function Main() {
 		mode: 'onSubmit',
 	})
 
+	const editFormMethods = useForm<EditTaskFormSchema>({
+		resolver: zodResolver(editTaskFormSchema),
+		defaultValues: {
+			title: '',
+			priority: 'Low',
+			taskDescription: '',
+			image: undefined,
+			date: null,
+		},
+		mode: 'onSubmit',
+	})
+
 	return (
 		<>
 			<Header />
 			<div className='container flex w-full'>
 				<Menu />
 				<FormProvider {...createFormMethods}>
-					<Outlet />
+					<FormProvider {...editFormMethods}>
+						<Outlet />
+					</FormProvider>
 				</FormProvider>
 			</div>
 			{/* <h1
