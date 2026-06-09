@@ -5,7 +5,7 @@ import {
 	LogOut,
 	Settings,
 } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { BsExclamationLg } from 'react-icons/bs'
 import { HiQuestionMarkCircle } from 'react-icons/hi'
 import { useGetUserInfo } from '../../hooks/useGetUserInfo'
@@ -33,11 +33,16 @@ export default function Menu() {
 			</div>
 			<nav className='menu w-full flex flex-col items-center mt-10'>
 				<ul className='flex flex-col ml-14 gap-2.5 w-full'>
-					<Link className='w-full h-full' to={'/dashboard'}>
+					<NavLink
+						className={({ isActive }) =>
+							`w-full h-full ${isActive ? 'active' : ''}`
+						}
+						to={'/dashboard'}
+					>
 						<li className='flex gap-5'>
 							<LayoutDashboard size={35} /> Dashboard
 						</li>
-					</Link>
+					</NavLink>
 
 					<Link className='w-full h-full' to={'#'}>
 						<li className='flex gap-5'>
