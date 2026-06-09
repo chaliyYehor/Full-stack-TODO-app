@@ -1,8 +1,4 @@
-import {
-	FormProvider,
-	useForm,
-	type SubmitHandler,
-} from 'react-hook-form'
+import { FormProvider, useForm, type SubmitHandler } from 'react-hook-form'
 import {
 	createTaskFormSchema,
 	type CreateTaskFormType,
@@ -10,7 +6,7 @@ import {
 import TaskCreationForm from './TaskCreationForm'
 import { useCreateTodo } from '../../../hooks/useCreateTodo'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useNavigate } from 'react-router-dom'
@@ -82,6 +78,20 @@ export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 
 	const { data: todos, isPending } = useGetAllTodos()
 	const oldTodo = todos?.find(todo => todo._id === editTaskId)
+
+	useEffect(() => {
+		if (!editTask || !oldTodo) return
+
+		createFormMethods.reset({
+			title: oldTodo.title,
+			priority: oldTodo.priority,
+			taskDescription: oldTodo.taskDescription,
+			date: oldTodo.date ? dayjs(oldTodo.date) : null,
+			status: oldTodo.status,
+			image: undefined,
+		})
+	}, [editTask, oldTodo, createFormMethods])
+	
 	const onEditSubmit: SubmitHandler<CreateTaskFormType> = async data => {
 		const changedFields: Partial<CreateTaskFormType> = {}
 
