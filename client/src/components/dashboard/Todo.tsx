@@ -1,6 +1,7 @@
 import { Circle } from 'lucide-react'
 import type { TodoType } from '../../schemas/todosSchema'
 import dayjs from 'dayjs'
+import { useState } from 'react'
 
 type Props = {
 	completed: boolean
@@ -8,6 +9,8 @@ type Props = {
 }
 
 export default function Todo({ completed, todoInfo }: Props) {
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
 	const { imageUrl, priority, taskDescription, title, status, createdAt } =
 		todoInfo
 	console.log(imageUrl)
@@ -29,15 +32,20 @@ export default function Todo({ completed, todoInfo }: Props) {
 
 	return (
 		<>
-			<div className='todo-wrapper grid grid-rows-3 cursor-pointer relative mt-4 gap-3 rounded-lg border border-[#A1A3AB] py-4 px-6 h-60'>
+			<div className='todo-wrapper select-none grid grid-rows-3 cursor-pointer relative mt-4 gap-3 rounded-lg border border-[#A1A3AB] py-4 px-6 h-60'>
 				<div className='todo-status absolute left-1 top-1'>
 					<Circle strokeWidth={3} color={statusColor} />
 				</div>
 
-				<div className='tools absolute right-2 gap-0.5 flex justify-center items-center cursor-pointer w-14 h-10 '>
+				<div
+					onClick={() => setIsDropdownOpen(state => (state ? false : true))}
+					className='tools absolute right-2 gap-0.5 flex justify-center items-center cursor-pointer w-14 h-10 '
+				>
 					<Circle strokeWidth={3} size={12} color='#A1A3AB' />
 					<Circle strokeWidth={3} size={12} color='#A1A3AB' />
 					<Circle strokeWidth={3} size={12} color='#A1A3AB' />
+				</div>
+				{isDropdownOpen && (
 					<div className='todoDropdown cursor-default absolute top-8 right-2 w-50 h-fit p-2 text-[16px] bg-white shadow-xl rounded-md'>
 						<ul className='flex flex-col gap-2'>
 							<li>
@@ -53,7 +61,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 							</li>
 						</ul>
 					</div>
-				</div>
+				)}
 
 				<h3 className=' font-bold text-2xl'>{title}</h3>
 
