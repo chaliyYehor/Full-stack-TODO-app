@@ -1,6 +1,6 @@
 import { useLocalStorage } from '@uidotdev/usehooks'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import Dashboard from '../components/main/Dashboard'
 import Header from '../components/main/Header'
 import Menu from '../components/main/Menu'
@@ -46,15 +46,13 @@ export default function Main() {
 		mode: 'onSubmit',
 	})
 
-	console.log(data)
-
 	return (
 		<>
 			<Header />
 			<div className='container flex w-full'>
 				<Menu />
 				<FormProvider {...methods}>
-					<Dashboard />
+					<Outlet />
 				</FormProvider>
 			</div>
 			{/* <h1

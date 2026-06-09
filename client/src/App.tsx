@@ -4,12 +4,23 @@ import NotFound from './pages/NotFound'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import Dashboard from './components/main/Dashboard'
 
 const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <Main />,
 		errorElement: <NotFound />,
+		children: [
+			{
+				path: '/dashboard',
+				element: <Dashboard />
+			},
+			// {
+			// 	path: '/editTask',
+			// 	element: 
+			// }
+		]
 	},
 	{
 		path: '/signUp',
