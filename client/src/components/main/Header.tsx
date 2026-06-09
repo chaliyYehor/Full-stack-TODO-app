@@ -9,12 +9,12 @@ export default function Header() {
 			className='bg-[#F8F8F8] shadow-md flex items-center justify-between px-18 pt-10 pb-6.25
 		'
 		>
-			<div className='logo text-4xl'>
+			<div translate='no' className='logo text-4xl'>
 				<span className='text-[#FF6767]'>Dash</span>
 				<span className='text-[#000000]'>board</span>
 			</div>
 			<div className='date'>
-				<p className='text-black'>{dayName}</p>
+				<p className='text-black capitalize'>{dayName}</p>
 				<p className='text-[#3ABEFF]'>{date}</p>
 			</div>
 		</header>
