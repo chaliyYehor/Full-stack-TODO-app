@@ -25,11 +25,11 @@ export default function Menu() {
 	return (
 		<div className='menu-wrapper flex flex-col items-center relative bg-[#FF6767] shadow-md rounded-r-xl min-w-100 min-h-[calc(100dvh-11rem)] mt-15 text-white'>
 			<div className='account-info pt-17 flex flex-col items-center'>
-				<div className='pfp absolute flex justify-center items-center -top-13 bg-cyan-500 rounded-full w-25 h-25 text-5xl font-bold'>
+				<div translate='no' className='pfp absolute flex justify-center items-center -top-13 bg-cyan-500 rounded-full w-25 h-25 text-5xl font-bold'>
 					{data?.lastName.split('')[0]}
 				</div>
-				<p className='name font-bold text-xl'>{`${data?.firstName} ${data?.lastName}`}</p>
-				<p className='email'>{data?.email}</p>
+				<p translate='no' className='name font-bold text-xl'>{`${data?.firstName} ${data?.lastName}`}</p>
+				<p translate='no' className='email'>{data?.email}</p>
 			</div>
 			<nav className='menu w-full flex flex-col items-center mt-10'>
 				<ul className='flex flex-col ml-14 gap-2.5 w-full'>

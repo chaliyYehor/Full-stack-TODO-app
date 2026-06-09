@@ -2,6 +2,7 @@ import { Circle } from 'lucide-react'
 import type { TodoType } from '../../schemas/todosSchema'
 import dayjs from 'dayjs'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 type Props = {
 	completed: boolean
@@ -11,7 +12,7 @@ type Props = {
 export default function Todo({ completed, todoInfo }: Props) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-	const { imageUrl, priority, taskDescription, title, status, createdAt } =
+	const { imageUrl, priority, taskDescription, title, status, createdAt, _id } =
 		todoInfo
 	console.log(imageUrl)
 	const formattedDate = dayjs(createdAt).format('DD/MM/YYYY')
@@ -48,14 +49,21 @@ export default function Todo({ completed, todoInfo }: Props) {
 				{isDropdownOpen && (
 					<div className='todoDropdown cursor-default absolute top-8 right-2 w-50 h-fit p-2 text-[16px] bg-white shadow-xl rounded-md'>
 						<ul className='flex flex-col gap-2'>
-							<li>
-								<button>Edit Task</button>
+							<li className='w-full h-full'>
+								<Link
+									className='w-full h-full inline-block p-2'
+									to={`/editTask/${_id}`}
+								>
+									Edit Task
+								</Link>
 							</li>
-							<li>
-								<button>Delete Task</button>
+							<li className='w-full h-full'>
+								<button className='w-full h-full inline-block p-2'>
+									Delete Task
+								</button>
 							</li>
-							<li>
-								<button>
+							<li className='w-full h-full'>
+								<button className='w-full h-full inline-block p-2'>
 									{completed ? 'Remove from completed' : 'Complete'}
 								</button>
 							</li>
