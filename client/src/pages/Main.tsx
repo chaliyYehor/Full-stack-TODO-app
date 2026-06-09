@@ -33,7 +33,7 @@ export default function Main() {
 		}
 	})
 
-	const methods = useForm<CreateTaskFormType>({
+	const createFormMethods = useForm<CreateTaskFormType>({
 		resolver: zodResolver(createTaskFormSchema),
 		defaultValues: {
 			title: '',
@@ -51,7 +51,7 @@ export default function Main() {
 			<Header />
 			<div className='container flex w-full'>
 				<Menu />
-				<FormProvider {...methods}>
+				<FormProvider {...createFormMethods}>
 					<Outlet />
 				</FormProvider>
 			</div>
