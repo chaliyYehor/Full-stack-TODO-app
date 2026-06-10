@@ -96,3 +96,11 @@ export const getAllTodos = async (
 		next(error)
 	}
 }
+
+export const changeTodo = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	
+}

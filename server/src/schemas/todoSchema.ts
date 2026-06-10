@@ -12,4 +12,7 @@ export const createTaskSchema = z.object({
 	status: z.enum(['Not Started', 'In Progress', 'Completed']),
 })
 
+export const optionalTaskSchema = createTaskSchema.partial()
+
+export type OptionalTask = z.infer<typeof optionalTaskSchema>
 export type CreateTaskFormType = z.infer<typeof createTaskSchema>
