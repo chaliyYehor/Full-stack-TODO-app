@@ -67,7 +67,7 @@ export const createTodo = async (
 
 		res.status(StatusCodes.CREATED).json({ msg: 'success', imageUrl })
 	} catch (error) {
-		return next(new BadRequestError('Image Upload failed'))
+		next(error)
 	} finally {
 		if (req.file?.path) {
 			await fs.unlink(req.file.path).catch(() => {})
@@ -102,10 +102,62 @@ export const changeTodo = async (
 	res: Response,
 	next: NextFunction,
 ) => {
-	const rs = req.query
+	const todoId = req.params.todoId
 	const result = optionalTaskSchema.safeParse(req.body)
 	if (!result.success) {
 		return next(new BadRequestError('Provide valid credentials'))
 	}
-	res.json({ result: result, query: rs })
+
+	try {
+		const task = await Task.findOne({
+			_id: todoId,
+			creatorId: req.user?.userID,
+		})
+
+		if (!task) {
+			return next(new BadRequestError('Task not found'))
+		}
+
+		const updatedData = { ...result.data }
+
+		if (req.file) {
+			if (req.file.size > MAX_FILE_SIZE) {
+				return next(new BadRequestError('Max image size is 5MB'))
+			}
+
+			if (!req.file.mimetype.startsWith('image/')) {
+				return next(new BadRequestError('Only images are allowed'))
+			}
+
+			const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
+				folder: 'todo-tasks',
+			})
+
+			if (task.imagePublicId) {
+				await cloudinary.uploader.destroy(task.imagePublicId)
+			}
+
+			Object.assign(updatedData, {
+				imageUrl: uploadedImage.secure_url,
+				imagePublicId: uploadedImage.public_id,
+			})
+		}
+
+		const updatedTask = await Task.findOneAndUpdate(
+			{
+				_id: todoId,
+				creatorID: req.user?.userID,
+			},
+			updatedData,
+			{ new: true, runValidators: true },
+		)
+
+		res.status(StatusCodes.OK).json({ task: updatedTask })
+	} catch (error) {
+		next(error)
+	} finally {
+		if (req.file?.path) {
+			await fs.unlink(req.file.path).catch(() => {})
+		}
+	}
 }

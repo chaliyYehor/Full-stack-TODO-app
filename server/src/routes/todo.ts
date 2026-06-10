@@ -9,7 +9,7 @@ import {
 const router = express.Router()
 
 router.post('/create', upload.single('image'), createTodo)
-router.post('/editTodo/:todoId', upload.single('image'), changeTodo)
+router.patch('/editTodo/:todoId', upload.single('image'), changeTodo)
 router.get('/', getAllTodos)
 
 export default router
