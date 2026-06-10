@@ -11,7 +11,7 @@ export const useLogin = () => {
 		mutationFn: loginUser,
 		onSuccess: (data) => {
 			saveToken(data.token)
-			navigate('/dashboard')
+			navigate('/')
 		},
 	})
 }

@@ -14,11 +14,11 @@ const router = createBrowserRouter([
 		errorElement: <NotFound />,
 		children: [
 			{
-				path: '/dashboard',
+				index: true,
 				element: <Dashboard />,
 			},
 			{
-				path: '/editTask/:todoId',
+				path: 'editTask/:todoId',
 				element: <EditTask />,
 			},
 		],

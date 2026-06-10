@@ -15,8 +15,6 @@ export default function Main() {
 		if (!token) {
 			saveToken('')
 			navigate('/signUp')
-		} else {
-			navigate('/dashboard')
 		}
 	})
 	// Check if the user is authorized 1.2
@@ -25,8 +23,6 @@ export default function Main() {
 		if (isError) {
 			saveToken('')
 			navigate('/signUp')
-		} else {
-			navigate('/dashboard')
 		}
 	})
 
