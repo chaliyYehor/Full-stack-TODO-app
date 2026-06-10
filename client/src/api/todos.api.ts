@@ -12,3 +12,9 @@ export const createTodo = async (data: FormData) => {
 
 	return response.data
 }
+
+export const editTodo = async (data: FormData, taskId: string) => {
+	const response = await api.patch(`/api/v1/todos/editTodo/${taskId}`)
+
+	return response.data
+}
