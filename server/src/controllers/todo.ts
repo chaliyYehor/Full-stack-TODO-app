@@ -2,7 +2,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import { NextFunction, Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import multer from 'multer'
-import { createTaskSchema } from '../schemas/todoSchema.js'
+import { createTaskSchema, optionalTaskSchema } from '../schemas/todoSchema.js'
 import { BadRequestError } from '../errors/bad-request.js'
 import Task from '../models/task.js'
 import fs from 'fs/promises'
@@ -100,7 +100,12 @@ export const getAllTodos = async (
 export const changeTodo = async (
 	req: Request,
 	res: Response,
-	next: NextFunction
+	next: NextFunction,
 ) => {
-	
+	const rs = req.query
+	const result = optionalTaskSchema.safeParse(req.body)
+	if (!result.success) {
+		return next(new BadRequestError('Provide valid credentials'))
+	}
+	res.json({ result: result, query: rs })
 }
