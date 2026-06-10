@@ -111,11 +111,11 @@ export const changeTodo = async (
 	try {
 		const task = await Task.findOne({
 			_id: todoId,
-			creatorId: req.user?.userID,
+			creatorID: req.user?.userID,
 		})
 
 		if (!task) {
-			return next(new BadRequestError('Task not found'))
+			return next(new BadRequestError(`Task not found`))
 		}
 
 		const updatedData = { ...result.data }
