@@ -152,7 +152,7 @@ export const changeTodo = async (
 			{ new: true, runValidators: true },
 		)
 
-		res.status(StatusCodes.OK).json({ task: updatedTask })
+		res.status(StatusCodes.OK).json({msg: 'Success'})
 	} catch (error) {
 		next(error)
 	} finally {
