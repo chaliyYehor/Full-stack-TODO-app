@@ -5,6 +5,7 @@ import multer from 'multer'
 import { createTaskSchema } from '../schemas/todoSchema.js'
 import { BadRequestError } from '../errors/bad-request.js'
 import Task from '../models/task.js'
+import fs from 'fs/promises'
 
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -67,6 +68,10 @@ export const createTodo = async (
 		res.status(StatusCodes.CREATED).json({ msg: 'success', imageUrl })
 	} catch (error) {
 		return next(new BadRequestError('Image Upload failed'))
+	} finally {
+		if (req.file?.path) {
+			await fs.unlink(req.file.path).catch(() => {})
+		}
 	}
 }
 
