@@ -14,7 +14,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useGetAllTodos } from '../../../hooks/useGetAllTodos'
 import { editTaskFormSchema } from '../../../schemas/editTaskFormSchema'
 import dayjs from 'dayjs'
-import { editTodo } from '../../../api/todos.api'
 import { useEditTodo } from '../../../hooks/useEditTodo'
 
 type Props = {
@@ -149,6 +148,7 @@ export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 			await editTaskAsync({ data: formData, taskId: editTaskId })
 			resetCreate()
 			queryClient.invalidateQueries({ queryKey: ['todos'] })
+			navigate('/')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setAuthError(error.response?.data?.msg)
