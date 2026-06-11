@@ -176,7 +176,7 @@ export const deleteTodo = async (
 		}).select(['imagePublicId'])
 
 		if (deleteTask?.imagePublicId) {
-			cloudinary.uploader.destroy(deleteTask.imagePublicId)
+			await cloudinary.uploader.destroy(deleteTask.imagePublicId)
 		}
 
 		res.status(StatusCodes.OK).json({ msg: 'Success' })
