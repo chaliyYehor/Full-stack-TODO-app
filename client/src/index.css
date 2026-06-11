@@ -284,3 +284,7 @@ header {
 .saveChanges {
 	box-shadow: 0px 0px 5px rgb(12, 50, 8);
 }
+
+.text {
+	scrollbar-width: none;
+}

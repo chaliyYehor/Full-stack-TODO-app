@@ -19,9 +19,19 @@ export default function Todo({ completed, todoInfo }: Props) {
 
 	const queryClient = useQueryClient()
 
-	const { imageUrl, priority, taskDescription, title, status, createdAt, _id } =
-		todoInfo
+	const {
+		imageUrl,
+		priority,
+		taskDescription,
+		title,
+		status,
+		createdAt,
+		_id,
+		updatedAt,
+	} = todoInfo
 	const formattedDate = dayjs(createdAt).format('DD/MM/YYYY')
+
+	const difference = dayjs(updatedAt).diff(dayjs(createdAt), 'day')
 
 	let statusColor =
 		status === 'Not Started'
@@ -128,19 +138,16 @@ export default function Todo({ completed, todoInfo }: Props) {
 									)}
 								</button>
 							</li>
-							<li className='w-full h-full'>
-								<button className='w-full h-full inline-block p-2'>
-									{completed ? 'Remove from completed' : 'Complete'}
-								</button>
-							</li>
 						</ul>
 					</div>
 				)}
 
-				<h3 className='cursor-pointer font-bold text-2xl'>{title}</h3>
+				<h3 className='cursor-pointer font-bold text-2xl capitalize'>
+					<Link to={`/viewTask/${_id}`}>{title}</Link>
+				</h3>
 
 				<div className='info-block w-full flex items-center gap-2 '>
-					<p className='todo-text w-[75%] text-[#747474] text-[18px] '>
+					<p className='todo-text w-[75%] text-[#747474] text-[18px] capitalize'>
 						{taskDescription}
 					</p>
 					{imageUrl && <img className='w-[30%]' src={imageUrl} alt='img' />}
@@ -201,7 +208,9 @@ export default function Todo({ completed, todoInfo }: Props) {
 				</div>
 				{completed && (
 					<span className='text-[#747474] text-[13px]'>
-						Completed 2 days ago.
+						{difference === 0
+							? 'Completed today.'
+							: `Completed ${difference} days ago.`}
 					</span>
 				)}
 			</div>

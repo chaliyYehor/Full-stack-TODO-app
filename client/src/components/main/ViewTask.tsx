@@ -1,0 +1,130 @@
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useGetAllTodos } from '../../hooks/useGetAllTodos'
+import dayjs from 'dayjs'
+import { SquarePen, Trash } from 'lucide-react'
+import { useDeleteTodo } from '../../hooks/useDeleteTodo'
+
+export default function ViewTask() {
+	const navigate = useNavigate()
+	const { todoId } = useParams()
+	const { data: todos } = useGetAllTodos()
+	const todo = todos?.filter(todo => todo._id === todoId)
+	const { mutateAsync: deleteTodo, isPending: isDeleting } = useDeleteTodo()
+	if (!todo) return
+	const {
+		title,
+		priority,
+		status,
+		createdAt,
+		taskDescription,
+		imageUrl,
+		updatedAt,
+	} = todo[0]
+
+	const formattedDate = dayjs(createdAt).format('DD/MM/YYYY')
+
+	const difference = dayjs(updatedAt).diff(dayjs(createdAt), 'day')
+
+	let statusColor =
+		status === 'Not Started'
+			? '#F21E1E'
+			: status === 'In Progress'
+				? '#0225FF'
+				: '#05A301'
+
+	const priorityColor =
+		priority === 'Extreme'
+			? '#F21E1E'
+			: priority === 'Moderate'
+				? '#3ABEFF'
+				: '#05A301'
+
+	const deleteTodoOnClick = async () => {
+		try {
+			if (!todoId) return
+			await deleteTodo({ taskId: todoId })
+			navigate('/')
+		} catch (error) {
+			console.log(error)
+		}
+	}
+	return (
+		<div className='viewTaskWrapper relative w-full h-[calc(100dvh-13rem)] mb-10 mt-15 ml-20 border-2 border-[#A1A3AB] rounded-2xl p-8'>
+			<button
+				type='button'
+				className='cursor-pointer text-xl font-semibold underline absolute right-10'
+				onClick={() => {
+					navigate(-1)
+				}}
+			>
+				Go Back
+			</button>
+			<div className='flex gap-5 mb-20'>
+				{imageUrl && (
+					<div className='w-75 max-h-75 overflow-hidden'>
+						<img className='object-cover w-full' src={imageUrl} alt='img' />
+					</div>
+				)}
+				<div className='todo-info text-[13px] flex flex-col gap-5'>
+					<h2 className='font-bold text-4xl capitalize max-w-[80%] wrap-normal'>
+						{title}
+					</h2>
+					<div className='spanWrapper flex flex-col gap-2 text-[20px]'>
+						<span>
+							Priority:{' '}
+							<span
+								className='font-semibold'
+								style={{
+									color: priorityColor,
+								}}
+							>
+								{priority}
+							</span>
+						</span>
+						<span>
+							Status:{' '}
+							<span className='font-semibold' style={{ color: statusColor }}>
+								{status}
+							</span>
+						</span>
+						<span className='text-[#A1A3AB]'>Created on: {formattedDate}</span>
+						<span className='text-[#A1A3AB]'>
+							{difference === 0
+								? 'Completed today.'
+								: `Completed ${difference} days ago.`}
+						</span>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div className='text w-[80%] h-[20%] overflow-y-scroll'>
+					<p className='text-[#747474] w-full max-h-95 text-[18px] capitalize'>
+						{taskDescription}
+					</p>
+				</div>
+			</div>
+			<div className='tools w-fit flex gap-5 absolute bottom-5 right-5'>
+				<div
+					onClick={deleteTodoOnClick}
+					className='delete cursor-pointer bg-[#FF6767] hover:bg-[#d65a5a] transition flex justify-center items-center w-15.5 h-15.5 rounded-2xl'
+				>
+					{isDeleting ? (
+						<div className='w-full h-full flex justify-center items-center'>
+							<div className='loader ' />
+						</div>
+					) : (
+						<Trash color='white' size={30} />
+					)}
+				</div>
+				<div className='editTask cursor-pointer bg-[#FF6767] hover:bg-[#d65a5a] transition flex justify-center items-center w-15.5 h-15.5 rounded-2xl'>
+					<Link
+						className='w-full h-full inline-flex justify-center items-center'
+						to={`/editTask/${todoId}`}
+					>
+						<SquarePen color='white' size={30} />
+					</Link>
+				</div>
+			</div>
+		</div>
+	)
+}
