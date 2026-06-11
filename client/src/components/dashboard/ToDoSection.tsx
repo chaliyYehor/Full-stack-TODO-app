@@ -44,7 +44,7 @@ export default function ToDoSection() {
 						</button>
 					)}
 				</div>
-				<div className='dateSection w-full shrink-0'>
+				{!unCompletedTodos && <div className='dateSection w-full shrink-0'>
 					{formattedDate.split('/')[0] + '  '}
 					{dayjs()
 						.month(+formattedDate.split('/')[1] - 1)
@@ -57,7 +57,7 @@ export default function ToDoSection() {
 							</>
 						)}
 					</span>
-				</div>
+				</div>}
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
 					{unCompletedTodos &&
 						unCompletedTodos.map(todo => (
