@@ -3,6 +3,9 @@ import type { TodoType } from '../../schemas/todosSchema'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDeleteTodo } from '../../hooks/useDeleteTodo'
+import axios from 'axios'
+import { useQueryClient } from '@tanstack/react-query'
 
 type Props = {
 	completed: boolean
@@ -11,6 +14,8 @@ type Props = {
 
 export default function Todo({ completed, todoInfo }: Props) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+	const queryClient = useQueryClient()
 
 	const { imageUrl, priority, taskDescription, title, status, createdAt, _id } =
 		todoInfo
@@ -31,8 +36,18 @@ export default function Todo({ completed, todoInfo }: Props) {
 				? '#3ABEFF'
 				: '#05A301'
 
-	const deleteTodo = async () => {
-		
+	const { mutateAsync: deleteTodoFunc, isPending: isDeleting } = useDeleteTodo()
+
+	const deleteTodo = async (todoId: string) => {
+		try {
+			await deleteTodoFunc({ taskId: todoId })
+			queryClient.invalidateQueries({ queryKey: ['todos'] })
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				console.log(error.response?.data?.msg)
+				return
+			}
+		}
 	}
 
 	return (
@@ -62,7 +77,10 @@ export default function Todo({ completed, todoInfo }: Props) {
 								</Link>
 							</li>
 							<li className='w-full h-full'>
-								<button className='w-full h-full inline-block p-2'>
+								<button
+									onClick={() => deleteTodo(_id)}
+									className='w-full h-full inline-block p-2'
+								>
 									Delete Task
 								</button>
 							</li>
