@@ -17,11 +17,10 @@ export default function ToDoSection() {
 		return parsedDate.isValid() && parsedDate.isSame(dayjs(), 'day')
 	}
 
-	const { data: todos, isPending } = useGetAllTodos()
+	const { data: todos } = useGetAllTodos()
 	const formattedDate = dayjs(todos?.[0]?.createdAt).format('DD/MM/YYYY')
 
 	const unCompletedTodos = todos?.filter(todo => todo.status !== 'Completed')
-	const completedTodos = todos?.filter(todo => todo.status === 'Completed')
 
 	return (
 		<>
@@ -60,11 +59,7 @@ export default function ToDoSection() {
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
 					{unCompletedTodos &&
 						unCompletedTodos.map(todo => (
-							<Todo
-								todoInfo={todo}
-								completed={false}
-								key={todo._id}
-							/>
+							<Todo todoInfo={todo} completed={false} key={todo._id} />
 						))}
 				</div>
 				{todos && todos?.length < 1 && (
