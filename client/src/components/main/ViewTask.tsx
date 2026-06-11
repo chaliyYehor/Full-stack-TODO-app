@@ -111,8 +111,11 @@ export default function ViewTask() {
 						<Trash color='white' size={30} />
 					)}
 				</div>
-				<div className='editTask cursor-pointer bg-[#FF6767] hover:bg-[#d65a5a] transition flex justify-center items-center p-4 rounded-2xl'>
-					<Link to={`/editTask/${todoId}`}>
+				<div className='editTask cursor-pointer bg-[#FF6767] hover:bg-[#d65a5a] transition flex justify-center items-center w-15.5 h-15.5 rounded-2xl'>
+					<Link
+						className='w-full h-full inline-flex justify-center items-center'
+						to={`/editTask/${todoId}`}
+					>
 						<SquarePen color='white' size={30} />
 					</Link>
 				</div>
