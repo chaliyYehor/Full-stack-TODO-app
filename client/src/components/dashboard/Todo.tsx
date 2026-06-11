@@ -81,7 +81,13 @@ export default function Todo({ completed, todoInfo }: Props) {
 									onClick={() => deleteTodo(_id)}
 									className='w-full h-full inline-block p-2'
 								>
-									Delete Task
+									{!isDeleting ? (
+										<div className='w-full h-full flex justify-center items-center'>
+											<div className='loader ' />
+										</div>
+									) : (
+										'Delete Task'
+									)}
 								</button>
 							</li>
 							<li className='w-full h-full'>

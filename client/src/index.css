@@ -273,3 +273,10 @@ header {
 	background-color: #565872;
 	color: white;
 }
+
+.todoDropdown li .loader {
+	background: black
+}
+.todoDropdown li:hover .loader {
+	background: #fff
+}
