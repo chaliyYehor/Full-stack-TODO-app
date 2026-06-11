@@ -161,3 +161,7 @@ export const changeTodo = async (
 		}
 	}
 }
+
+export const deleteTodo = async (req: Request, res: Response, next: NextFunction) => {
+	const taskId = req.params
+}
