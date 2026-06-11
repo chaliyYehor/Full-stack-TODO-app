@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
 type Props = {
-	percent: number
+	percent: number | undefined
 	state: 'Completed' | 'In Progress' | 'Not Started'
 }
 
-export default function CircledPercentage({ percent, state }: Props) {
+export default function CircledPercentage({ percent = 0, state }: Props) {
 	const radius = 50
 	const size = 120
 	const circumference = 2 * Math.PI * radius
