@@ -16,10 +16,14 @@ export default function ViewTask() {
 		createdAt,
 		taskDescription,
 		imageUrl,
-		date,
+		updatedAt,
 	} = todo[0]
 
 	const formattedDate = dayjs(createdAt).format('DD/MM/YYYY')
+
+	const difference = dayjs(updatedAt).diff(dayjs(createdAt), 'day')
+
+	console.log(difference)
 
 	let statusColor =
 		status === 'Not Started'
@@ -47,12 +51,16 @@ export default function ViewTask() {
 				Go Back
 			</button>
 			<div className='flex gap-5 mb-20'>
-				<div className='w-75 max-h-75 overflow-hidden'>
-					<img className='object-cover w-full' src={imageUrl} alt='img' />
-				</div>
-				<div className='todo-info text-[13px] flex flex-col gap-2'>
-					<h2 className='font-bold text-4xl capitalize max-w-[80%] wrap-normal'>{title}</h2>
-					<div className='spanWrapper flex flex-col text-[20px]'>
+				{imageUrl && (
+					<div className='w-75 max-h-75 overflow-hidden'>
+						<img className='object-cover w-full' src={imageUrl} alt='img' />
+					</div>
+				)}
+				<div className='todo-info text-[13px] flex flex-col gap-5'>
+					<h2 className='font-bold text-4xl capitalize max-w-[80%] wrap-normal'>
+						{title}
+					</h2>
+					<div className='spanWrapper flex flex-col gap-2 text-[20px]'>
 						<span>
 							Priority:{' '}
 							<span
@@ -71,6 +79,11 @@ export default function ViewTask() {
 							</span>
 						</span>
 						<span className='text-[#A1A3AB]'>Created on: {formattedDate}</span>
+						<span className='text-[#A1A3AB]'>
+							{difference === 0
+								? 'Completed today.'
+								: `Completed ${difference} days ago.`}
+						</span>
 					</div>
 				</div>
 			</div>
