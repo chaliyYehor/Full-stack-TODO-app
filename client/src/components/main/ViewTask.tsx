@@ -1,12 +1,15 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useGetAllTodos } from '../../hooks/useGetAllTodos'
 import dayjs from 'dayjs'
+import { SquarePen, Trash } from 'lucide-react'
+import { useDeleteTodo } from '../../hooks/useDeleteTodo'
 
 export default function ViewTask() {
 	const navigate = useNavigate()
 	const { todoId } = useParams()
 	const { data: todos } = useGetAllTodos()
 	const todo = todos?.filter(todo => todo._id === todoId)
+	const { mutateAsync: deleteTodo, isPending: isDeleting } = useDeleteTodo()
 	if (!todo) return
 	const {
 		title,
@@ -22,8 +25,6 @@ export default function ViewTask() {
 
 	const difference = dayjs(updatedAt).diff(dayjs(createdAt), 'day')
 
-	console.log(difference)
-
 	let statusColor =
 		status === 'Not Started'
 			? '#F21E1E'
@@ -38,6 +39,15 @@ export default function ViewTask() {
 				? '#3ABEFF'
 				: '#05A301'
 
+	const deleteTodoOnClick = async () => {
+		try {
+			if (!todoId) return
+			await deleteTodo({ taskId: todoId })
+			navigate('/')
+		} catch (error) {
+			console.log(error)
+		}
+	}
 	return (
 		<div className='viewTaskWrapper relative w-full h-[calc(100dvh-13rem)] mb-10 mt-15 ml-20 border-2 border-[#A1A3AB] rounded-2xl p-8'>
 			<button
@@ -90,6 +100,22 @@ export default function ViewTask() {
 				<p className='text-[#747474] text-[18px] capitalize'>
 					{taskDescription}
 				</p>
+			</div>
+			<div className='tools w-fit'>
+				<div className='delete cursor-pointer bg-[#FF6767] hover:bg-[#d65a5a] transition flex justify-center items-center w-15.5 h-15.5 rounded-2xl'>
+					{isDeleting ? (
+						<div className='w-full h-full flex justify-center items-center'>
+							<div className='loader ' />
+						</div>
+					) : (
+						<Trash color='white' size={30} />
+					)}
+				</div>
+				<div className='editTask cursor-pointer bg-[#FF6767] hover:bg-[#d65a5a] transition flex justify-center items-center p-4 rounded-2xl'>
+					<Link to={`/editTask/${todoId}`}>
+						<SquarePen color='white' size={30} />
+					</Link>
+				</div>
 			</div>
 		</div>
 	)
