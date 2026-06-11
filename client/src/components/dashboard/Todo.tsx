@@ -31,6 +31,10 @@ export default function Todo({ completed, todoInfo }: Props) {
 				? '#3ABEFF'
 				: '#05A301'
 
+	const deleteTodo = async () => {
+		
+	}
+
 	return (
 		<>
 			<div className='todo-wrapper select-none grid grid-rows-3 cursor-pointer relative mt-4 gap-3 rounded-lg border border-[#A1A3AB] py-4 px-6 h-60'>

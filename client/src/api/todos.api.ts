@@ -13,8 +13,20 @@ export const createTodo = async (data: FormData) => {
 	return response.data
 }
 
-export const editTodo = async ({data, taskId}: {data: FormData, taskId: string}) => {
+export const editTodo = async ({
+	data,
+	taskId,
+}: {
+	data: FormData
+	taskId: string
+}) => {
 	const response = await api.patch(`/api/v1/todos/editTodo/${taskId}`, data)
+
+	return response.data
+}
+
+export const deleteTodo = async ({ taskId }: { taskId: string }) => {
+	const response = await api.delete(`/api/v1/todos/deleteTodo/${taskId}`)
 
 	return response.data
 }
