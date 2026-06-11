@@ -1,4 +1,10 @@
+import { useGetAllTodos } from '../../hooks/useGetAllTodos'
+import Todo from './Todo'
+
 export default function CompletedTask() {
+	const { data: todos } = useGetAllTodos()
+	const completedTodos = todos?.filter(todo => todo.status === 'Completed')
+
 	return (
 		<div className='completedTaskWrapper w-full h-full min-h-0 overflow-hidden p-6.25 flex flex-col'>
 			<div className='heading flex shrink-0'>
@@ -13,7 +19,10 @@ export default function CompletedTask() {
 			</div>
 
 			<div className='completedSection flex-1 min-h-0 overflow-y-auto pr-2'>
-				{/* render completed tasks here */}
+				{completedTodos &&
+					completedTodos.map(todo => (
+						<Todo completed todoInfo={todo} key={todo.title} />
+					))}
 			</div>
 		</div>
 	)

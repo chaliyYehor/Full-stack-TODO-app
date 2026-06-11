@@ -2,9 +2,11 @@ import { v2 as cloudinary } from 'cloudinary'
 import { NextFunction, Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import multer from 'multer'
-import { createTaskSchema } from '../schemas/todoSchema.js'
+import { createTaskSchema, optionalTaskSchema } from '../schemas/todoSchema.js'
 import { BadRequestError } from '../errors/bad-request.js'
 import Task from '../models/task.js'
+import fs from 'fs/promises'
+import z from 'zod'
 
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -66,7 +68,11 @@ export const createTodo = async (
 
 		res.status(StatusCodes.CREATED).json({ msg: 'success', imageUrl })
 	} catch (error) {
-		return next(new BadRequestError('Image Upload failed'))
+		next(error)
+	} finally {
+		if (req.file?.path) {
+			await fs.unlink(req.file.path).catch(() => {})
+		}
 	}
 }
 
@@ -89,5 +95,122 @@ export const getAllTodos = async (
 		res.status(StatusCodes.OK).json({ tasks })
 	} catch (error) {
 		next(error)
+	}
+}
+
+export const changeTodo = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const todoId = req.params.todoId
+	const result = optionalTaskSchema.safeParse(req.body)
+	if (!result.success) {
+		return next(new BadRequestError('Provide valid credentials'))
+	}
+
+	try {
+		const task = await Task.findOne({
+			_id: todoId,
+			creatorID: req.user?.userID,
+		})
+
+		if (!task) {
+			return next(new BadRequestError(`Task not found`))
+		}
+
+		const updatedData = { ...result.data }
+
+		if (req.file) {
+			if (req.file.size > MAX_FILE_SIZE) {
+				return next(new BadRequestError('Max image size is 5MB'))
+			}
+
+			if (!req.file.mimetype.startsWith('image/')) {
+				return next(new BadRequestError('Only images are allowed'))
+			}
+
+			const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
+				folder: 'todo-tasks',
+			})
+
+			if (task.imagePublicId) {
+				await cloudinary.uploader.destroy(task.imagePublicId)
+			}
+
+			Object.assign(updatedData, {
+				imageUrl: uploadedImage.secure_url,
+				imagePublicId: uploadedImage.public_id,
+			})
+		}
+
+		await Task.findOneAndUpdate(
+			{
+				_id: todoId,
+				creatorID: req.user?.userID,
+			},
+			updatedData,
+			{ new: true, runValidators: true },
+		)
+
+		res.status(StatusCodes.OK).json({ msg: 'Success' })
+	} catch (error) {
+		next(error)
+	} finally {
+		if (req.file?.path) {
+			await fs.unlink(req.file.path).catch(() => {})
+		}
+	}
+}
+
+export const changeStatus = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const taskId = req.params.todoId
+	const result = z
+		.object({
+			status: z.enum(['Not Started', 'In Progress', 'Completed']),
+		})
+		.safeParse(req.body)
+
+	if (!result.success || !taskId) {
+		return next(new BadRequestError('Incorrect status type or task id'))
+	}
+	try {
+		await Task.findOneAndUpdate(
+			{
+				_id: taskId,
+				creatorID: req.user?.userID,
+			},
+			{ status: result.data.status },
+		)
+		res.status(StatusCodes.OK).json({ msg: 'Success' })
+	} catch (error) {
+		next(error)
+	}
+}
+
+export const deleteTodo = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const taskId = req.params.todoId
+
+	try {
+		const deleteTask = await Task.findOneAndDelete({
+			_id: taskId,
+			creatorID: req.user?.userID,
+		}).select(['imagePublicId'])
+
+		if (deleteTask?.imagePublicId) {
+			await cloudinary.uploader.destroy(deleteTask.imagePublicId)
+		}
+
+		res.status(StatusCodes.OK).json({ msg: 'Success' })
+	} catch (error) {
+		return next(error)
 	}
 }

@@ -37,7 +37,7 @@ export default function Menu() {
 						className={({ isActive }) =>
 							`w-full h-full ${isActive ? 'active' : ''}`
 						}
-						to={'/dashboard'}
+						to={'/'}
 					>
 						<li className='flex gap-5'>
 							<LayoutDashboard size={35} /> Dashboard

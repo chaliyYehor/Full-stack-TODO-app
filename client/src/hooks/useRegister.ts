@@ -11,7 +11,7 @@ export const useRegister = () => {
 		mutationFn: registerUser,
 		onSuccess: data => {
 			saveToken(data.token)
-			navigate('/dashboard')
+			navigate('/')
 		},
 	})
 }

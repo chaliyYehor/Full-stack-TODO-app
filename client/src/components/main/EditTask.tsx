@@ -6,7 +6,7 @@ export default function EditTask() {
 
 	const { todoId } = useParams()
 	if(!todoId) {
-		navigate('/dashboard')
+		navigate('/')
 	}
 	return (
 		<div className='editTaskWrapper w-fit h-fit mt-15 ml-10 shadow-2xl rounded-xl'>

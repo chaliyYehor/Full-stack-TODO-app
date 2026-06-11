@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useGetAllTodos } from '../../../hooks/useGetAllTodos'
 import { editTaskFormSchema } from '../../../schemas/editTaskFormSchema'
 import dayjs from 'dayjs'
+import { useEditTodo } from '../../../hooks/useEditTodo'
 
 type Props = {
 	closeTask?: React.Dispatch<React.SetStateAction<boolean>>
@@ -67,7 +68,6 @@ export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 			resetCreate()
 			closeTask && closeTask(false)
 			queryClient.invalidateQueries({ queryKey: ['todos'] })
-			console.log('success')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setAuthError(error.response?.data?.msg)
@@ -91,6 +91,8 @@ export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 			image: undefined,
 		})
 	}, [editTask, oldTodo, createFormMethods])
+
+	const { mutateAsync: editTaskAsync, isPending: isEditting } = useEditTodo()
 
 	const onEditSubmit: SubmitHandler<CreateTaskFormType> = async data => {
 		const changedFields: Partial<CreateTaskFormType> = {}
@@ -140,6 +142,19 @@ export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 
 			formData.append(key, String(value))
 		})
+
+		try {
+			if(!editTaskId) return
+			await editTaskAsync({ data: formData, taskId: editTaskId })
+			resetCreate()
+			queryClient.invalidateQueries({ queryKey: ['todos'] })
+			navigate('/')
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				setAuthError(error.response?.data?.msg)
+				return
+			}
+		}
 	}
 
 	return (
@@ -183,7 +198,7 @@ export default function CreateTask({ closeTask, editTask, editTaskId }: Props) {
 							type='submit'
 							className='bg-[#F24E1E] hover:bg-[#df3400] active:bg-[#f68663] transition text-[#FFFFFF] w-25 h-13 py-3 px-5 rounded-md flex justify-center items-center cursor-pointer mt-8 font-semibold text-xl'
 						>
-							{isPending ? <div className='loader ' /> : 'Done'}
+							{isPending || isEditting ? <div className='loader ' /> : 'Done'}
 						</button>
 					</form>
 				</FormProvider>
