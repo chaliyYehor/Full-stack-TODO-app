@@ -1,7 +1,7 @@
 import { Circle } from 'lucide-react'
 import type { TodoType } from '../../schemas/todosSchema'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDeleteTodo } from '../../hooks/useDeleteTodo'
 import axios from 'axios'
@@ -19,10 +19,9 @@ export default function Todo({ completed, todoInfo }: Props) {
 
 	const { imageUrl, priority, taskDescription, title, status, createdAt, _id } =
 		todoInfo
-	console.log(imageUrl)
 	const formattedDate = dayjs(createdAt).format('DD/MM/YYYY')
 
-	const statusColor =
+	let statusColor =
 		status === 'Not Started'
 			? '#F21E1E'
 			: status === 'In Progress'
@@ -50,9 +49,25 @@ export default function Todo({ completed, todoInfo }: Props) {
 		}
 	}
 
+	const [userStatusIdx, setUserStatusIdx] = useState<number>(0)
+	const statusProperties: ['Not Started', 'In Progress', 'Completed'] = [
+		'Not Started',
+		'In Progress',
+		'Completed',
+	]
+	useEffect(() => {
+		setUserStatusIdx(currentStatusIdx)
+	}, [status])
+	const currentStatusIdx = statusProperties.findIndex(idx => idx === status)
+
+	const changeStatus = () => {
+		if (userStatusIdx === undefined) return
+		const nextIdx = (userStatusIdx + 1) % 3
+		setUserStatusIdx(nextIdx)
+	}
 	return (
 		<>
-			<div className='todo-wrapper select-none grid grid-rows-3 cursor-pointer relative mt-4 gap-3 rounded-lg border border-[#A1A3AB] py-4 px-6 h-60'>
+			<div className='todo-wrapper select-none grid grid-rows-3 relative mt-4 gap-3 rounded-lg border border-[#A1A3AB] py-4 px-6 h-60'>
 				<div className='todo-status absolute left-1 top-1'>
 					<Circle strokeWidth={3} color={statusColor} />
 				</div>
@@ -99,7 +114,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 					</div>
 				)}
 
-				<h3 className=' font-bold text-2xl'>{title}</h3>
+				<h3 className='cursor-pointer font-bold text-2xl'>{title}</h3>
 
 				<div className='info-block w-full flex items-center gap-2 '>
 					<p className='todo-text w-[75%] text-[#747474] text-[18px] '>
@@ -121,14 +136,19 @@ export default function Todo({ completed, todoInfo }: Props) {
 							</span>
 						</span>
 					)}
-					<span>
+					<span onClick={changeStatus} className='cursor-pointer'>
 						Status:{' '}
 						<span
 							style={{
-								color: statusColor,
+								color:
+									statusProperties[userStatusIdx] === 'Not Started'
+										? '#F21E1E'
+										: statusProperties[userStatusIdx] === 'In Progress'
+											? '#0225FF'
+											: '#05A301',
 							}}
 						>
-							{status}
+							{statusProperties[userStatusIdx]}
 						</span>
 					</span>
 					{!completed && (
