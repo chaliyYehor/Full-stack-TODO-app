@@ -6,6 +6,7 @@ import { createTaskSchema, optionalTaskSchema } from '../schemas/todoSchema.js'
 import { BadRequestError } from '../errors/bad-request.js'
 import Task from '../models/task.js'
 import fs from 'fs/promises'
+import z from 'zod'
 
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -159,6 +160,35 @@ export const changeTodo = async (
 		if (req.file?.path) {
 			await fs.unlink(req.file.path).catch(() => {})
 		}
+	}
+}
+
+export const changeStatus = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const taskId = req.params.todoId
+	const result = z
+		.object({
+			status: z.enum(['Not Started', 'In Progress', 'Completed']),
+		})
+		.safeParse(req.body)
+
+	if (!result.success || !taskId) {
+		return next(new BadRequestError('Incorrect status type or task id'))
+	}
+	try {
+		await Task.findOneAndUpdate(
+			{
+				_id: taskId,
+				creatorID: req.user?.userID,
+			},
+			{ status: result.data.status },
+		)
+		res.status(StatusCodes.OK).json({ msg: 'Success' })
+	} catch (error) {
+		next(error)
 	}
 }
 

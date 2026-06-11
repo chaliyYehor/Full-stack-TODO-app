@@ -60,11 +60,12 @@ export default function Todo({ completed, todoInfo }: Props) {
 	}, [status])
 	const currentStatusIdx = statusProperties.findIndex(idx => idx === status)
 
-	const changeStatus = () => {
+	const changeStatusUI = () => {
 		if (userStatusIdx === undefined) return
 		const nextIdx = (userStatusIdx + 1) % 3
 		setUserStatusIdx(nextIdx)
 	}
+	const changeStatusServer = () => {}
 	return (
 		<>
 			<div className='todo-wrapper select-none grid grid-rows-3 relative mt-4 gap-3 rounded-lg border border-[#A1A3AB] py-4 px-6 h-60'>
@@ -136,7 +137,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 							</span>
 						</span>
 					)}
-					<span onClick={changeStatus} className='cursor-pointer relative'>
+					<span onClick={changeStatusUI} className='cursor-pointer relative'>
 						Status:{' '}
 						<span
 							style={{
@@ -154,6 +155,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 					{statusProperties[userStatusIdx] !== status && status ? (
 						<div
 							title='Save Changes'
+							onClick={changeStatusServer}
 							className='saveChanges cursor-pointer rounded-full bg-green-600 transition hover:bg-green-800 flex justify-center items-center w-fit h-fit absolute -top-11 left-[50%] translate-x-[-60%] p-2'
 						>
 							<Check color='white' size={25} />
