@@ -81,7 +81,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 									onClick={() => deleteTodo(_id)}
 									className='w-full h-full inline-block p-2'
 								>
-									{!isDeleting ? (
+									{isDeleting ? (
 										<div className='w-full h-full flex justify-center items-center'>
 											<div className='loader ' />
 										</div>
@@ -109,7 +109,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 				</div>
 
 				<div className='todo-info text-[13px] w-full flex justify-between self-end'>
-					{completed && (
+					{!completed && (
 						<span>
 							Priority:{' '}
 							<span
