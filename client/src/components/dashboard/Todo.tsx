@@ -57,10 +57,10 @@ export default function Todo({ completed, todoInfo }: Props) {
 		'In Progress',
 		'Completed',
 	]
+	const currentStatusIdx = statusProperties.findIndex(idx => idx === status)
 	useEffect(() => {
 		setUserStatusIdx(currentStatusIdx)
 	}, [status])
-	const currentStatusIdx = statusProperties.findIndex(idx => idx === status)
 
 	const changeStatusUI = () => {
 		if (userStatusIdx === undefined) return
@@ -83,6 +83,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 		}
 		try {
 			await changeStatus({ data: result.data, taskId: _id })
+			queryClient.invalidateQueries({ queryKey: ['todos'] })
 		} catch (error) {
 			console.error(error)
 		}
@@ -158,7 +159,10 @@ export default function Todo({ completed, todoInfo }: Props) {
 							</span>
 						</span>
 					)}
-					<span onClick={changeStatusUI} className='cursor-pointer relative'>
+					<span
+						onClick={changeStatusUI}
+						className='cursor-pointer relative statusText'
+					>
 						Status:{' '}
 						<span
 							style={{
