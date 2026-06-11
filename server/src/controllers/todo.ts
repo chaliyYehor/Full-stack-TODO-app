@@ -143,7 +143,7 @@ export const changeTodo = async (
 			})
 		}
 
-		const updatedTask = await Task.findOneAndUpdate(
+		await Task.findOneAndUpdate(
 			{
 				_id: todoId,
 				creatorID: req.user?.userID,
@@ -152,7 +152,7 @@ export const changeTodo = async (
 			{ new: true, runValidators: true },
 		)
 
-		res.status(StatusCodes.OK).json({msg: 'Success'})
+		res.status(StatusCodes.OK).json({ msg: 'Success' })
 	} catch (error) {
 		next(error)
 	} finally {
@@ -162,6 +162,25 @@ export const changeTodo = async (
 	}
 }
 
-export const deleteTodo = async (req: Request, res: Response, next: NextFunction) => {
-	const taskId = req.params
+export const deleteTodo = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const taskId = req.params.todoId
+
+	try {
+		const deleteTask = await Task.findOneAndDelete({
+			_id: taskId,
+			creatorID: req.user?.userID,
+		}).select(['imagePublicId'])
+
+		if (deleteTask?.imagePublicId) {
+			cloudinary.uploader.destroy(deleteTask.imagePublicId)
+		}
+
+		res.status(StatusCodes.OK).json({ msg: 'Success' })
+	} catch (error) {
+		return next(error)
+	}
 }
