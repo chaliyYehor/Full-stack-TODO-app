@@ -280,3 +280,7 @@ header {
 .todoDropdown li:hover .loader {
 	background: #fff
 }
+
+.saveChanges {
+	box-shadow: 0px 0px 5px rgb(12, 50, 8);
+}

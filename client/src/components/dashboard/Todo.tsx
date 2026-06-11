@@ -1,4 +1,4 @@
-import { Circle } from 'lucide-react'
+import { Check, Circle } from 'lucide-react'
 import type { TodoType } from '../../schemas/todosSchema'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
@@ -123,7 +123,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 					{imageUrl && <img className='w-[30%]' src={imageUrl} alt='img' />}
 				</div>
 
-				<div className='todo-info text-[13px] w-full flex justify-between self-end'>
+				<div className='todo-info relative text-[13px] w-full flex justify-between self-end'>
 					{!completed && (
 						<span>
 							Priority:{' '}
@@ -136,7 +136,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 							</span>
 						</span>
 					)}
-					<span onClick={changeStatus} className='cursor-pointer'>
+					<span onClick={changeStatus} className='cursor-pointer relative'>
 						Status:{' '}
 						<span
 							style={{
@@ -151,6 +151,17 @@ export default function Todo({ completed, todoInfo }: Props) {
 							{statusProperties[userStatusIdx]}
 						</span>
 					</span>
+					{statusProperties[userStatusIdx] !== status && status ? (
+						<div
+							title='Save Changes'
+							className='saveChanges cursor-pointer rounded-full bg-green-600 transition hover:bg-green-800 flex justify-center items-center w-fit h-fit absolute -top-11 left-[50%] translate-x-[-60%] p-2'
+						>
+							<Check color='white' size={25} />
+						</div>
+					) : (
+						''
+					)}
+
 					{!completed && (
 						<span className='text-[#A1A3AB]'>Created on: {formattedDate}</span>
 					)}
