@@ -221,7 +221,10 @@ export default function ViewTask() {
 				</div>
 			</div>
 			<div className='tools w-fit flex gap-5 absolute bottom-5 right-5'>
-				<div className='delete cursor-pointer bg-[#FF6767] hover:bg-[#d65a5a] transition flex justify-center items-center w-15.5 h-15.5 rounded-2xl'>
+				<div
+					onClick={() => todoId ? deleteTodoOnClick(todoId) : ''}
+					className='delete cursor-pointer bg-[#FF6767] hover:bg-[#d65a5a] transition flex justify-center items-center w-15.5 h-15.5 rounded-2xl'
+				>
 					{isDeleting ? (
 						<div className='w-full h-full flex justify-center items-center'>
 							<div className='loader ' />
