@@ -137,7 +137,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 					</div>
 				)}
 
-				<h3 className='cursor-pointer font-bold text-2xl'>{title}</h3>
+				<h3 className='cursor-pointer font-bold text-2xl'><Link to={`/viewTask/${_id}`}>{title}</Link></h3>
 
 				<div className='info-block w-full flex items-center gap-2 '>
 					<p className='todo-text w-[75%] text-[#747474] text-[18px] '>
