@@ -31,13 +31,11 @@ export const deleteTodo = async ({ taskId }: { taskId: string }) => {
 	return response.data
 }
 
-export const changeStatus = async ({
-	data,
-	taskId,
-}: {
-	data: string
+type ChangeStatusData = {
+	data: {status: 'Not Started' | 'In Progress' | 'Completed'}
 	taskId: string
-}) => {
+}
+export const changeStatus = async ({ data, taskId }: ChangeStatusData) => {
 	const response = await api.patch(`/api/v1/todos/editStatus/${taskId}`, data)
 
 	return response.data

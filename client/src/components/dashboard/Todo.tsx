@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import { useDeleteTodo } from '../../hooks/useDeleteTodo'
 import axios from 'axios'
 import { useQueryClient } from '@tanstack/react-query'
+import { useChangeStatus } from '../../hooks/useChangeStatus'
+import z from 'zod'
 
 type Props = {
 	completed: boolean
@@ -65,7 +67,26 @@ export default function Todo({ completed, todoInfo }: Props) {
 		const nextIdx = (userStatusIdx + 1) % 3
 		setUserStatusIdx(nextIdx)
 	}
-	const changeStatusServer = () => {}
+
+	const { mutateAsync: changeStatus, isPending: isChangingStatus } =
+		useChangeStatus()
+
+	const changeStatusServer = async () => {
+		if (statusProperties[userStatusIdx] === status || !status) return
+		const result = z
+			.object({
+				status: z.enum(['Not Started', 'In Progress', 'Completed']),
+			})
+			.safeParse({ status: statusProperties[userStatusIdx] })
+		if (!result.success) {
+			return
+		}
+		try {
+			await changeStatus({ data: result.data, taskId: _id })
+		} catch (error) {
+			console.error(error)
+		}
+	}
 	return (
 		<>
 			<div className='todo-wrapper select-none grid grid-rows-3 relative mt-4 gap-3 rounded-lg border border-[#A1A3AB] py-4 px-6 h-60'>
