@@ -18,6 +18,8 @@ export default function ToDoSection() {
 	}
 
 	const { data: todos } = useGetAllTodos()
+	const inCompleteTodos = todos?.filter(todo => todo.status !== 'Completed')
+
 	const formattedDate = dayjs(todos?.[0]?.createdAt).format('DD/MM/YYYY')
 
 	const unCompletedTodos = todos?.filter(todo => todo.status !== 'Completed')
@@ -32,7 +34,7 @@ export default function ToDoSection() {
 							To-Do
 						</span>
 					</div>
-					{todos && todos?.length > 0 && (
+					{inCompleteTodos && inCompleteTodos?.length > 0 && (
 						<button
 							onClick={() => setIsAddTaskOpen(true)}
 							className='flex cursor-pointer'
@@ -43,9 +45,9 @@ export default function ToDoSection() {
 					)}
 				</div>
 				<div className='dateSection w-full shrink-0'>
-					20{' '}
+					{formattedDate.split('/')[0] + '  '}
 					{dayjs()
-						.month(5 - 1)
+						.month(+formattedDate.split('/')[1] - 1)
 						.format('MMM')}
 					<span className='text-[#A1A3AB] ml-2'>
 						{isToday(formattedDate) && (
@@ -62,7 +64,7 @@ export default function ToDoSection() {
 							<Todo todoInfo={todo} completed={false} key={todo._id} />
 						))}
 				</div>
-				{todos && todos?.length < 1 && (
+				{inCompleteTodos && inCompleteTodos?.length < 1 && (
 					<button
 						className='FirstTask absolute flex cursor-pointer top-[50%] left-[50%] -translate-x-1/2 text-2xl items-center justify-center'
 						onClick={() => setIsAddTaskOpen(true)}
