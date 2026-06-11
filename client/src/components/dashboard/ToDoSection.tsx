@@ -20,6 +20,9 @@ export default function ToDoSection() {
 	const { data: todos, isPending } = useGetAllTodos()
 	const formattedDate = dayjs(todos?.[0]?.createdAt).format('DD/MM/YYYY')
 
+	const unCompletedTodos = todos?.filter(todo => todo.status !== 'Completed')
+	const completedTodos = todos?.filter(todo => todo.status === 'Completed')
+
 	return (
 		<>
 			<div className='todoWrapper p-5 h-full min-h-0 relative overflow-hidden flex flex-col'>
@@ -55,11 +58,11 @@ export default function ToDoSection() {
 					</span>
 				</div>
 				<div className='todo-section flex-1 min-h-0 overflow-y-auto pr-2'>
-					{todos &&
-						todos.map(todo => (
+					{unCompletedTodos &&
+						unCompletedTodos.map(todo => (
 							<Todo
 								todoInfo={todo}
-								completed={todo.status === 'Completed'}
+								completed={false}
 								key={todo._id}
 							/>
 						))}
