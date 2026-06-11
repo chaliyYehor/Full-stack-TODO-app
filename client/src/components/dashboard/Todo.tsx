@@ -179,7 +179,13 @@ export default function Todo({ completed, todoInfo }: Props) {
 							onClick={changeStatusServer}
 							className='saveChanges cursor-pointer rounded-full bg-green-600 transition hover:bg-green-800 flex justify-center items-center w-fit h-fit absolute -top-11 left-[50%] translate-x-[-60%] p-2'
 						>
-							<Check color='white' size={25} />
+							{isChangingStatus ? (
+								<div className='w-full h-full flex justify-center items-center'>
+									<div className='loader ' />
+								</div>
+							) : (
+								<Check color='white' size={25} />
+							)}
 						</div>
 					) : (
 						''
