@@ -109,7 +109,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 				</div>
 
 				<div className='todo-info text-[13px] w-full flex justify-between self-end'>
-					{!completed && (
+					{completed && (
 						<span>
 							Priority:{' '}
 							<span
