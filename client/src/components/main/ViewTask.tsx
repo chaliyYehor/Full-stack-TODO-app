@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGetAllTodos } from '../../hooks/useGetAllTodos'
-import type { TodoType } from '../../schemas/todosSchema'
 import dayjs from 'dayjs'
 
 export default function ViewTask() {
