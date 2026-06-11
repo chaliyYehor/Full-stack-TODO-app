@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 type Props = {
@@ -60,7 +61,12 @@ export default function CircledPercentage({ percent = 0, state }: Props) {
 					></div>
 					{state}
 				</div>
-				<span className='inline-block absolute top-[28%] left-[35%] text-xl font-bold'>
+				<span
+					className={clsx(
+						percent === 100 ? 'left-[30%]' : 'left-[35%]',
+						'inline-block absolute top-[28%] text-xl font-bold',
+					)}
+				>
 					{percent}%
 				</span>
 			</div>
