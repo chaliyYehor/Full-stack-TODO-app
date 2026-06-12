@@ -5,7 +5,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { SquarePen, Trash } from 'lucide-react'
 import clsx from 'clsx'
 
-export default function ViewSingleTodo({ todo }: { todo: TodoType }) {
+type Props = {
+	todo: TodoType
+	setCurrentTodo?: React.Dispatch<React.SetStateAction<TodoType | undefined>>
+}
+
+export default function ViewSingleTodo({ todo, setCurrentTodo }: Props) {
 	const navigate = useNavigate()
 
 	const { mutateAsync: deleteTodo, isPending: isDeleting } = useDeleteTodo()
@@ -42,7 +47,7 @@ export default function ViewSingleTodo({ todo }: { todo: TodoType }) {
 		try {
 			if (!_id) return
 			await deleteTodo({ taskId: _id })
-			navigate('/')
+			setCurrentTodo && setCurrentTodo(undefined)
 		} catch (error) {
 			console.log(error)
 		}
