@@ -41,7 +41,7 @@ const sanitizeMongoInput = (
 }
 
 const corsOptions = {
-	origin: 'http://localhost:5173',
+	origin: process.env.ClIENT_URL,
 	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 	credentials: true,
 }
