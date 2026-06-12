@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { useDeleteTodo } from '../../hooks/useDeleteTodo'
 import type { TodoType } from '../../schemas/todosSchema'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { SquarePen, Trash } from 'lucide-react'
 import clsx from 'clsx'
 
@@ -11,8 +11,6 @@ type Props = {
 }
 
 export default function ViewSingleTodo({ todo, setCurrentTodo }: Props) {
-	const navigate = useNavigate()
-
 	const { mutateAsync: deleteTodo, isPending: isDeleting } = useDeleteTodo()
 	const {
 		title,

@@ -1,7 +1,5 @@
-import dayjs from 'dayjs'
 import { useGetAllTodos } from '../../hooks/useGetAllTodos'
 import Todo from '../dashboard/Todo'
-import { useDeleteTodo } from '../../hooks/useDeleteTodo'
 import ViewSingleTodo from '../dashboard/ViewSingleTodo'
 import { useState } from 'react'
 import type { TodoType } from '../../schemas/todosSchema'

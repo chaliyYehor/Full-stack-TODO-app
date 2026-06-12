@@ -50,10 +50,10 @@ export default function Menu() {
 							<span className='inline-block -ml-2'>Vital Task</span>
 						</li>
 					</Link>
-					<Link className='w-full h-full' to={'#'}>
+					<Link className='w-full h-full' to={'/myTask'}>
 						<li className='flex gap-5'>
 							<CalendarCheck size={35} />
-							My Task
+							My Tasks
 						</li>
 					</Link>
 					<Link className='w-full h-full' to={'#'}>

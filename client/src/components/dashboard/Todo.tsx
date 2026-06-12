@@ -142,7 +142,7 @@ export default function Todo({ completed, todoInfo }: Props) {
 					</div>
 				)}
 
-				<h3 className='cursor-pointer font-bold text-2xl capitalize'>
+				<h3 className='cursor-pointer font-bold text-2xl capitalize pt-1'>
 					<Link to={`/viewTask/${_id}`}>{title}</Link>
 				</h3>
 
