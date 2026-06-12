@@ -4,25 +4,17 @@ import CircledPercentage from './CircledPercentage'
 export default function TaskStatus() {
 	const { data: todos } = useGetAllTodos()
 
-	const percentNotStarted = todos
-		? Math.round((todos?.filter(todo => todo.status === 'Not Started').length /
-				todos?.length) *
-			100)
-		: undefined
+	const getStatusPercent = (status: 'Completed' | 'In Progress' | 'Not Started') => {
+		if (!todos?.length) return 0
 
-	const percentInProgress = todos
-		? Math.round((todos?.filter(todo => todo.status === 'In Progress').length /
-				todos?.length) *
-			100)
-		: undefined
+		return Math.round(
+			(todos.filter(todo => todo.status === status).length / todos.length) * 100,
+		)
+	}
 
-	const percentCompleted = todos
-		? Math.round((todos?.filter(todo => todo.status === 'Completed').length /
-				todos?.length) *
-			100)
-		: undefined
-
-	console.log(percentNotStarted)
+	const percentNotStarted = getStatusPercent('Not Started')
+	const percentInProgress = getStatusPercent('In Progress')
+	const percentCompleted = getStatusPercent('Completed')
 
 	return (
 		<div className='taskStatusWrapper p-6.25 h-full min-h-0 w-full flex flex-col overflow-hidden'>

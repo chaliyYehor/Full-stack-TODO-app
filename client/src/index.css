@@ -235,7 +235,7 @@ header {
 }
 
 .loader {
-	width:25px;
+	width: 25px;
 	padding: 4px;
 	aspect-ratio: 1;
 	border-radius: 50%;
@@ -252,7 +252,6 @@ header {
 		transform: rotate(1turn);
 	}
 }
-
 
 .todoDropdown li {
 	width: 100%;
@@ -275,10 +274,10 @@ header {
 }
 
 .todoDropdown li .loader {
-	background: black
+	background: black;
 }
 .todoDropdown li:hover .loader {
-	background: #fff
+	background: #fff;
 }
 
 .saveChanges {
@@ -286,5 +285,15 @@ header {
 }
 
 .text {
+	scrollbar-width: none;
+}
+
+.viewTask {
+	font-family: 'Montserrat', sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+}
+
+.todosSect {
 	scrollbar-width: none;
 }

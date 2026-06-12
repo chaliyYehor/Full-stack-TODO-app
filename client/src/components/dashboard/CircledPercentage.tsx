@@ -28,7 +28,7 @@ export default function CircledPercentage({ percent = 0, state }: Props) {
 	return (
 		<>
 			<div className='progressBar'>
-				<svg width={size} height={size} xmlns='http://www.w3.org/2000/svg'>
+				<svg width={size} height={size} xmlns='http://www.w3.org/2000/svg ' className='transition-all duration-500 ease-in-out'>
 					<circle
 						strokeWidth='13'
 						stroke='#D9D9D9'
@@ -36,6 +36,7 @@ export default function CircledPercentage({ percent = 0, state }: Props) {
 						cy={center}
 						r={radius}
 						fill='none'
+						className='transition-all duration-500 ease-in-out'
 					/>
 
 					<circle
@@ -49,6 +50,7 @@ export default function CircledPercentage({ percent = 0, state }: Props) {
 						strokeDashoffset={offset}
 						strokeLinecap='butt'
 						transform={`rotate(-90 ${center} ${center})`}
+						className='transition-all duration-500 ease-out'
 					/>
 				</svg>
 

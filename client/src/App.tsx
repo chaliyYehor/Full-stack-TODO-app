@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Dashboard from './components/main/Dashboard'
 import EditTask from './components/main/EditTask'
 import ViewTask from './components/main/ViewTask'
+import MyTask from './components/main/MyTask'
 
 const router = createBrowserRouter([
 	{
@@ -25,6 +26,19 @@ const router = createBrowserRouter([
 			{
 				path: 'viewTask/:todoId',
 				element: <ViewTask />,
+			},
+			{
+				path: 'myTask',
+				children: [
+					{
+						index: true,
+						element: <MyTask />,
+					},
+					{
+						path: ':taskId',
+						element: <MyTask />,
+					},
+				],
 			},
 		],
 	},
