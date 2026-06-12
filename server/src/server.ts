@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import 'dotenv/config'
 import { notFoundMiddleware } from './middleware/not-found.js'
 import { errorHandlerMiddleware } from './middleware/error-handler.js'
@@ -8,6 +8,9 @@ import todosRouter from './routes/todo.js'
 import userRouter from './routes/user.js'
 import cors from 'cors'
 import { authMiddleware } from './middleware/authorization.js'
+import rateLimit from 'express-rate-limit'
+import expressMongoSanitize from 'express-mongo-sanitize'
+import helmet from 'helmet'
 const app = express()
 
 const port = process.env.PORT || 5000
@@ -16,8 +19,26 @@ if (!uri) {
 	throw new Error('MONGO_URI is not defined')
 }
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.set('trust proxy', 1)
+
+const apiLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000,
+	limit: 100,
+	standardHeaders: 'draft-8',
+	legacyHeaders: false,
+})
+
+const sanitizeMongoInput = (
+	req: Request,
+	_res: Response,
+	next: NextFunction,
+) => {
+	if (req.body) {
+		expressMongoSanitize.sanitize(req.body)
+	}
+
+	next()
+}
 
 const corsOptions = {
 	origin: 'http://localhost:5173',
@@ -25,7 +46,12 @@ const corsOptions = {
 	credentials: true,
 }
 
+app.use(apiLimiter)
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(cors(corsOptions))
+app.use(helmet())
+app.use(sanitizeMongoInput)
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/todos', authMiddleware, todosRouter)
