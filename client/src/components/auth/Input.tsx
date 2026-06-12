@@ -39,13 +39,13 @@ export default function Input({ inpPlaceholder }: Props) {
 	let imgUrl = null
 	switch (inpPlaceholder) {
 		case 'Username':
-			imgUrl = '/auth/formIcons/Username.png'
+			imgUrl = '/auth/formIcons/username.png'
 			break
 		case 'Email':
-			imgUrl = '/auth/formIcons/Email.png'
+			imgUrl = '/auth/formIcons/email.png'
 			break
 		case 'Password':
-			imgUrl = '/auth/formIcons/Password.png'
+			imgUrl = '/auth/formIcons/password.png'
 			break
 		case 'Confirm Password':
 			imgUrl = '/auth/formIcons/confirm.png'
