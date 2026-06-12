@@ -14,7 +14,7 @@ import { useEffect } from 'react'
 export default function Menu() {
 	const navigate = useNavigate()
 
-	const { data, isPending, isError } = useGetUserInfo()
+	const { data, isError } = useGetUserInfo()
 
 	useEffect(() => {
 		if (isError) {
